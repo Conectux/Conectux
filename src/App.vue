@@ -50,7 +50,7 @@ const scrollToSection = (target) => {
       class="px-4 app-bar"
     >
       <v-app-bar-title class="font-weight-black">
-        <span class="gradient-text">Digital</span>Agency
+        <span class="gradient-text">Conectux</span>
       </v-app-bar-title>
 
       <v-spacer></v-spacer>
@@ -67,13 +67,12 @@ const scrollToSection = (target) => {
         </v-btn>
 
         <v-btn
-          color="primary"
-          class="ml-4 start-btn"
+          class="ml-4 start-btn text-white"
           elevation="0"
           @click="scrollToSection('contact')"
         >
           Empezar proyecto
-          <v-icon end>mdi-arrow-right</v-icon>
+          <v-icon end color="white">mdi-arrow-right</v-icon>
         </v-btn>
       </div>
 
@@ -111,7 +110,7 @@ const scrollToSection = (target) => {
           <v-row>
             <v-col cols="12" md="4">
               <h3 class="text-h5 font-weight-black white--text mb-6">
-                <span class="gradient-text">Digital</span>Agency
+                <span class="gradient-text">Conectux</span>
               </h3>
               <p class="text-body-1 grey--text">
                 Transformando ideas en resultados digitales excepcionales. Tu socio estratégico en el mundo digital.
