@@ -1,17 +1,17 @@
 <script setup>
 const scrollToServices = () => {
-  const element = document.getElementById('services')
+  const element = document.getElementById("services");
   if (element) {
-    element.scrollIntoView({ behavior: 'smooth' })
+    element.scrollIntoView({ behavior: "smooth" });
   }
-}
+};
 
 const scrollToContact = () => {
-  const element = document.getElementById('contact')
+  const element = document.getElementById("contact");
   if (element) {
-    element.scrollIntoView({ behavior: 'smooth' })
+    element.scrollIntoView({ behavior: "smooth" });
   }
-}
+};
 </script>
 
 <template>
@@ -20,26 +20,29 @@ const scrollToContact = () => {
     <v-row align="center" justify="center" class="hero-content">
       <v-col cols="12" md="8" class="text-center">
         <h1 class="text-h1 font-weight-black mb-6 text-white">
-          Impulsa tu marca, transforma tu mundo digital
+          Estrategia + Contenido + Pauta = Ventas reales para empresas en
+          crecimiento
         </h1>
         <p class="text-h5 mb-12 text-white font-weight-light">
-          Creamos estrategias digitales que conectan con tu audiencia y generan resultados excepcionales
+          Integramos marketing digital, redes, generación de leads y
+          automatización para convertir interés en clientes.
         </p>
         <div class="d-flex justify-center gap-4">
           <v-btn
             color="primary"
             size="x-large"
-            class="hero-btn primary-btn"
-            @click="scrollToContact"
+            :href="'https://wa.me/573242947897'"
+            target="_blank"
+            class="hero-btn primary-btn mx-2"
           >
-            Contáctanos
+            Cotiza tu proyecto
             <v-icon end>mdi-arrow-right</v-icon>
           </v-btn>
           <v-btn
             variant="outlined"
             color="white"
             size="x-large"
-            class="hero-btn secondary-btn"
+            class="hero-btn secondary-btn mx-2"
             @click="scrollToServices"
           >
             Explorar servicios
@@ -67,7 +70,7 @@ const scrollToContact = () => {
 .hero-section {
   min-height: 100vh;
   position: relative;
-  background: url('/hero-bg.jpg') center/cover no-repeat;
+  background: url("/hero-bg.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
 }
@@ -78,7 +81,11 @@ const scrollToContact = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(161,0,255,0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(161, 0, 255, 0.4) 100%
+  );
 }
 
 .hero-content {
@@ -96,7 +103,7 @@ const scrollToContact = () => {
 }
 
 .primary-btn {
-  background: linear-gradient(45deg, #A100FF, #7B00FF) !important;
+  background: linear-gradient(45deg, #a100ff, #7b00ff) !important;
   border-radius: 30px !important;
   box-shadow: 0 4px 15px rgba(161, 0, 255, 0.3) !important;
 }
@@ -130,7 +137,11 @@ const scrollToContact = () => {
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {

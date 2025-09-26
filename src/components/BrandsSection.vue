@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Autoplay } from 'swiper/modules';
-import 'swiper/css';
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const brands = [
-  { name: 'Google', logo: 'mdi-google' },
-  { name: 'Microsoft', logo: 'mdi-microsoft' },
-  { name: 'Amazon', logo: 'mdi-amazon' },
-  { name: 'Apple', logo: 'mdi-apple' },
-  { name: 'Facebook', logo: 'mdi-facebook' },
-  { name: 'Twitter', logo: 'mdi-twitter' },
-  { name: 'Instagram', logo: 'mdi-instagram' },
-  { name: 'LinkedIn', logo: 'mdi-linkedin' }
+  { name: "Google", logo: "mdi-google" },
+  { name: "Microsoft", logo: "mdi-microsoft" },
+  { name: "Amazon", logo: "mdi-amazon" },
+  { name: "Apple", logo: "mdi-apple" },
+  { name: "Facebook", logo: "mdi-facebook" },
+  { name: "Twitter", logo: "mdi-twitter" },
+  { name: "Instagram", logo: "mdi-instagram" },
+  { name: "LinkedIn", logo: "mdi-linkedin" },
 ];
 </script>
 
@@ -19,9 +19,11 @@ const brands = [
   <v-container fluid class="brands-section py-16 bg-grey-lighten-4">
     <v-row justify="center" class="mb-12">
       <v-col cols="12" class="text-center">
-        <h2 class="text-h3 font-weight-bold mb-3">Confiado por grandes marcas</h2>
+        <h2 class="text-h3 font-weight-bold mb-3">
+          +30 empresas atendidas en Colombia y LATAM
+        </h2>
         <p class="text-subtitle-1 text-grey-darken-1">
-          Empresas líderes confían en nuestras soluciones digitales
+          Más de 5 años generando resultados
         </p>
       </v-col>
     </v-row>

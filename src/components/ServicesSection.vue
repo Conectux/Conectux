@@ -1,44 +1,57 @@
 <script setup lang="ts">
 const services = [
   {
-    icon: 'mdi-trending-up',
-    title: 'Marketing Digital',
-    description: 'Estrategias personalizadas para aumentar tu presencia online y generar leads cualificados.',
-    features: ['SEO', 'SEM', 'Social Media', 'Content Marketing']
+    icon: "mdi-trending-up",
+    title: "Marketing Digital",
+    description:
+      "Estrategias personalizadas para aumentar tu presencia online y generar leads cualificados.",
+    features: ["SEO", "SEM", "Social Media", "Content Marketing"],
   },
   {
-    icon: 'mdi-chart-line',
-    title: 'Analítica Digital',
-    description: 'Análisis profundo de datos para tomar decisiones informadas y optimizar resultados.',
-    features: ['Google Analytics', 'Data Studio', 'KPIs', 'ROI Tracking']
+    icon: "mdi-chart-line",
+    title: "Analítica Digital",
+    description:
+      "Análisis profundo de datos para tomar decisiones informadas y optimizar resultados.",
+    features: ["Google Analytics", "Data Studio", "KPIs", "ROI Tracking"],
   },
   {
-    icon: 'mdi-palette',
-    title: 'Diseño Creativo',
-    description: 'Diseños únicos que capturan la esencia de tu marca y conectan con tu audiencia.',
-    features: ['Branding', 'UI/UX', 'Motion Graphics', 'Social Media Design']
+    icon: "mdi-palette",
+    title: "Diseño Creativo",
+    description:
+      "Diseños únicos que capturan la esencia de tu marca y conectan con tu audiencia.",
+    features: ["Branding", "UI/UX", "Motion Graphics", "Social Media Design"],
   },
   {
-    icon: 'mdi-bullhorn',
-    title: 'Publicidad Digital',
-    description: 'Campañas publicitarias optimizadas para maximizar tu inversión.',
-    features: ['Google Ads', 'Meta Ads', 'LinkedIn Ads', 'Display Marketing']
-  }
-]
+    icon: "mdi-bullhorn",
+    title: "Publicidad Digital",
+    description:
+      "Campañas publicitarias optimizadas para maximizar tu inversión.",
+    features: ["Google Ads", "Meta Ads", "LinkedIn Ads", "Display Marketing"],
+  },
+];
 </script>
 
 <template>
   <v-container class="services-section py-16">
     <v-row justify="center" class="mb-16">
       <v-col cols="12" md="8" class="text-center">
-        <h2 class="text-h3 font-weight-black mb-4">Servicios Especializados</h2>
+        <h2 class="text-h3 font-weight-black mb-4">
+          De la idea a los resultados
+        </h2>
         <p class="text-subtitle-1 text-grey-darken-1">
-          Soluciones digitales que transforman negocios y crean experiencias memorables
+          Conectamos marketing, contenido y ventas para llevar tu marca más
+          lejos
         </p>
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="service in services" :key="service.title" cols="12" md="6" lg="3">
+      <v-col
+        v-for="service in services"
+        :key="service.title"
+        cols="12"
+        md="6"
+        lg="3"
+      >
         <v-hover v-slot="{ isHovering, props }">
           <v-card
             v-bind="props"
@@ -47,11 +60,11 @@ const services = [
             height="100%"
           >
             <div class="service-card-content">
-              <div class="service-icon-wrapper" :class="{ 'icon-hover': isHovering }">
-                <v-icon
-                  :color="isHovering ? 'white' : 'primary'"
-                  size="32"
-                >
+              <div
+                class="service-icon-wrapper"
+                :class="{ 'icon-hover': isHovering }"
+              >
+                <v-icon :color="isHovering ? 'white' : 'primary'" size="32">
                   {{ service.icon }}
                 </v-icon>
               </div>
@@ -112,7 +125,7 @@ const services = [
 }
 
 .icon-hover {
-  background: linear-gradient(45deg, #A100FF, #7B00FF);
+  background: linear-gradient(45deg, #a100ff, #7b00ff);
   transform: rotate(5deg);
 }
 
@@ -128,7 +141,7 @@ const services = [
 }
 
 .feature-hover {
-  background: linear-gradient(45deg, #A100FF, #7B00FF) !important;
+  background: linear-gradient(45deg, #a100ff, #7b00ff) !important;
   color: white !important;
   transform: scale(1.05);
 }

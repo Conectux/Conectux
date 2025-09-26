@@ -1,36 +1,32 @@
 <script setup>
-import { ref } from 'vue'
-import HeroSection from './components/HeroSection.vue'
-import BrandsSection from './components/BrandsSection.vue'
-import ServicesSection from './components/ServicesSection.vue'
-import BenefitsSection from './components/BenefitsSection.vue'
-import TestimonialsSection from './components/TestimonialsSection.vue'
-import ContactSection from './components/ContactSection.vue'
+import { ref } from "vue";
+import HeroSection from "./components/HeroSection.vue";
+import BrandsSection from "./components/BrandsSection.vue";
+import ServicesSection from "./components/ServicesSection.vue";
+import BenefitsSection from "./components/BenefitsSection.vue";
+import TestimonialsSection from "./components/TestimonialsSection.vue";
+import ContactSection from "./components/ContactSection.vue";
 
-const drawer = ref(false)
+const drawer = ref(false);
 const menuItems = [
-  { title: 'Inicio', icon: 'mdi-home', target: 'hero' },
-  { title: 'Servicios', icon: 'mdi-briefcase', target: 'services' },
-  { title: 'Testimonios', icon: 'mdi-account-group', target: 'testimonials' },
-  { title: 'Contacto', icon: 'mdi-email', target: 'contact' }
-]
+  { title: "Inicio", icon: "mdi-home", target: "hero" },
+  { title: "Servicios", icon: "mdi-briefcase", target: "services" },
+  { title: "Testimonios", icon: "mdi-account-group", target: "testimonials" },
+  { title: "Contacto", icon: "mdi-email", target: "contact" },
+];
 
 const scrollToSection = (target) => {
-  const element = document.getElementById(target)
+  const element = document.getElementById(target);
   if (element) {
-    element.scrollIntoView({ behavior: 'smooth' })
+    element.scrollIntoView({ behavior: "smooth" });
   }
-  drawer.value = false
-}
+  drawer.value = false;
+};
 </script>
 
 <template>
   <v-app>
-    <v-navigation-drawer
-      v-model="drawer"
-      temporary
-      location="right"
-    >
+    <v-navigation-drawer v-model="drawer" temporary location="right">
       <v-list>
         <v-list-item
           v-for="item in menuItems"
@@ -49,8 +45,8 @@ const scrollToSection = (target) => {
       height="80"
       class="px-4 app-bar"
     >
-      <v-app-bar-title class="font-weight-black">
-        <span class="gradient-text">Conectux</span>
+      <v-app-bar-title>
+        <img src="./assets/logo-conectux.png" alt="Conectux" width="200px" />
       </v-app-bar-title>
 
       <v-spacer></v-spacer>
@@ -76,11 +72,7 @@ const scrollToSection = (target) => {
         </v-btn>
       </div>
 
-      <v-btn
-        class="d-md-none"
-        icon
-        @click="drawer = !drawer"
-      >
+      <v-btn class="d-md-none" icon @click="drawer = !drawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>
@@ -104,7 +96,7 @@ const scrollToSection = (target) => {
       <div id="contact">
         <ContactSection />
       </div>
-      
+
       <v-footer class="bg-secondary py-16">
         <v-container>
           <v-row>
@@ -113,11 +105,17 @@ const scrollToSection = (target) => {
                 <span class="gradient-text">Conectux</span>
               </h3>
               <p class="text-body-1 grey--text">
-                Transformando ideas en resultados digitales excepcionales. Tu socio estratégico en el mundo digital.
+                Transformando ideas en resultados digitales excepcionales. Tu
+                socio estratégico en el mundo digital.
               </p>
               <div class="mt-6">
                 <v-btn
-                  v-for="icon in ['mdi-facebook', 'mdi-twitter', 'mdi-instagram', 'mdi-linkedin']"
+                  v-for="icon in [
+                    'mdi-facebook',
+                    'mdi-twitter',
+                    'mdi-instagram',
+                    'mdi-linkedin',
+                  ]"
                   :key="icon"
                   :icon="icon"
                   variant="text"
@@ -127,7 +125,9 @@ const scrollToSection = (target) => {
               </div>
             </v-col>
             <v-col cols="12" md="4">
-              <h4 class="text-h6 font-weight-bold white--text mb-6">Enlaces rápidos</h4>
+              <h4 class="text-h6 font-weight-bold white--text mb-6">
+                Enlaces rápidos
+              </h4>
               <v-list density="compact" bg-color="transparent" class="pa-0">
                 <v-list-item
                   v-for="item in menuItems"
@@ -139,7 +139,9 @@ const scrollToSection = (target) => {
               </v-list>
             </v-col>
             <v-col cols="12" md="4">
-              <h4 class="text-h6 font-weight-bold white--text mb-6">Contacto</h4>
+              <h4 class="text-h6 font-weight-bold white--text mb-6">
+                Contacto
+              </h4>
               <v-list density="compact" bg-color="transparent" class="pa-0">
                 <v-list-item prepend-icon="mdi-email" class="white--text mb-2">
                   info@digitalagency.com
@@ -157,7 +159,8 @@ const scrollToSection = (target) => {
           <v-row>
             <v-col cols="12" class="text-center">
               <p class="text-caption grey--text mb-0">
-                © {{ new Date().getFullYear() }} DigitalAgency. Todos los derechos reservados.
+                © {{ new Date().getFullYear() }} DigitalAgency. Todos los
+                derechos reservados.
               </p>
             </v-col>
           </v-row>
@@ -172,10 +175,7 @@ const scrollToSection = (target) => {
         href="https://wa.me/34900123456"
         target="_blank"
       >
-        <v-tooltip
-          activator="parent"
-          location="top"
-        >
+        <v-tooltip activator="parent" location="top">
           Chatea con nosotros
         </v-tooltip>
       </v-btn>
@@ -185,8 +185,8 @@ const scrollToSection = (target) => {
 
 <style>
 :root {
-  --primary-gradient: linear-gradient(45deg, #A100FF, #7B00FF);
-  --hover-gradient: linear-gradient(45deg, #8A00FF, #6500FF);
+  --primary-gradient: linear-gradient(45deg, #a100ff, #7b00ff);
+  --hover-gradient: linear-gradient(45deg, #8a00ff, #6500ff);
 }
 
 .whatsapp-button {
@@ -225,7 +225,7 @@ const scrollToSection = (target) => {
 }
 
 .nav-btn::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -269,7 +269,7 @@ const scrollToSection = (target) => {
 .social-btn:hover {
   transform: translateY(-3px);
   opacity: 1;
-  color: #A100FF !important;
+  color: #a100ff !important;
 }
 
 .footer-link {
@@ -278,7 +278,7 @@ const scrollToSection = (target) => {
 }
 
 .footer-link:hover {
-  color: #A100FF !important;
+  color: #a100ff !important;
   transform: translateX(5px);
 }
 
