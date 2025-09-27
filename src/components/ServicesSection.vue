@@ -56,7 +56,7 @@ const services = [
         </p>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row justify="center">
       <v-col
         v-for="service in services"
         :key="service.title"
