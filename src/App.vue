@@ -5,7 +5,7 @@ import BrandsSection from "./components/BrandsSection.vue";
 import ServicesSection from "./components/ServicesSection.vue";
 import BenefitsSection from "./components/BenefitsSection.vue";
 import TestimonialsSection from "./components/TestimonialsSection.vue";
-import ContactSection from "./components/ContactSection.vue";
+// import ContactSection from "./components/ContactSection.vue";
 import logo from "./assets/logo-conectux.png";
 
 const drawer = ref(false);
@@ -13,7 +13,7 @@ const menuItems = [
   { title: "Inicio", icon: "mdi-home", target: "hero" },
   { title: "Servicios", icon: "mdi-briefcase", target: "services" },
   { title: "Testimonios", icon: "mdi-account-group", target: "testimonials" },
-  { title: "Contacto", icon: "mdi-email", target: "contact" },
+  //{ title: "Contacto", icon: "mdi-email", target: "contact" },
 ];
 
 const scrollToSection = (target) => {
@@ -145,13 +145,13 @@ const scrollToSection = (target) => {
               </h4>
               <v-list density="compact" bg-color="transparent" class="pa-0">
                 <v-list-item prepend-icon="mdi-email" class="white--text mb-2">
-                  info@digitalagency.com
+                  conectuxdigital@gmail.com
                 </v-list-item>
                 <v-list-item prepend-icon="mdi-phone" class="white--text mb-2">
-                  +34 900 123 456
+                  +57 324 294 7897
                 </v-list-item>
                 <v-list-item prepend-icon="mdi-map-marker" class="white--text">
-                  Madrid, España
+                  Medellín, Colombia
                 </v-list-item>
               </v-list>
             </v-col>
@@ -160,7 +160,7 @@ const scrollToSection = (target) => {
           <v-row>
             <v-col cols="12" class="text-center">
               <p class="text-caption grey--text mb-0">
-                © {{ new Date().getFullYear() }} DigitalAgency. Todos los
+                © {{ new Date().getFullYear() }} Conectux S.A.S Todos los
                 derechos reservados.
               </p>
             </v-col>
@@ -169,16 +169,17 @@ const scrollToSection = (target) => {
       </v-footer>
 
       <v-btn
-        icon="mdi-whatsapp"
+        icon
         color="#25D366"
         size="x-large"
         class="whatsapp-button"
-        href="https://wa.me/34900123456"
+        :href="'https://wa.me/573242947897'"
         target="_blank"
       >
         <v-tooltip activator="parent" location="top">
           Chatea con nosotros
         </v-tooltip>
+        <v-icon size="x-large" color="white">mdi-whatsapp</v-icon>
       </v-btn>
     </v-main>
   </v-app>
