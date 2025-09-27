@@ -19,48 +19,50 @@ const scrollToContact = () => {
     <div class="hero-overlay"></div>
     <v-row align="center" justify="center" class="hero-content">
       <v-col cols="12" md="8" class="text-center">
-        <h1 class="text-h1 font-weight-black mb-6 text-white">
-          Estrategia + Contenido + Pauta = Ventas reales para empresas en
-          crecimiento
-        </h1>
-        <p class="text-h5 mb-12 text-white font-weight-light">
-          Integramos marketing digital, redes, generación de leads y
-          automatización para convertir interés en clientes.
-        </p>
-        <div class="d-flex justify-center gap-4">
-          <v-btn
-            color="primary"
-            size="x-large"
-            :href="'https://wa.me/573242947897'"
-            target="_blank"
-            class="hero-btn primary-btn mx-2"
-          >
-            Cotiza tu proyecto
-            <v-icon end>mdi-arrow-right</v-icon>
-          </v-btn>
-          <v-btn
-            variant="outlined"
-            color="white"
-            size="x-large"
-            class="hero-btn secondary-btn mx-2"
-            @click="scrollToServices"
-          >
-            Explorar servicios
-            <v-icon end>mdi-chevron-down</v-icon>
-          </v-btn>
-        </div>
-        <div class="mt-16">
-          <v-scroll-x-transition>
-            <v-icon
+        <v-container class="pa-10 pa-lg-0">
+          <h1 class="text-h4 text-lg-h1 font-weight-black mb-6 text-white">
+            Estrategia + Contenido + Pauta = Ventas reales para empresas en
+            crecimiento
+          </h1>
+          <p class="text-h5 mb-12 text-white font-weight-light">
+            Integramos marketing digital, redes, generación de leads y
+            automatización para convertir interés en clientes.
+          </p>
+          <div class="d-flex flex-wrap justify-center gap-4">
+            <v-btn
+              color="primary"
+              size="x-large"
+              :href="'https://wa.me/573242947897'"
+              target="_blank"
+              class="hero-btn primary-btn ma-2"
+            >
+              Cotiza tu proyecto
+              <v-icon end>mdi-arrow-right</v-icon>
+            </v-btn>
+            <v-btn
+              variant="outlined"
               color="white"
-              size="48"
-              class="scroll-icon"
+              size="x-large"
+              class="hero-btn secondary-btn ma-2"
               @click="scrollToServices"
             >
-              mdi-chevron-down
-            </v-icon>
-          </v-scroll-x-transition>
-        </div>
+              Explorar servicios
+              <v-icon end>mdi-chevron-down</v-icon>
+            </v-btn>
+          </div>
+          <div class="mt-16">
+            <v-scroll-x-transition>
+              <v-icon
+                color="white"
+                size="48"
+                class="scroll-icon"
+                @click="scrollToServices"
+              >
+                mdi-chevron-down
+              </v-icon>
+            </v-scroll-x-transition>
+          </div>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
@@ -81,10 +83,11 @@ const scrollToContact = () => {
   left: 0;
   right: 0;
   bottom: 0;
+  background: #a100ff;
   background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(161, 0, 255, 0.4) 100%
+    127deg,
+    rgba(161, 0, 255, 1) 0%,
+    rgba(66, 0, 105, 1) 100%
   );
 }
 

@@ -6,6 +6,7 @@ import ServicesSection from "./components/ServicesSection.vue";
 import BenefitsSection from "./components/BenefitsSection.vue";
 import TestimonialsSection from "./components/TestimonialsSection.vue";
 import ContactSection from "./components/ContactSection.vue";
+import logo from "./assets/logo-conectux.png";
 
 const drawer = ref(false);
 const menuItems = [
@@ -46,7 +47,7 @@ const scrollToSection = (target) => {
       class="px-4 app-bar"
     >
       <v-app-bar-title>
-        <img src="./assets/logo-conectux.png" alt="Conectux" width="200px" />
+        <v-img :src="logo" alt="Logo Conectux" max-width="200" contain />
       </v-app-bar-title>
 
       <v-spacer></v-spacer>

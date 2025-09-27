@@ -8,6 +8,25 @@ const services = [
     features: ["SEO", "SEM", "Social Media", "Content Marketing"],
   },
   {
+    icon: "mdi-video",
+    title: "Contenido & UGC",
+    description:
+      "Contenido auténtico y creativo que conecta marcas con personas reales.",
+    features: [
+      "Reels & TikToks",
+      "Fotografía de producto",
+      "Videos UGC",
+      "Storytelling para marcas",
+    ],
+  },
+  {
+    icon: "mdi-bullhorn",
+    title: "Publicidad Digital",
+    description:
+      "Campañas publicitarias optimizadas para maximizar tu inversión.",
+    features: ["Google Ads", "Meta Ads", "TikTok Ads", "Display Marketing"],
+  },
+  {
     icon: "mdi-chart-line",
     title: "Analítica Digital",
     description:
@@ -20,13 +39,6 @@ const services = [
     description:
       "Diseños únicos que capturan la esencia de tu marca y conectan con tu audiencia.",
     features: ["Branding", "UI/UX", "Motion Graphics", "Social Media Design"],
-  },
-  {
-    icon: "mdi-bullhorn",
-    title: "Publicidad Digital",
-    description:
-      "Campañas publicitarias optimizadas para maximizar tu inversión.",
-    features: ["Google Ads", "Meta Ads", "LinkedIn Ads", "Display Marketing"],
   },
 ];
 </script>

@@ -20,10 +20,11 @@ const brands = [
     <v-row justify="center" class="mb-12">
       <v-col cols="12" class="text-center">
         <h2 class="text-h3 font-weight-bold mb-3">
-          +30 empresas atendidas en Colombia y LATAM
+          <span class="text-color">+30</span> empresas atendidas en Colombia,
+          LATAM y Estados Unidos
         </h2>
-        <p class="text-subtitle-1 text-grey-darken-1">
-          Más de 5 años generando resultados
+        <p class="text-h5 text-grey-darken-1 text-color">
+          Más de 7 años generando resultados
         </p>
       </v-col>
     </v-row>
@@ -72,5 +73,9 @@ const brands = [
 
 .brand-card:hover {
   transform: scale(1.05);
+}
+
+.text-color {
+  color: #a100ff !important;
 }
 </style>
