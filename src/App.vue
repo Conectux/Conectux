@@ -66,7 +66,8 @@ const scrollToSection = (target) => {
         <v-btn
           class="ml-4 start-btn text-white"
           elevation="0"
-          @click="scrollToSection('contact')"
+          :href="'https://wa.me/573242947897'"
+          target="_blank"
         >
           Empezar proyecto
           <v-icon end color="white">mdi-arrow-right</v-icon>
