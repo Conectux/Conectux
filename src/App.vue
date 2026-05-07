@@ -1,185 +1,187 @@
 <script setup>
-import { ref } from "vue";
-import HeroSection from "./components/HeroSection.vue";
-import BrandsSection from "./components/BrandsSection.vue";
-import ServicesSection from "./components/ServicesSection.vue";
-import BenefitsSection from "./components/BenefitsSection.vue";
-import TestimonialsSection from "./components/TestimonialsSection.vue";
-// import ContactSection from "./components/ContactSection.vue";
-import logo from "./assets/logo-conectux.png";
+import { ref } from 'vue'
+import HeroSection from './components/HeroSection.vue'
+import StatsSection from './components/StatsSection.vue'
+import ServicesSection from './components/ServicesSection.vue'
+import AISection from './components/AISection.vue'
+import MethodologySection from './components/MethodologySection.vue'
+import TestimonialsSection from './components/TestimonialsSection.vue'
+import BrandsSection from './components/BrandsSection.vue'
+import HistorySection from './components/HistorySection.vue'
+import logo from './assets/logo-conectux.png'
 
-const drawer = ref(false);
+const drawer = ref(false)
 const menuItems = [
-  { title: "Inicio", icon: "mdi-home", target: "hero" },
-  { title: "Servicios", icon: "mdi-briefcase", target: "services" },
-  { title: "Testimonios", icon: "mdi-account-group", target: "testimonials" },
-  //{ title: "Contacto", icon: "mdi-email", target: "contact" },
-];
+  { title: 'Inicio', icon: 'mdi-home', target: 'hero' },
+  { title: 'Servicios', icon: 'mdi-briefcase', target: 'services' },
+  { title: 'Nuestro Sistema', icon: 'mdi-cog-outline', target: 'methodology' },
+  { title: 'Clientes', icon: 'mdi-account-group', target: 'testimonials' },
+  { title: 'Nosotros', icon: 'mdi-information-outline', target: 'history' },
+]
 
 const scrollToSection = (target) => {
-  const element = document.getElementById(target);
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
-  }
-  drawer.value = false;
-};
+  document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
+  drawer.value = false
+}
 </script>
 
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" temporary location="right">
-      <v-list>
-        <v-list-item
-          v-for="item in menuItems"
-          :key="item.title"
-          :prepend-icon="item.icon"
-          :title="item.title"
-          class="mb-2 nav-item"
-          @click="scrollToSection(item.target)"
-        ></v-list-item>
-      </v-list>
+    <!-- Mobile Drawer -->
+    <v-navigation-drawer v-model="drawer" temporary location="right" class="mobile-drawer">
+      <div class="pa-6">
+        <v-img :src="logo" alt="Conectux" max-width="150" contain class="mb-8 logo-white" />
+        <v-list class="pa-0">
+          <v-list-item
+            v-for="item in menuItems"
+            :key="item.title"
+            :prepend-icon="item.icon"
+            :title="item.title"
+            class="mb-1 nav-item rounded-lg"
+            @click="scrollToSection(item.target)"
+          />
+        </v-list>
+        <v-btn
+          block
+          class="mt-8 cta-btn"
+          href="https://wa.me/573242947897"
+          target="_blank"
+        >
+          <v-icon start>mdi-calendar-check</v-icon>
+          Agendar llamada
+        </v-btn>
+      </div>
     </v-navigation-drawer>
 
-    <v-app-bar
-      elevation="0"
-      color="transparent"
-      height="80"
-      class="px-4 app-bar"
-    >
+    <!-- App Bar -->
+    <v-app-bar elevation="0" color="transparent" height="80" class="px-4 app-bar">
       <v-app-bar-title>
-        <v-img :src="logo" alt="Logo Conectux" max-width="200" contain />
+        <v-img :src="logo" alt="Conectux" max-width="170" contain class="logo-white" />
       </v-app-bar-title>
-
-      <v-spacer></v-spacer>
-
+      <v-spacer />
       <div class="d-none d-md-flex align-center">
         <v-btn
           v-for="item in menuItems"
           :key="item.title"
           variant="text"
-          class="nav-btn mx-2"
+          class="nav-btn mx-1"
           @click="scrollToSection(item.target)"
-        >
-          {{ item.title }}
-        </v-btn>
-
+        >{{ item.title }}</v-btn>
         <v-btn
-          class="ml-4 start-btn text-white"
-          elevation="0"
-          :href="'https://wa.me/573242947897'"
+          class="ml-4 cta-btn"
+          href="https://wa.me/573242947897"
           target="_blank"
         >
-          Empezar proyecto
-          <v-icon end color="white">mdi-arrow-right</v-icon>
+          <v-icon start size="18">mdi-calendar-check</v-icon>
+          Agendar llamada
         </v-btn>
       </div>
-
-      <v-btn class="d-md-none" icon @click="drawer = !drawer">
+      <v-btn class="d-md-none" icon variant="text" color="white" @click="drawer = !drawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>
 
+    <!-- Main Content -->
     <v-main>
-      <div id="hero">
-        <HeroSection />
-      </div>
-      <div id="brands">
-        <BrandsSection />
-      </div>
-      <div id="services">
-        <ServicesSection />
-      </div>
-      <div id="benefits">
-        <BenefitsSection />
-      </div>
-      <div id="testimonials">
-        <TestimonialsSection />
-      </div>
-      <div id="contact">
-        <ContactSection />
-      </div>
+      <div id="hero"><HeroSection /></div>
+      <div id="stats"><StatsSection /></div>
+      <div id="services"><ServicesSection /></div>
+      <div id="ai"><AISection /></div>
+      <div id="methodology"><MethodologySection /></div>
+      <div id="testimonials"><TestimonialsSection /></div>
+      <div id="brands"><BrandsSection /></div>
+      <div id="history"><HistorySection /></div>
 
-      <v-footer class="bg-secondary py-16">
-        <v-container>
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-glow" />
+        <v-container class="py-16">
           <v-row>
-            <v-col cols="12" md="4">
-              <h3 class="text-h5 font-weight-black white--text mb-6">
-                <span class="gradient-text">Conectux</span>
-              </h3>
-              <p class="text-body-1 grey--text">
-                Transformando ideas en resultados digitales excepcionales. Tu
-                socio estratégico en el mundo digital.
+            <v-col cols="12" md="4" class="mb-10 mb-md-0">
+              <v-img :src="logo" alt="Conectux" max-width="170" contain class="mb-6 logo-white" />
+              <p class="footer-desc mb-6">
+                Especialistas en ventas para el sector salud. Más de 6 años generando resultados
+                reales con metodología comprobada e inteligencia artificial.
               </p>
-              <div class="mt-6">
-                <v-btn
-                  v-for="icon in [
-                    'mdi-facebook',
-                    'mdi-twitter',
-                    'mdi-instagram',
-                    'mdi-linkedin',
-                  ]"
-                  :key="icon"
-                  :icon="icon"
-                  variant="text"
-                  color="white"
-                  class="mr-4 social-btn"
-                ></v-btn>
+              <div class="d-flex gap-3">
+                <a
+                  v-for="s in ['mdi-facebook', 'mdi-instagram', 'mdi-linkedin']"
+                  :key="s"
+                  href="#"
+                  class="social-icon"
+                >
+                  <v-icon size="18" color="white">{{ s }}</v-icon>
+                </a>
               </div>
             </v-col>
-            <v-col cols="12" md="4">
-              <h4 class="text-h6 font-weight-bold white--text mb-6">
-                Enlaces rápidos
-              </h4>
-              <v-list density="compact" bg-color="transparent" class="pa-0">
-                <v-list-item
-                  v-for="item in menuItems"
-                  :key="item.title"
-                  :title="item.title"
-                  class="pa-0 white--text footer-link"
-                  @click="scrollToSection(item.target)"
-                ></v-list-item>
-              </v-list>
+
+            <v-col cols="6" md="2" offset-md="1" class="mb-8 mb-md-0">
+              <h4 class="footer-title mb-5">Navegación</h4>
+              <div
+                v-for="item in menuItems"
+                :key="item.title"
+                class="footer-link mb-3"
+                @click="scrollToSection(item.target)"
+              >{{ item.title }}</div>
             </v-col>
-            <v-col cols="12" md="4">
-              <h4 class="text-h6 font-weight-bold white--text mb-6">
-                Contacto
-              </h4>
-              <v-list density="compact" bg-color="transparent" class="pa-0">
-                <v-list-item prepend-icon="mdi-email" class="white--text mb-2">
-                  conectuxdigital@gmail.com
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-phone" class="white--text mb-2">
-                  +57 324 294 7897
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-map-marker" class="white--text">
-                  Medellín, Colombia
-                </v-list-item>
-              </v-list>
+
+            <v-col cols="6" md="2" class="mb-8 mb-md-0">
+              <h4 class="footer-title mb-5">Servicios</h4>
+              <div
+                v-for="s in ['Outsourcing Comercial', 'Generación de Leads', 'Marketing para Salud', 'IA para Ventas', 'CRM & Automatización']"
+                :key="s"
+                class="footer-link mb-3"
+              >{{ s }}</div>
+            </v-col>
+
+            <v-col cols="12" md="3">
+              <h4 class="footer-title mb-5">Contacto</h4>
+              <div class="d-flex align-center mb-4 footer-desc" style="gap:10px">
+                <v-icon size="16" color="#a100ff">mdi-email-outline</v-icon>
+                conectuxdigital@gmail.com
+              </div>
+              <div class="d-flex align-center mb-4 footer-desc" style="gap:10px">
+                <v-icon size="16" color="#a100ff">mdi-whatsapp</v-icon>
+                +57 324 294 7897
+              </div>
+              <div class="d-flex align-center mb-7 footer-desc" style="gap:10px">
+                <v-icon size="16" color="#a100ff">mdi-map-marker-outline</v-icon>
+                Colombia · LATAM · USA
+              </div>
+              <v-btn
+                class="cta-btn"
+                href="https://wa.me/573242947897"
+                target="_blank"
+                size="small"
+              >
+                Hablar con un asesor
+              </v-btn>
             </v-col>
           </v-row>
-          <v-divider class="my-8 border-opacity-25"></v-divider>
-          <v-row>
-            <v-col cols="12" class="text-center">
-              <p class="text-caption grey--text mb-0">
-                © {{ new Date().getFullYear() }} Conectux S.A.S Todos los
-                derechos reservados.
-              </p>
+
+          <div class="footer-divider my-10" />
+
+          <v-row align="center">
+            <v-col cols="12" md="6">
+              <p class="footer-copy">© {{ new Date().getFullYear() }} Conectux LLC · Todos los derechos reservados.</p>
+            </v-col>
+            <v-col cols="12" md="6" class="text-md-right">
+              <p class="footer-copy">Especialistas en Ventas para el Sector Salud</p>
             </v-col>
           </v-row>
         </v-container>
-      </v-footer>
+      </footer>
 
+      <!-- WhatsApp FAB -->
       <v-btn
         icon
         color="#25D366"
         size="x-large"
         class="whatsapp-button"
-        :href="'https://wa.me/573242947897'"
+        href="https://wa.me/573242947897"
         target="_blank"
       >
-        <v-tooltip activator="parent" location="top">
-          Chatea con nosotros
-        </v-tooltip>
+        <v-tooltip activator="parent" location="start">Chatea con nosotros</v-tooltip>
         <v-icon size="x-large" color="white">mdi-whatsapp</v-icon>
       </v-btn>
     </v-main>
@@ -187,114 +189,177 @@ const scrollToSection = (target) => {
 </template>
 
 <style>
-:root {
-  --primary-gradient: linear-gradient(45deg, #a100ff, #7b00ff);
-  --hover-gradient: linear-gradient(45deg, #8a00ff, #6500ff);
-}
-
-.whatsapp-button {
-  position: fixed !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  z-index: 100 !important;
-  transform: scale(1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3) !important;
-}
-
-.whatsapp-button:hover {
-  transform: scale(1.1) !important;
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4) !important;
-}
-
-.gradient-text {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+/* ─── App Bar ──────────────────────────────────── */
 .app-bar {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  background: rgba(9, 9, 15, 0.8) !important;
+  border-bottom: 1px solid rgba(161, 0, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.logo-white {
+  filter: brightness(0) invert(1);
 }
 
 .nav-btn {
   position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-weight: 500;
-  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  text-transform: none !important;
+  letter-spacing: 0.2px !important;
+  transition: color 0.3s ease !important;
 }
-
 .nav-btn::after {
-  content: "";
+  content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 4px;
   left: 50%;
   width: 0;
   height: 2px;
-  background: var(--primary-gradient);
+  background: linear-gradient(90deg, #a100ff, #c84bff);
+  border-radius: 2px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateX(-50%);
 }
-
 .nav-btn:hover {
-  transform: translateY(-2px);
+  color: #ffffff !important;
 }
-
 .nav-btn:hover::after {
-  width: 100%;
+  width: 80%;
 }
 
-.start-btn {
-  background: var(--primary-gradient) !important;
-  border-radius: 30px !important;
-  padding: 0 32px !important;
-  height: 48px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.5px;
-  text-transform: none !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+/* ─── Mobile drawer ────────────────────────────── */
+.mobile-drawer {
+  background: #0d0d1e !important;
+  border-right: 1px solid rgba(161, 0, 255, 0.15) !important;
+}
+.mobile-drawer .nav-item {
+  color: rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.25s ease !important;
+}
+.mobile-drawer .nav-item:hover {
+  background: rgba(161, 0, 255, 0.1) !important;
+  color: #fff !important;
 }
 
-.start-btn:hover {
-  background: var(--hover-gradient) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 15px rgba(161, 0, 255, 0.3) !important;
+/* ─── Footer ───────────────────────────────────── */
+.site-footer {
+  position: relative;
+  background: #060610;
+  border-top: 1px solid rgba(161, 0, 255, 0.1);
+  overflow: hidden;
 }
-
-.social-btn {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  opacity: 0.8;
+.footer-glow {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(161, 0, 255, 0.06) 0%, transparent 70%);
+  pointer-events: none;
 }
-
-.social-btn:hover {
-  transform: translateY(-3px);
-  opacity: 1;
-  color: #a100ff !important;
+.footer-title {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
-
+.footer-desc {
+  color: rgba(160, 160, 184, 0.85);
+  font-size: 14px;
+  line-height: 1.7;
+}
 .footer-link {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgba(160, 160, 184, 0.75);
+  font-size: 14px;
   cursor: pointer;
+  transition: all 0.25s ease;
 }
-
 .footer-link:hover {
-  color: #a100ff !important;
-  transform: translateX(5px);
+  color: #c84bff;
+  padding-left: 4px;
 }
-
-.nav-item {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
+.footer-copy {
+  color: rgba(90, 90, 120, 0.9);
+  font-size: 13px;
+  margin: 0;
 }
-
-.nav-item:hover {
+.footer-divider {
+  border: none;
+  border-top: 1px solid rgba(161, 0, 255, 0.1);
+}
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   background: rgba(161, 0, 255, 0.1);
-  transform: translateX(5px);
+  border: 1px solid rgba(161, 0, 255, 0.2);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.social-icon:hover {
+  background: rgba(161, 0, 255, 0.25);
+  border-color: rgba(161, 0, 255, 0.5);
+  transform: translateY(-3px);
 }
 
+/* ─── WhatsApp button ──────────────────────────── */
+.whatsapp-button {
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  z-index: 999 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35) !important;
+}
+.whatsapp-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.5) !important;
+}
+
+/* ─── Section wrappers — sin gaps ─────────────── */
+#hero, #stats, #services, #ai, #methodology,
+#testimonials, #brands, #history {
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 0;        /* colapsa cualquier espacio inline */
+}
+#hero > *, #stats > *, #services > *, #ai > *,
+#methodology > *, #testimonials > *, #brands > *,
+#history > * {
+  line-height: normal;   /* restaura line-height en el hijo directo */
+}
+
+/* Evita que v-main inyecte background de tema claro */
+.v-main,
+.v-main__wrap {
+  background-color: #09090f !important;
+  overflow-x: hidden;
+}
+
+/* ─── Footer textos ────────────────────────────── */
+.footer-title {
+  font-size: 13px !important;
+}
+.footer-desc {
+  font-size: 14.5px !important;
+  line-height: 1.75 !important;
+}
+.footer-link {
+  font-size: 14.5px !important;
+}
+.footer-copy {
+  font-size: 13.5px !important;
+}
+
+/* ─── Global Vuetify overrides ─────────────────── */
 .v-btn {
   text-transform: none !important;
 }

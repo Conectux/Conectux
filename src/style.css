@@ -1,7 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 :root {
-  --primary: #A100FF;
-  --secondary: #111111;
-  --accent: #E8E8E8;
+  --primary: #a100ff;
+  --primary-dark: #7b00cc;
+  --primary-light: #c84bff;
+  --ai-accent: #00d4ff;
+  --dark-bg: #09090f;
+  --dark-card: #0f0f1e;
+  --dark-card-2: #131326;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b8;
+  --text-muted: #5a5a78;
+  --border: rgba(161, 0, 255, 0.15);
+  --border-hover: rgba(161, 0, 255, 0.4);
+  --glow: rgba(161, 0, 255, 0.25);
+  --glow-strong: rgba(161, 0, 255, 0.4);
+  --gradient: linear-gradient(135deg, #a100ff 0%, #7b00cc 100%);
+  --gradient-text: linear-gradient(135deg, #c84bff 0%, #a100ff 50%, #7b00ff 100%);
+  --gradient-ai: linear-gradient(135deg, #a100ff 0%, #00d4ff 100%);
+  --transition: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html {
@@ -10,27 +27,134 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--dark-bg);
+  color: var(--text-primary);
+  overflow-x: hidden;
 }
 
 .v-application {
-  background-color: #FFFFFF !important;
+  background-color: var(--dark-bg) !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
-.section-divider {
-  border-color: var(--accent);
-  margin: 0;
-  opacity: 0.3;
+/* ─── Gradient text ─────────────────────────────── */
+.gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+.gradient-text-ai {
+  background: var(--gradient-ai);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Scroll reveal ──────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(44px);
+  transition: opacity 0.75s var(--transition), transform 0.75s var(--transition);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-44px);
+  transition: opacity 0.75s var(--transition), transform 0.75s var(--transition);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(44px);
+  transition: opacity 0.75s var(--transition), transform 0.75s var(--transition);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.d1 { transition-delay: 0.05s !important; }
+.d2 { transition-delay: 0.15s !important; }
+.d3 { transition-delay: 0.25s !important; }
+.d4 { transition-delay: 0.35s !important; }
+.d5 { transition-delay: 0.45s !important; }
+.d6 { transition-delay: 0.55s !important; }
+
+/* ─── Glass card ─────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  transition: all 0.35s var(--transition);
+}
+.glass-card:hover {
+  background: rgba(161, 0, 255, 0.07);
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 40px var(--glow), 0 0 0 1px rgba(161, 0, 255, 0.08);
+  transform: translateY(-5px);
+}
+
+/* ─── Section badge ──────────────────────────────── */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(161, 0, 255, 0.1);
+  border: 1px solid rgba(161, 0, 255, 0.3);
+  border-radius: 100px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-light);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* ─── CTA button (global) ────────────────────────── */
+.cta-btn {
+  background: var(--gradient) !important;
+  color: #fff !important;
+  border-radius: 100px !important;
+  padding: 0 32px !important;
+  height: 52px !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  letter-spacing: 0.3px !important;
+  text-transform: none !important;
+  transition: all 0.3s var(--transition) !important;
+  box-shadow: 0 4px 20px rgba(161, 0, 255, 0.35) !important;
+  border: none !important;
+}
+.cta-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(161, 0, 255, 0.5) !important;
+}
+
+/* ─── Fade transition ────────────────────────────── */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
 }
-
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* ─── Dot grid overlay ───────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(161, 0, 255, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
