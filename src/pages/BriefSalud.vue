@@ -102,7 +102,7 @@ const steps = [
         <div class="bf-form-wrap">
           <iframe
             src="https://api.leadconnectorhq.com/widget/form/mSwZmFfQsSYxBVth6rEY"
-            style="width:100%;height:100%;border:none;border-radius:8px"
+            style="width:100%;height:6209px;border:none;display:block;"
             id="inline-mSwZmFfQsSYxBVth6rEY"
             data-layout="{'id':'INLINE'}"
             data-trigger-type="alwaysShow"
@@ -334,16 +334,16 @@ const steps = [
 .bf-form-section {
   background: #0d0d1e;
   border-top: 1px solid rgba(161, 0, 255, 0.1);
-  padding: 60px 24px 80px;
+  padding: 60px 24px;
 }
 .bf-form-wrap {
   max-width: 860px;
   margin: 0 auto;
-  min-height: 6209px;
   border-radius: 20px;
-  overflow: hidden;
   border: 1px solid rgba(161, 0, 255, 0.15);
   box-shadow: 0 8px 60px rgba(161, 0, 255, 0.08);
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.01);
 }
 
 /* ─── Footer ─────────────────────────────────────────────────── */
