@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/presentacion-salud", "destination": "/presentacion-salud/index.html" },
+    { "source": "/presentacion-salud/", "destination": "/presentacion-salud/index.html" }
+  ]
+}
