@@ -68,7 +68,15 @@ const scrollToSection = (target) => {
           @click="scrollToSection(item.target)"
         >{{ item.title }}</v-btn>
         <v-btn
-          class="ml-4 cta-btn"
+          class="ml-4 login-btn"
+          href="https://app.conectux.com/"
+          target="_blank"
+        >
+          <v-icon start size="16">mdi-login</v-icon>
+          Iniciar sesión
+        </v-btn>
+        <v-btn
+          class="ml-3 cta-btn"
           href="https://wa.me/573242947897"
           target="_blank"
         >
@@ -357,6 +365,25 @@ const scrollToSection = (target) => {
 }
 .footer-copy {
   font-size: 13.5px !important;
+}
+
+/* ─── Login button ─────────────────────────────── */
+.login-btn {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 100px !important;
+  padding: 0 20px !important;
+  height: 40px !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  text-transform: none !important;
+  transition: all 0.25s ease !important;
+}
+.login-btn:hover {
+  color: #fff !important;
+  border-color: rgba(161, 0, 255, 0.5) !important;
+  background: rgba(161, 0, 255, 0.08) !important;
 }
 
 /* ─── Global Vuetify overrides ─────────────────── */
