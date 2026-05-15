@@ -163,11 +163,11 @@ const whys = [
               <div class="ps-stats mx-auto">
                 <div class="ps-stat">
                   <span class="ps-stat-num gradient-text">6+</span>
-                  <span class="ps-stat-label">Años en el sector salud</span>
+                  <span class="ps-stat-label">Años generando ventas</span>
                 </div>
                 <div class="ps-stat">
                   <span class="ps-stat-num gradient-text">50+</span>
-                  <span class="ps-stat-label">Profesionales de salud</span>
+                  <span class="ps-stat-label">Empresas atendidas</span>
                 </div>
                 <div class="ps-stat">
                   <span class="ps-stat-num gradient-text">+300%</span>
