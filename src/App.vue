@@ -44,7 +44,7 @@ const scrollToSection = (target) => {
         <v-btn
           block
           class="mt-8 cta-btn"
-          href="https://wa.me/573242947897"
+          href="https://wa.me/573147101116"
           target="_blank"
         >
           <v-icon start>mdi-calendar-check</v-icon>
@@ -77,7 +77,7 @@ const scrollToSection = (target) => {
         </v-btn>
         <v-btn
           class="ml-3 cta-btn"
-          href="https://wa.me/573242947897"
+          href="https://wa.me/573147101116"
           target="_blank"
         >
           <v-icon start size="18">mdi-calendar-check</v-icon>
@@ -150,7 +150,7 @@ const scrollToSection = (target) => {
               </div>
               <div class="d-flex align-center mb-4 footer-desc" style="gap:10px">
                 <v-icon size="16" color="#a100ff">mdi-whatsapp</v-icon>
-                +57 324 294 7897
+                +57 314 710 1116
               </div>
               <div class="d-flex align-center mb-7 footer-desc" style="gap:10px">
                 <v-icon size="16" color="#a100ff">mdi-map-marker-outline</v-icon>
@@ -158,7 +158,7 @@ const scrollToSection = (target) => {
               </div>
               <v-btn
                 class="cta-btn"
-                href="https://wa.me/573242947897"
+                href="https://wa.me/573147101116"
                 target="_blank"
                 size="small"
               >
@@ -186,7 +186,7 @@ const scrollToSection = (target) => {
         color="#25D366"
         size="x-large"
         class="whatsapp-button"
-        href="https://wa.me/573242947897"
+        href="https://wa.me/573147101116"
         target="_blank"
       >
         <v-tooltip activator="parent" location="start">Chatea con nosotros</v-tooltip>
