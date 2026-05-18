@@ -368,7 +368,7 @@ const swiperModules = [Autoplay, Pagination]
             @click="scrollTo(item.target)"
           />
         </v-list>
-        <v-btn block class="mt-8 cta-btn" href="https://wa.me/573242947897" target="_blank">
+        <v-btn block class="mt-8 cta-btn" href="https://wa.me/573147101116" target="_blank">
           <v-icon start>mdi-calendar-check</v-icon>
           Agendar llamada
         </v-btn>
@@ -393,7 +393,7 @@ const swiperModules = [Autoplay, Pagination]
           <v-icon start size="16">mdi-login</v-icon>
           Iniciar sesión
         </v-btn>
-        <v-btn class="ml-3 cta-btn" href="https://wa.me/573242947897" target="_blank">
+        <v-btn class="ml-3 cta-btn" href="https://wa.me/573147101116" target="_blank">
           <v-icon start size="18">mdi-calendar-check</v-icon>
           Agendar llamada
         </v-btn>
@@ -439,7 +439,7 @@ const swiperModules = [Autoplay, Pagination]
               <div class="hero-ctas d-flex flex-wrap justify-center mt-10">
                 <v-btn
                   class="hero-cta-primary ma-2"
-                  href="https://wa.me/573242947897"
+                  href="https://wa.me/573147101116"
                   target="_blank"
                   size="large"
                 >
@@ -551,7 +551,7 @@ const swiperModules = [Autoplay, Pagination]
           <v-row justify="center" class="mt-14">
             <v-col cols="12" class="text-center reveal">
               <p class="cta-sub mb-6">¿Tu industria no aparece en la lista? No importa — si vendes, podemos ayudarte.</p>
-              <v-btn class="cta-btn" size="large" href="https://wa.me/573242947897" target="_blank">
+              <v-btn class="cta-btn" size="large" href="https://wa.me/573147101116" target="_blank">
                 <v-icon start>mdi-whatsapp</v-icon>
                 Hablar con un especialista
               </v-btn>
@@ -594,7 +594,7 @@ const swiperModules = [Autoplay, Pagination]
                 </div>
               </div>
 
-              <v-btn class="mt-8 cta-btn reveal-left d4" href="https://wa.me/573242947897" target="_blank">
+              <v-btn class="mt-8 cta-btn reveal-left d4" href="https://wa.me/573147101116" target="_blank">
                 <v-icon start>mdi-robot</v-icon>
                 Ver cómo funciona la IA
               </v-btn>
@@ -689,7 +689,7 @@ const swiperModules = [Autoplay, Pagination]
                   Agenda un diagnóstico gratuito de 30 minutos y descubre cómo podemos
                   escalar las ventas de tu empresa, sin importar la industria.
                 </p>
-                <v-btn class="cta-btn" size="large" href="https://wa.me/573242947897" target="_blank">
+                <v-btn class="cta-btn" size="large" href="https://wa.me/573147101116" target="_blank">
                   <v-icon start>mdi-calendar-check</v-icon>
                   Agendar diagnóstico gratuito
                 </v-btn>
@@ -940,13 +940,13 @@ const swiperModules = [Autoplay, Pagination]
               </div>
               <div class="d-flex align-center mb-4 footer-desc" style="gap:10px">
                 <v-icon size="16" color="#a100ff">mdi-whatsapp</v-icon>
-                +57 324 294 7897
+                +57 314 710 1116
               </div>
               <div class="d-flex align-center mb-7 footer-desc" style="gap:10px">
                 <v-icon size="16" color="#a100ff">mdi-map-marker-outline</v-icon>
                 Colombia · LATAM · USA
               </div>
-              <v-btn class="cta-btn" href="https://wa.me/573242947897" target="_blank" size="small">
+              <v-btn class="cta-btn" href="https://wa.me/573147101116" target="_blank" size="small">
                 Hablar con un asesor
               </v-btn>
             </v-col>
@@ -971,7 +971,7 @@ const swiperModules = [Autoplay, Pagination]
         color="#25D366"
         size="x-large"
         class="whatsapp-button"
-        href="https://wa.me/573242947897"
+        href="https://wa.me/573147101116"
         target="_blank"
       >
         <v-tooltip activator="parent" location="start">Chatea con nosotros</v-tooltip>

@@ -71,7 +71,7 @@ onMounted(() => {
           <div class="hero-ctas d-flex flex-wrap justify-center mt-10">
             <v-btn
               class="hero-cta-primary ma-2"
-              href="https://wa.me/573242947897"
+              href="https://wa.me/573147101116"
               target="_blank"
               size="large"
             >

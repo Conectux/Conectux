@@ -75,7 +75,7 @@ const features = [
 
           <v-btn
             class="mt-8 cta-btn reveal-left d4"
-            href="https://wa.me/573242947897"
+            href="https://wa.me/573147101116"
             target="_blank"
           >
             <v-icon start>mdi-robot</v-icon>

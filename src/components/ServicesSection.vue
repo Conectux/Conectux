@@ -112,7 +112,7 @@ const services = [
           <v-btn
             class="cta-btn"
             size="large"
-            href="https://wa.me/573242947897"
+            href="https://wa.me/573147101116"
             target="_blank"
           >
             <v-icon start>mdi-whatsapp</v-icon>

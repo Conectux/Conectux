@@ -72,7 +72,7 @@ const benefits = [
       <v-col cols="12" class="text-center">
         <v-btn
           color="primary"
-          :href="'https://wa.me/573242947897'"
+          :href="'https://wa.me/573147101116'"
           target="_blank"
           size="x-large"
           elevation="2"
