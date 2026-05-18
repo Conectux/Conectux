@@ -195,8 +195,6 @@ const scrollToSection = (target) => {
         <v-icon size="x-large" color="white">mdi-whatsapp</v-icon>
       </v-btn>
 
-      <!-- Motor de Google Translate (oculto) -->
-      <div id="google_translate_element" style="position:absolute;top:-9999px;left:-9999px;" />
     </v-main>
   </v-app>
 </template>

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/css'
@@ -980,8 +981,6 @@ const swiperModules = [Autoplay, Pagination]
         <v-icon size="x-large" color="white">mdi-whatsapp</v-icon>
       </v-btn>
 
-      <!-- Motor de Google Translate (oculto) -->
-      <div id="google_translate_element" style="position:absolute;top:-9999px;left:-9999px;" />
     </v-main>
   </v-app>
 </template>
