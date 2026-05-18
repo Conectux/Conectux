@@ -67,8 +67,9 @@ const scrollToSection = (target) => {
           class="nav-btn mx-1"
           @click="scrollToSection(item.target)"
         >{{ item.title }}</v-btn>
+        <div id="google_translate_element" class="gt-widget mx-3" />
         <v-btn
-          class="ml-4 login-btn"
+          class="ml-2 login-btn"
           href="https://app.conectux.com/"
           target="_blank"
         >
@@ -389,5 +390,47 @@ const scrollToSection = (target) => {
 /* ─── Global Vuetify overrides ─────────────────── */
 .v-btn {
   text-transform: none !important;
+}
+
+/* ─── Google Translate ─────────────────────────── */
+/* Oculta el banner superior que Google inyecta */
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+
+.gt-widget .goog-te-gadget {
+  color: transparent !important;
+  font-size: 0 !important;
+}
+.gt-widget .goog-te-gadget > span,
+.gt-widget .goog-te-gadget > span a {
+  display: none !important;
+}
+.gt-widget .goog-te-gadget select {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 100px !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 6px 14px !important;
+  height: 36px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: all 0.25s ease !important;
+}
+.gt-widget .goog-te-gadget select:hover {
+  border-color: rgba(161, 0, 255, 0.5) !important;
+  background: rgba(161, 0, 255, 0.08) !important;
+  color: #fff !important;
+}
+.gt-widget .goog-te-gadget select option {
+  background: #0d0d1e !important;
+  color: #fff !important;
 }
 </style>
