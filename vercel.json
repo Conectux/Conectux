@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/presentacion", "destination": "/presentacion/index.html" },
+    { "source": "/presentacion/", "destination": "/presentacion/index.html" },
     { "source": "/presentacion-salud", "destination": "/presentacion-salud/index.html" },
     { "source": "/presentacion-salud/", "destination": "/presentacion-salud/index.html" },
     { "source": "/brief-salud", "destination": "/brief-salud/index.html" },

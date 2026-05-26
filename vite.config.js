@@ -12,6 +12,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         sectores: resolve(__dirname, 'sectores/index.html'),
+        presentacion: resolve(__dirname, 'presentacion/index.html'),
         presentacionSalud: resolve(__dirname, 'presentacion-salud/index.html'),
         briefSalud: resolve(__dirname, 'brief-salud/index.html'),
         propuestaManual: resolve(__dirname, 'propuesta-manual/index.html'),
