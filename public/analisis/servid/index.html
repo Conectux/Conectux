@@ -202,6 +202,96 @@
       margin-bottom: 16px;
     }
 
+    /* ─── Antes / Después ────────────────────── */
+    .transform-head { margin: 48px 0 28px; }
+    .section-title {
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0 0 10px;
+    }
+    .section-lead {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin: 0;
+      max-width: 580px;
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .split-card { border-radius: 20px; padding: 26px 28px; border: 1px solid; }
+    .split-card.before { background: rgba(255, 77, 109, 0.05); border-color: rgba(255, 77, 109, 0.25); }
+    .split-card.after { background: rgba(161, 0, 255, 0.08); border-color: var(--border-hover); }
+
+    .split-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 18px;
+    }
+    .split-label.before { color: var(--danger); }
+    .split-label.after { color: var(--primary-light); }
+
+    .check-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 13px; }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+    }
+    .check-list li svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; fill: none; stroke-width: 2; }
+    .check-list.before svg { stroke: var(--danger); }
+    .check-list.after svg { stroke: var(--primary-light); }
+
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 0 0 12px;
+    }
+    .stat-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 14px;
+      text-align: center;
+    }
+    .stat-num {
+      display: block;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      background: var(--gradient-ai);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+    .stat-label { font-size: 11px; line-height: 1.4; color: var(--text-muted); }
+
+    .stat-caption {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin: 0 0 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      .split-grid { grid-template-columns: 1fr; }
+      .stat-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* ─── Diagnóstico / Conectux fit — highlighted blocks ─── */
     .highlight-card {
       border-radius: 20px;
@@ -357,6 +447,75 @@
       </p>
     </div>
 
+    <div class="transform-head">
+      <span class="section-badge">La transformación</span>
+      <h2 class="section-title">Servid ya genera demanda.<br /><span class="gradient-text">Le falta el sistema que la convierta.</span></h2>
+      <p class="section-lead">
+        No prometemos pacientes mágicos. Construimos el sistema que responde, agenda, recuerda y da seguimiento a
+        cada persona que ya está interesada — para que ese interés real deje de perderse en el camino.
+      </p>
+    </div>
+
+    <div class="split-grid">
+      <div class="split-card before">
+        <span class="split-label before">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6" stroke-linecap="round"/></svg>
+          Hoy
+        </span>
+        <ul class="check-list before">
+          <li>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6" stroke-linecap="round"/></svg>
+            Destacados de Instagram desactualizados hasta 30 semanas y sin CTA de agendamiento en el perfil.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6" stroke-linecap="round"/></svg>
+            Comentarios y mensajes se responden a mano, cuando hay tiempo — sin calificar ni dar seguimiento.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6" stroke-linecap="round"/></svg>
+            Tráfico pagado de altísima intención ("hospitalización psiquiátrica") cayendo en un sitio roto.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6" stroke-linecap="round"/></svg>
+            Cero visibilidad: nadie sabe en qué estado va cada lead ni cuántos se están perdiendo.
+          </li>
+        </ul>
+      </div>
+
+      <div class="split-card after">
+        <span class="split-label after">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Con Conectux
+        </span>
+        <ul class="check-list after">
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Un bot con IA responde y califica cada contacto en segundos, 24/7 — no solo en horario de consultorio.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Agenda la cita automáticamente y envía recordatorios, reduciendo inasistencias.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Cada clic pagado en Google y Meta llega a una landing conectada al sistema, no a un sitio caído.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Panel en tiempo real con el estado de cada lead: nuevo, contactado, agendado, atendido.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-box"><span class="stat-num">+6 años</span><span class="stat-label">de experiencia en marketing y ventas</span></div>
+      <div class="stat-box"><span class="stat-num">+300%</span><span class="stat-label">ROI promedio documentado</span></div>
+      <div class="stat-box"><span class="stat-num">-40%</span><span class="stat-label">en el ciclo de venta con IA</span></div>
+      <div class="stat-box"><span class="stat-num">+65%</span><span class="stat-label">en tasa de respuesta a prospectos</span></div>
+    </div>
+    <p class="stat-caption">Resultados promedio de Conectux en clientes que implementan IA en su proceso comercial — no son cifras específicas de Servid.</p>
+
     <div class="highlight-card fit">
       <div class="card-head">
         <div class="icon-badge">
@@ -369,7 +528,9 @@
         ni seguimiento) y el panel de estado de leads les daría visibilidad de todo lo que hoy se pierde sin
         registro. Además, arreglar o reemplazar el destino del tráfico pago (landing conectada a Conectux en vez de
         un sitio caído) sería una victoria rápida y muy tangible para abrir la conversación comercial, ya que se les
-        puede mostrar que están perdiendo dinero activamente en este momento.
+        puede mostrar que están perdiendo dinero activamente en este momento. Somos expertos en marketing médico:
+        no improvisamos — diseñamos la estrategia, la pauta y el sistema de conversión enfocados en un solo
+        resultado, pacientes agendados, y medimos todo en el camino.
       </p>
     </div>
 
