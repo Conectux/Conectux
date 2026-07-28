@@ -254,42 +254,53 @@
     .check-list.before svg { stroke: var(--danger); }
     .check-list.after svg { stroke: var(--primary-light); }
 
-    .stat-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin: 0 0 12px;
-    }
-    .stat-box {
+    /* ─── Roadmap (qué vamos a construir) ───── */
+    .roadmap-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .roadmap-card {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 20px 14px;
-      text-align: center;
+      padding: 22px 26px;
+      transition: all 0.3s var(--transition);
     }
-    .stat-num {
-      display: block;
-      font-size: 25px;
+    .roadmap-card:hover { border-color: var(--border-hover); background: rgba(161, 0, 255, 0.05); }
+    .roadmap-num {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
       font-weight: 800;
-      letter-spacing: -0.01em;
-      background: var(--gradient-ai);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 4px;
+      color: var(--primary-light);
+      background: rgba(161, 0, 255, 0.12);
+      border: 1px solid rgba(161, 0, 255, 0.3);
     }
-    .stat-label { font-size: 11px; line-height: 1.4; color: var(--text-muted); }
+    .roadmap-card h3 { margin: 2px 0 6px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+    .roadmap-card p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--text-secondary); }
 
-    .stat-caption {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      margin: 0 0 20px;
-      text-align: center;
+    /* ─── Resultados ─────────────────────────── */
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+    .result-card {
+      background: rgba(161, 0, 255, 0.07);
+      border: 1px solid var(--border-hover);
+      border-radius: 16px;
+      padding: 24px 24px;
     }
+    .result-card .icon-badge { width: 36px; height: 36px; border-radius: 10px; margin-bottom: 14px; }
+    .result-card .icon-badge svg { width: 18px; height: 18px; }
+    .result-card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+    .result-card p { margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--text-secondary); }
 
     @media (max-width: 700px) {
       .split-grid { grid-template-columns: 1fr; }
-      .stat-strip { grid-template-columns: repeat(2, 1fr); }
+      .result-grid { grid-template-columns: 1fr; }
+      .roadmap-card { padding: 20px; gap: 14px; }
     }
 
     /* ─── Diagnóstico / Conectux fit — highlighted blocks ─── */
@@ -448,11 +459,12 @@
     </div>
 
     <div class="transform-head">
-      <span class="section-badge">La transformación</span>
-      <h2 class="section-title">Servid ya genera demanda.<br /><span class="gradient-text">Le falta el sistema que la convierta.</span></h2>
+      <span class="section-badge">Lo que vamos a hacer</span>
+      <h2 class="section-title">Vamos a convertir cada peso que Servid<br /><span class="gradient-text">invierte en pauta, en pacientes agendados.</span></h2>
       <p class="section-lead">
-        No prometemos pacientes mágicos. Construimos el sistema que responde, agenda, recuerda y da seguimiento a
-        cada persona que ya está interesada — para que ese interés real deje de perderse en el camino.
+        Servid ya tiene lo más difícil: comunidad, contenido y tráfico pagado con intención real de compra. Lo que
+        le falta es el sistema que atienda, agende y le dé seguimiento a cada uno de esos contactos sin depender de
+        que una persona esté disponible para responder. Eso es exactamente lo que vamos a construir y operar.
       </p>
     </div>
 
@@ -508,29 +520,108 @@
       </div>
     </div>
 
-    <div class="stat-strip">
-      <div class="stat-box"><span class="stat-num">+6 años</span><span class="stat-label">de experiencia en marketing y ventas</span></div>
-      <div class="stat-box"><span class="stat-num">+300%</span><span class="stat-label">ROI promedio documentado</span></div>
-      <div class="stat-box"><span class="stat-num">-40%</span><span class="stat-label">en el ciclo de venta con IA</span></div>
-      <div class="stat-box"><span class="stat-num">+65%</span><span class="stat-label">en tasa de respuesta a prospectos</span></div>
+    <div class="transform-head">
+      <span class="section-badge">Qué vamos a construir</span>
+      <h2 class="section-title">El sistema completo, de punta a punta</h2>
+      <p class="section-lead">
+        No es una recomendación suelta ni una idea más. Es el plan de trabajo con el que vamos a intervenir cada
+        etapa del embudo de Servid, en orden, hasta que agendar una cita deje de depender de la suerte o de quién
+        esté conectado al WhatsApp en ese momento.
+      </p>
     </div>
-    <p class="stat-caption">Resultados promedio de Conectux en clientes que implementan IA en su proceso comercial — no son cifras específicas de Servid.</p>
+
+    <div class="roadmap-grid">
+      <div class="roadmap-card">
+        <span class="roadmap-num">01</span>
+        <div>
+          <h3>Landing conectada al sistema de agendamiento</h3>
+          <p>Reemplazamos el destino roto de servid.co por una página rápida, enfocada en un solo objetivo: que cada clic pagado en Google y Meta Ads termine en una cita agendada, no en un error 404.</p>
+        </div>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-num">02</span>
+        <div>
+          <h3>Bot con IA en WhatsApp e Instagram</h3>
+          <p>Responde en segundos, a cualquier hora, entiende el motivo de consulta, califica al paciente y lo agenda directamente en la agenda de Servid — sin que nadie del equipo tenga que estar pendiente del chat.</p>
+        </div>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-num">03</span>
+        <div>
+          <h3>Recordatorios automáticos de cita</h3>
+          <p>Antes de cada consulta, el sistema le escribe al paciente para confirmar y recordar. Menos inasistencias, más cupos de agenda que sí se convierten en consulta pagada.</p>
+        </div>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-num">04</span>
+        <div>
+          <h3>Panel de estado de leads en tiempo real</h3>
+          <p>El equipo de Servid ve, en un solo lugar, quién escribió, en qué etapa va y quién ya fue atendido. Nada vuelve a perderse en el feed ni en un chat sin responder.</p>
+        </div>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-num">05</span>
+        <div>
+          <h3>Perfil de Instagram renovado y con CTA de agendamiento</h3>
+          <p>Actualizamos los destacados de Servicios, Testimonios y Farmacia, y agregamos un botón de agendamiento directo en el perfil para que la comunidad que ya siguen convierta, no solo mire.</p>
+        </div>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-num">06</span>
+        <div>
+          <h3>Nuevas creatividades para Meta Ads</h3>
+          <p>Ampliamos el mensaje más allá de "SerVid, Servicio para la Vida" con variaciones de copy e imagen para llegar a más segmentos de padres y pacientes, sin depender de un solo anuncio repetido.</p>
+        </div>
+      </div>
+      <div class="roadmap-card">
+        <span class="roadmap-num">07</span>
+        <div>
+          <h3>Optimización continua de Google Ads</h3>
+          <p>Seguimos capturando y ampliando búsquedas de altísima intención como "hospitalización psiquiátrica" y "consulta psiquiátrica", ahora con seguimiento real de conversión — sabremos exactamente qué búsqueda se convierte en paciente.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="transform-head">
+      <span class="section-badge">Los resultados que va a tener Servid</span>
+      <h2 class="section-title">Esto es lo que va a pasar</h2>
+    </div>
+
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="icon-badge"><svg viewBox="0 0 24 24" stroke="#fff"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Más citas agendadas, cada semana</h3>
+        <p>Cada persona que hoy comenta, escribe o hace clic en un anuncio pasa a estar en la agenda de Servid, sin depender de que alguien esté disponible para contestar.</p>
+      </div>
+      <div class="result-card">
+        <div class="icon-badge"><svg viewBox="0 0 24 24" stroke="#fff"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Menos inasistencias</h3>
+        <p>Los recordatorios automáticos protegen cada cupo de la agenda médica, así el tiempo del equipo clínico se traduce en consultas efectivas.</p>
+      </div>
+      <div class="result-card">
+        <div class="icon-badge"><svg viewBox="0 0 24 24" stroke="#fff"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Cada peso de pauta trabajando</h3>
+        <p>Google Ads y Meta Ads dejan de perder presupuesto en un sitio caído o en un WhatsApp sin respuesta, y empiezan a convertirse en pacientes reales.</p>
+      </div>
+      <div class="result-card">
+        <div class="icon-badge"><svg viewBox="0 0 24 24" stroke="#fff"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Visibilidad total del embudo</h3>
+        <p>El equipo de Servid sabe, en tiempo real, cuántos leads entran, cuántos se agendan y cuántos se pierden — y puede tomar decisiones con datos, no con intuición.</p>
+      </div>
+    </div>
 
     <div class="highlight-card fit">
       <div class="card-head">
         <div class="icon-badge">
           <svg viewBox="0 0 24 24" stroke="#fff"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.4c.6.5.9 1.2.9 2v.1h6.2v-.1c0-.8.3-1.5.9-2A6 6 0 0 0 12 3z" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <h2>Cómo encaja Conectux</h2>
+        <h2>Somos expertos en marketing médico</h2>
       </div>
       <p class="desc">
-        El sistema de agendamiento con IA resolvería el cuello de botella principal (leads sin respuesta inmediata
-        ni seguimiento) y el panel de estado de leads les daría visibilidad de todo lo que hoy se pierde sin
-        registro. Además, arreglar o reemplazar el destino del tráfico pago (landing conectada a Conectux en vez de
-        un sitio caído) sería una victoria rápida y muy tangible para abrir la conversación comercial, ya que se les
-        puede mostrar que están perdiendo dinero activamente en este momento. Somos expertos en marketing médico:
-        no improvisamos — diseñamos la estrategia, la pauta y el sistema de conversión enfocados en un solo
-        resultado, pacientes agendados, y medimos todo en el camino.
+        No improvisamos: diseñamos la estrategia, construimos el sistema y lo operamos junto al equipo de Servid
+        hasta que agendar una cita sea la norma, no la excepción. Ya tienen la demanda, el contenido y la pauta.
+        Nosotros ponemos el sistema que convierte todo eso en pacientes agendados y en más ventas para la clínica,
+        de forma consistente y medible, mes tras mes.
       </p>
     </div>
 
