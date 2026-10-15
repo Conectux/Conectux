@@ -84,7 +84,7 @@ const steps = [
 
 const videos = ref([
   'https://www.instagram.com/reel/DXIMvz-CWb3/',
-  'https://www.instagram.com/reel/DUt6P1TgaoZ/',
+  'https://www.instagram.com/p/DeVUSwYsFTq/',
   'https://www.instagram.com/reel/DWB0-u5DXP6/',
 ])
 
