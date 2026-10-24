@@ -87,6 +87,7 @@ const clientesConEstado = computed(() =>
   clientes.map((c) => ({
     ...c,
     reporte: reportesPorSlug.value[c.slug] || null,
+    reportes: todosLosReportes.value.filter((r) => r.slug === c.slug),
     solicitud: solicitudesPorSlug.value[c.slug] || null,
   }))
 )
@@ -192,60 +193,45 @@ const eliminarReporte = async (item) => {
         <div class="rp-card-category">{{ c.categoria }}</div>
         <h3 class="rp-card-title">{{ c.nombre }}</h3>
 
-        <div v-if="c.reporte" class="rp-card-period">
-          Último: {{ c.reporte.periodo }}
-        </div>
-        <div v-else-if="!c.solicitud" class="rp-card-period rp-card-period--muted">
+        <div v-if="!c.reportes.length && !c.solicitud" class="rp-card-period rp-card-period--muted">
           {{ cargando ? 'Cargando…' : 'Sin reporte aún' }}
         </div>
+
+        <ul v-if="c.reportes.length" class="rp-card-reportes">
+          <li v-for="item in c.reportes" :key="item.pathname" class="rp-card-reporte-item">
+            <div class="rp-card-reporte-info">
+              <div class="rp-card-reporte-periodo">{{ item.periodo }}</div>
+              <div class="rp-card-reporte-fecha">{{ formatoFechaHora(item.publicado_en) }}</div>
+            </div>
+            <div class="rp-card-reporte-acciones">
+              <a
+                :href="`/api/reportes-descargar?pathname=${encodeURIComponent(item.pathname)}`"
+                target="_blank" rel="noopener" class="rp-mini-btn rp-mini-btn--descargar" title="Descargar"
+              >
+                <v-icon icon="mdi-download" size="14" />
+              </a>
+              <button
+                class="rp-mini-btn rp-mini-btn--eliminar"
+                :disabled="eliminandoPathname === item.pathname"
+                title="Eliminar"
+                @click="eliminarReporte(item)"
+              >
+                <v-icon icon="mdi-trash-can-outline" size="14" />
+              </button>
+            </div>
+          </li>
+        </ul>
 
         <div v-if="c.solicitud" class="rp-card-btn rp-card-btn--pending">
           <v-icon icon="mdi-clock-outline" size="16" class="mr-1" />
           Solicitado ({{ formatoFecha(c.solicitud.desde) }} – {{ formatoFecha(c.solicitud.hasta) }})
         </div>
-        <template v-else>
-          <a
-            v-if="c.reporte"
-            :href="`/api/reportes-descargar?pathname=${encodeURIComponent(c.reporte.pathname)}`"
-            target="_blank" rel="noopener" class="rp-card-btn rp-card-btn--ready"
-          >
-            <v-icon icon="mdi-download" size="18" class="mr-1" /> Descargar PDF
-          </a>
-          <button class="rp-card-btn rp-card-btn--generar" @click="abrirDialogo(c)">
-            <v-icon icon="mdi-refresh" size="16" class="mr-1" v-if="c.reporte" />
-            <v-icon icon="mdi-plus" size="16" class="mr-1" v-else />
-            {{ c.reporte ? 'Generar otro período' : 'Generar reporte' }}
-          </button>
-        </template>
+        <button v-else class="rp-card-btn rp-card-btn--generar" @click="abrirDialogo(c)">
+          <v-icon icon="mdi-refresh" size="16" class="mr-1" v-if="c.reportes.length" />
+          <v-icon icon="mdi-plus" size="16" class="mr-1" v-else />
+          {{ c.reportes.length ? 'Generar otro período' : 'Generar reporte' }}
+        </button>
       </article>
-    </section>
-
-    <section class="rp-historial">
-      <h2 class="rp-historial-title">Reportes generados</h2>
-      <div v-if="!cargando && !todosLosReportes.length" class="rp-card-period--muted" style="padding: 12px 0;">
-        Todavía no hay ningún reporte publicado.
-      </div>
-      <div v-for="item in todosLosReportes" :key="item.pathname" class="rp-historial-row glass-card">
-        <div class="rp-historial-info">
-          <div class="rp-historial-cliente">{{ item.cliente }}</div>
-          <div class="rp-historial-meta">{{ item.periodo }} · publicado el {{ formatoFechaHora(item.publicado_en) }}</div>
-        </div>
-        <div class="rp-historial-acciones">
-          <a
-            :href="`/api/reportes-descargar?pathname=${encodeURIComponent(item.pathname)}`"
-            target="_blank" rel="noopener" class="rp-historial-btn rp-historial-btn--descargar"
-          >
-            <v-icon icon="mdi-download" size="16" />
-          </a>
-          <button
-            class="rp-historial-btn rp-historial-btn--eliminar"
-            :disabled="eliminandoPathname === item.pathname"
-            @click="eliminarReporte(item)"
-          >
-            <v-icon icon="mdi-trash-can-outline" size="16" />
-          </button>
-        </div>
-      </div>
     </section>
 
     <v-dialog v-model="dialogAbierto" max-width="420">
@@ -402,48 +388,42 @@ const eliminarReporte = async (item) => {
 }
 .rp-card-btn--generar:hover { background: rgba(161, 0, 255, 0.2); }
 
-.rp-historial {
-  position: relative;
-  z-index: 1;
-  max-width: 1100px;
-  margin: 48px auto 0;
+.rp-card-reportes {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-.rp-historial-title {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text-primary);
-  margin: 0 0 14px;
-}
-.rp-historial-row {
+.rp-card-reporte-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
-  margin-bottom: 10px;
-  gap: 12px;
-}
-.rp-historial-cliente { font-size: 14px; font-weight: 700; color: var(--text-primary); }
-.rp-historial-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-.rp-historial-acciones { display: flex; gap: 8px; flex-shrink: 0; }
-.rp-historial-btn {
-  width: 36px; height: 36px;
-  display: flex; align-items: center; justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
   border-radius: 9px;
+  padding: 7px 9px;
+}
+.rp-card-reporte-periodo { font-size: 11.5px; font-weight: 600; color: var(--text-primary); }
+.rp-card-reporte-fecha { font-size: 10px; color: var(--text-muted); }
+.rp-card-reporte-acciones { display: flex; gap: 6px; flex-shrink: 0; }
+.rp-mini-btn {
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 7px;
   border: 1px solid var(--border);
   cursor: pointer;
   text-decoration: none;
   font-family: inherit;
   transition: all 0.2s ease;
 }
-.rp-historial-btn--descargar { background: rgba(161, 0, 255, 0.12); color: var(--primary-light); }
-.rp-historial-btn--descargar:hover { background: rgba(161, 0, 255, 0.22); }
-.rp-historial-btn--eliminar { background: rgba(248, 113, 113, 0.08); border-color: rgba(248, 113, 113, 0.3); color: #fca5a5; }
-.rp-historial-btn--eliminar:hover { background: rgba(248, 113, 113, 0.18); }
-.rp-historial-btn--eliminar:disabled { opacity: 0.5; cursor: default; }
-
-@media (max-width: 480px) {
-  .rp-historial-row { flex-wrap: wrap; }
-}
+.rp-mini-btn--descargar { background: rgba(161, 0, 255, 0.12); color: var(--primary-light); }
+.rp-mini-btn--descargar:hover { background: rgba(161, 0, 255, 0.22); }
+.rp-mini-btn--eliminar { background: rgba(248, 113, 113, 0.08); border-color: rgba(248, 113, 113, 0.3); color: #fca5a5; }
+.rp-mini-btn--eliminar:hover { background: rgba(248, 113, 113, 0.18); }
+.rp-mini-btn--eliminar:disabled { opacity: 0.5; cursor: default; }
 
 .rp-dialog { background: var(--dark-card) !important; }
 .rp-dialog-title { color: #fff; }
