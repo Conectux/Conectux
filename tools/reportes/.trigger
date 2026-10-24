@@ -1,0 +1,1 @@
+{"ultimo_disparo": null}
