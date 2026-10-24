@@ -1,5 +1,5 @@
 {
-  "_comentario": "Ejemplo de referencia para la estructura y el estilo de los datos de un reporte. No contiene datos reales de ningún cliente. Ver tools/reportes/template.html y generar-pdf.mjs para cómo se usa cada campo. Estilo: frases cortas (3-6 palabras), no oraciones largas; tono optimista pero anclado en números reales.",
+  "_comentario": "Ejemplo de referencia para la estructura y el estilo de los datos de un reporte. No contiene datos reales de ningún cliente. Ver tools/reportes/template.html y generar-pdf.mjs para cómo se usa cada campo. Estilo: frases cortas (3-6 palabras), no oraciones largas; tono optimista pero anclado en números reales. Cada campaña necesita 'gasto_numero' (el amount_spent real, sin formatear, como número) — se usa para la barra de participación de gasto.",
   "cliente": "Nombre del Cliente",
   "periodo": "Septiembre 2026",
   "fuente": {
@@ -39,7 +39,7 @@
     { "emoji": "📈", "value": "2,92%", "label": "CTR" }
   ],
   "campanas": [
-    { "nombre": "Nombre de campaña", "objetivo": "Tráfico", "resultado_valor": "882", "resultado_label": "visitas a perfil", "costo": "$74 COP" }
+    { "nombre": "Nombre de campaña", "objetivo": "Tráfico", "resultado_valor": "882", "resultado_label": "visitas a perfil", "costo": "$74 COP", "gasto_numero": 65443 }
   ],
   "contenidos": [
     {

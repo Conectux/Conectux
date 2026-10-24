@@ -28,8 +28,10 @@ const esc = (s) => String(s)
   .replace(/</g, '&lt;')
   .replace(/>/g, '&gt;')
 
-// Frases cortas y directas (resumen, plan de acción) — usan el ícono 🚀 del CSS.
-const punchList = (items = []) => items.map((i) => `<li>${esc(i)}</li>`).join('\n')
+// Frases cortas y directas (resumen, plan de acción) — con numeración circular.
+const punchList = (items = []) => items.map(
+  (i, idx) => `<li><span class="num">${idx + 1}</span>${esc(i)}</li>`
+).join('\n')
 
 // Tarjetas cortas con emoji propio (enfoque, entregables, qué funcionó, oportunidades)
 const punchCards = (items = []) => items.map(
@@ -38,33 +40,45 @@ const punchCards = (items = []) => items.map(
 
 // Números grandes para la portada
 const heroStats = (items = []) => items.map(
-  (s) => `<div class="hero-stat"><span class="emoji">${esc(s.emoji)}</span><div class="value">${esc(s.value)}</div><div class="label">${esc(s.label)}</div></div>`
+  (s) => `<div class="hero-stat"><div class="icon-circle">${esc(s.emoji)}</div><div class="value">${esc(s.value)}</div><div class="label">${esc(s.label)}</div></div>`
 ).join('\n')
 
 // Números grandes para secciones internas (redes, publicidad, comercial)
 const bigStats = (items = []) => items.map(
-  (s) => `<div class="big-stat"><span class="emoji">${esc(s.emoji)}</span><div class="value">${esc(s.value)}</div><div class="label">${esc(s.label)}</div></div>`
+  (s) => `<div class="big-stat"><div class="icon-circle">${esc(s.emoji)}</div><div class="value">${esc(s.value)}</div><div class="label">${esc(s.label)}</div></div>`
 ).join('\n')
 
-// Filas de campaña tipo tarjeta, con el resultado como número grande
-const campaignRows = (campanas = []) => campanas.map((c) => `
+// Filas de campaña tipo tarjeta, con barra de participación de gasto y el resultado como número grande
+const campaignRows = (campanas = []) => {
+  const maxGasto = Math.max(1, ...campanas.map((c) => c.gasto_numero || 0))
+  return campanas.map((c) => {
+    const pct = Math.max(4, Math.round(((c.gasto_numero || 0) / maxGasto) * 100))
+    return `
   <div class="campaign-row">
-    <div>
-      <div class="name">${esc(c.nombre)}</div>
-      <div class="obj">${esc(c.objetivo)}</div>
+    <div class="campaign-row-top">
+      <div>
+        <div class="name">${esc(c.nombre)}</div>
+        <div class="obj">${esc(c.objetivo)}</div>
+      </div>
+      <div>
+        <div class="result">${esc(c.resultado_valor)}</div>
+        <div class="cost">${esc(c.resultado_label)} · ${esc(c.costo)}</div>
+      </div>
     </div>
-    <div>
-      <div class="result">${esc(c.resultado_valor)}</div>
-      <div class="cost">${esc(c.resultado_label)} · ${esc(c.costo)}</div>
-    </div>
-  </div>`).join('\n')
+    <div class="campaign-bar-track"><div class="campaign-bar-fill" style="width:${pct}%"></div></div>
+    <div class="campaign-bar-label">% del gasto en este cliente</div>
+  </div>`
+  }).join('\n')
+}
 
 const contentCards = (contenidos = []) => contenidos.map((c) => `
   <div class="content-card">
-    <img src="${esc(c.imagen)}" />
-    <div class="body">
+    <div class="img-wrap">
+      <img src="${esc(c.imagen)}" />
       <span class="tag">${esc(c.tag)}</span>
-      <div style="font-weight:700; font-size:12px; margin-bottom:4px;">${esc(c.titulo)}</div>
+    </div>
+    <div class="body">
+      <div class="titulo">${esc(c.titulo)}</div>
       <div class="result">${esc(c.resultado)}</div>
       <div class="why">${esc(c.porque)}</div>
     </div>

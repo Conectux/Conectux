@@ -12,199 +12,232 @@
     color: #1c1230;
     background: #ffffff;
     font-size: 12px;
-    line-height: 1.45;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
   .page {
     width: 210mm;
     min-height: 297mm;
-    padding: 16mm 16mm 20mm 16mm;
+    padding: 18mm 18mm 22mm 18mm;
     position: relative;
     page-break-after: always;
+    overflow: hidden;
   }
   .page:last-child { page-break-after: auto; }
 
   /* ── Cover ───────────────────────────────── */
   .cover {
-    background: radial-gradient(circle at 20% 15%, #2a0f4d 0%, #0b0515 55%, #070410 100%);
+    background: radial-gradient(circle at 15% 8%, #3a1565 0%, #15082b 42%, #070410 100%);
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 18mm 18mm;
+    padding: 20mm 18mm;
   }
-  .cover img.logo { width: 140px; margin-bottom: 14mm; }
+  .cover-blob {
+    position: absolute; border-radius: 50%; filter: blur(2px); pointer-events: none;
+  }
+  .cover-blob-1 { width: 320px; height: 320px; top: -120px; right: -100px; background: radial-gradient(circle, rgba(161,0,255,0.35) 0%, transparent 70%); }
+  .cover-blob-2 { width: 260px; height: 260px; bottom: 60px; left: -110px; background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%); }
+
+  .cover-top { position: relative; z-index: 1; }
+  .cover img.logo { width: 150px; margin-bottom: 18mm; }
   .cover .eyebrow {
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     font-size: 11px;
+    font-weight: 700;
     color: #c89bff;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
-  .cover h1 { font-size: 36px; margin: 0 0 6px; font-weight: 800; }
-  .cover .periodo { font-size: 16px; color: #d9c4ff; margin-bottom: 0; }
+  .cover h1 { font-size: 54px; margin: 0 0 10px; font-weight: 800; letter-spacing: -1px; line-height: 1.05; }
+  .cover .periodo-pill {
+    display: inline-block;
+    font-size: 14px; font-weight: 700; color: #fff;
+    background: rgba(161,0,255,0.25); border: 1px solid rgba(161,0,255,0.5);
+    padding: 7px 18px; border-radius: 30px; margin-top: 4px;
+  }
 
-  .hero-row { display: flex; gap: 14px; margin: 10mm 0; }
+  .hero-row { position: relative; z-index: 1; display: flex; gap: 16px; margin: 14mm 0; }
   .hero-stat {
     flex: 1;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(161,0,255,0.35);
-    border-radius: 18px;
-    padding: 18px 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(161,0,255,0.4);
+    border-radius: 20px;
+    padding: 22px 14px;
     text-align: center;
   }
-  .hero-stat .emoji { font-size: 26px; margin-bottom: 6px; display: block; }
-  .hero-stat .value { font-size: 34px; font-weight: 800; color: #fff; line-height: 1; }
-  .hero-stat .label { font-size: 10px; color: #c89bff; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; }
-
-  .cover-summary {
-    background: rgba(161, 0, 255, 0.12);
-    border: 1px solid rgba(161, 0, 255, 0.35);
-    border-radius: 18px;
-    padding: 16px 18px;
+  .hero-stat .icon-circle {
+    width: 44px; height: 44px; margin: 0 auto 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(200,75,255,0.35), rgba(161,0,255,0.15));
+    border: 1px solid rgba(200,75,255,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
   }
-  .cover-summary h3 { margin: 0 0 10px; font-size: 13px; color: #d9b8ff; text-transform: uppercase; letter-spacing: 1px; }
+  .hero-stat .value { font-size: 40px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -1px; }
+  .hero-stat .label { font-size: 10px; color: #c89bff; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 8px; font-weight: 700; }
+
+  .cover-summary { position: relative; z-index: 1; background: rgba(161, 0, 255, 0.1); border: 1px solid rgba(161, 0, 255, 0.35); border-radius: 20px; padding: 20px 22px; }
+  .cover-summary h3 { margin: 0 0 14px; font-size: 13px; color: #d9b8ff; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; }
   .punch-list { list-style: none; margin: 0; padding: 0; }
   .punch-list li {
-    font-size: 14px;
-    font-weight: 600;
-    color: #fff;
-    padding: 7px 0 7px 26px;
-    position: relative;
+    font-size: 14.5px; font-weight: 700; color: #fff;
+    padding: 9px 0 9px 36px; position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
-  .punch-list li:before { content: "🚀"; position: absolute; left: 0; top: 6px; font-size: 13px; }
-  .footer-cover { margin-top: 12px; font-size: 10px; color: #9a84c0; }
+  .punch-list li:last-child { border-bottom: none; }
+  .punch-list li .num {
+    position: absolute; left: 0; top: 7px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: linear-gradient(135deg, #c84bff, #A100FF);
+    color: #fff; font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .footer-cover { position: relative; z-index: 1; margin-top: 16px; font-size: 10px; color: #9a84c0; display: flex; justify-content: space-between; }
 
   /* ── Section header ──────────────────────── */
-  .section-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
+  .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .section-icon {
+    width: 40px; height: 40px; border-radius: 13px; flex-shrink: 0;
+    background: linear-gradient(135deg, #c84bff, #A100FF);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 19px; box-shadow: 0 4px 14px rgba(161,0,255,0.35);
   }
-  .section-num {
-    background: #A100FF;
-    color: #fff;
-    width: 28px; height: 28px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 14px;
-    flex-shrink: 0;
-  }
-  .section-head h2 { font-size: 20px; margin: 0; color: #1c1230; font-weight: 800; }
-  .page-logo { position: absolute; top: 10mm; right: 16mm; width: 65px; opacity: 0.9; }
+  .section-head h2 { font-size: 24px; margin: 0; color: #1c1230; font-weight: 800; letter-spacing: -0.5px; }
+  .section-kicker { font-size: 10px; color: #A100FF; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin: 0 0 2px; }
+  .page-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8mm; }
+  .page-logo { width: 68px; opacity: 0.92; }
+  .page-badge { font-size: 10px; color: #a78bc4; font-weight: 700; background: #f6eeff; border: 1px solid #ecdcff; padding: 5px 12px; border-radius: 20px; }
 
   /* ── Big stat grid ────────────────────────── */
-  .big-stat-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .big-stat-grid { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
   .big-stat {
-    flex: 1;
-    min-width: 42%;
-    background: linear-gradient(145deg, #f6eeff, #fbf8ff);
-    border: 1px solid #ecdcff;
-    border-radius: 16px;
-    padding: 18px 16px;
-    text-align: center;
+    flex: 1; min-width: 42%;
+    background: linear-gradient(160deg, #faf5ff 0%, #ffffff 100%);
+    border: 1px solid #ecdcff; border-radius: 20px;
+    padding: 22px 18px; text-align: center;
+    box-shadow: 0 2px 10px rgba(161,0,255,0.06);
+    break-inside: avoid; page-break-inside: avoid;
   }
-  .big-stat .emoji { font-size: 24px; display: block; margin-bottom: 4px; }
-  .big-stat .value { font-size: 38px; font-weight: 800; color: #A100FF; line-height: 1; }
-  .big-stat .label { font-size: 10.5px; color: #665583; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; font-weight: 600; }
+  .big-stat .icon-circle {
+    width: 38px; height: 38px; margin: 0 auto 10px; border-radius: 50%;
+    background: rgba(161,0,255,0.1); display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .big-stat .value { font-size: 44px; font-weight: 800; line-height: 1; letter-spacing: -1px; color: #A100FF; }
+  .big-stat .label { font-size: 10.5px; color: #665583; text-transform: uppercase; letter-spacing: 0.6px; margin-top: 8px; font-weight: 700; }
 
   /* ── Punch cards (short-phrase lists) ────── */
-  .punch-grid { display: flex; flex-direction: column; gap: 8px; }
+  .punch-grid { display: flex; flex-direction: column; gap: 9px; }
   .punch-card {
-    background: #faf6ff;
-    border: 1px solid #ecdcff;
-    border-radius: 12px;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    background: #faf6ff; border: 1px solid #ecdcff; border-left: 4px solid #A100FF;
+    border-radius: 12px; padding: 13px 18px;
+    display: flex; align-items: center; gap: 14px;
+    break-inside: avoid; page-break-inside: avoid;
   }
-  .punch-card .emoji { font-size: 18px; flex-shrink: 0; }
-  .punch-card .txt { font-size: 13px; font-weight: 700; color: #1c1230; }
+  .punch-card .emoji { font-size: 20px; flex-shrink: 0; }
+  .punch-card .txt { font-size: 13.5px; font-weight: 700; color: #1c1230; }
 
-  /* ── Result badges table replacement ─────── */
-  .campaign-rows { display: flex; flex-direction: column; gap: 10px; }
+  /* ── Campaign rows with spend-share bar ──── */
+  .campaign-rows { display: flex; flex-direction: column; gap: 12px; }
   .campaign-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #1c1230;
-    border-radius: 14px;
-    padding: 12px 16px;
-    color: #fff;
+    background: #1c1230; border-radius: 16px; padding: 16px 20px; color: #fff;
+    break-inside: avoid; page-break-inside: avoid;
   }
-  .campaign-row .name { font-size: 12.5px; font-weight: 700; }
-  .campaign-row .obj { font-size: 9.5px; color: #c89bff; text-transform: uppercase; letter-spacing: 0.5px; }
-  .campaign-row .result { font-size: 22px; font-weight: 800; color: #d9b8ff; text-align: right; }
-  .campaign-row .cost { font-size: 9.5px; color: #a994c9; text-align: right; }
+  .campaign-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .campaign-row .name { font-size: 13.5px; font-weight: 800; }
+  .campaign-row .obj { font-size: 9.5px; color: #c89bff; text-transform: uppercase; letter-spacing: 0.6px; margin-top: 2px; }
+  .campaign-row .result { font-size: 26px; font-weight: 800; color: #e9d2ff; text-align: right; letter-spacing: -0.5px; }
+  .campaign-row .cost { font-size: 9.5px; color: #a994c9; text-align: right; margin-top: 2px; }
+  .campaign-bar-track { height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; }
+  .campaign-bar-fill { height: 100%; background: linear-gradient(90deg, #A100FF, #c84bff); border-radius: 6px; }
+  .campaign-bar-label { font-size: 8.5px; color: #8a76ab; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
 
   /* ── Content cards (best posts) ───────────── */
-  .content-grid { display: flex; gap: 12px; }
+  .content-grid { display: flex; gap: 16px; }
   .content-card {
-    flex: 1;
-    border: 1px solid #ecdcff;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #fff;
+    flex: 1; border: 1px solid #ecdcff; border-radius: 20px; overflow: hidden; background: #fff;
+    box-shadow: 0 2px 10px rgba(161,0,255,0.07);
+    break-inside: avoid; page-break-inside: avoid;
   }
-  .content-card img { width: 100%; height: 125px; object-fit: cover; display: block; background: #eee; }
-  .content-card .body { padding: 12px 14px; }
+  .content-card .img-wrap { position: relative; }
+  .content-card img { width: 100%; height: 165px; object-fit: cover; display: block; background: #eee; }
   .content-card .tag {
-    display: inline-block; background: #A100FF; color: #fff;
-    font-size: 9.5px; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; font-weight: 700;
+    position: absolute; top: 12px; left: 12px;
+    background: #1c1230; color: #fff; font-size: 9.5px; padding: 5px 13px;
+    border-radius: 20px; font-weight: 800; letter-spacing: 0.3px;
   }
-  .content-card .result { font-weight: 800; color: #A100FF; font-size: 18px; margin: 4px 0; }
-  .content-card .why { font-size: 10.5px; color: #4a3d63; }
+  .content-card .body { padding: 16px 18px; }
+  .content-card .titulo { font-weight: 800; font-size: 13px; color: #1c1230; margin-bottom: 6px; }
+  .content-card .result { font-weight: 800; color: #A100FF; font-size: 22px; margin: 2px 0 8px; letter-spacing: -0.5px; }
+  .content-card .why { font-size: 10.5px; color: #4a3d63; line-height: 1.5; }
 
   .callout {
-    background: #1c1230;
-    color: #fff;
-    border-radius: 16px;
-    padding: 18px 20px;
-    margin-top: 10px;
+    background: linear-gradient(150deg, #22093f 0%, #1c1230 100%);
+    color: #fff; border-radius: 20px; padding: 24px 26px; margin-top: 12px;
+    box-shadow: 0 8px 28px rgba(161,0,255,0.18);
   }
-  .callout h3 { margin: 0 0 10px; font-size: 13px; color: #d9b8ff; text-transform: uppercase; letter-spacing: 1px; }
+  .callout h3 { margin: 0 0 16px; font-size: 14px; color: #d9b8ff; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; }
 
-  .two-col { display: flex; gap: 16px; }
+  .two-col { display: flex; gap: 18px; }
   .two-col > div { flex: 1; }
-  .subhead { font-size: 13px; font-weight: 800; color: #A100FF; margin: 0 0 10px; }
+  .subhead { font-size: 14px; font-weight: 800; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+  .subhead-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 
   .footer-band {
-    position: absolute; bottom: 10mm; left: 16mm; right: 16mm;
+    position: absolute; bottom: 12mm; left: 18mm; right: 18mm;
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 9px; color: #a994c9; border-top: 1px solid #eee2fa; padding-top: 6px;
+    font-size: 9px; color: #a994c9; border-top: 1px solid #eee2fa; padding-top: 8px;
   }
+
+  /* ── Back / closing page ──────────────────── */
+  .closing {
+    background: radial-gradient(circle at 80% 85%, #3a1565 0%, #15082b 45%, #070410 100%);
+    color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 20mm;
+  }
+  .closing img.logo { width: 170px; margin-bottom: 20mm; }
+  .closing h2 { font-size: 34px; font-weight: 800; margin: 0 0 14px; letter-spacing: -0.5px; }
+  .closing p { font-size: 14px; color: #d9c4ff; max-width: 400px; line-height: 1.6; margin: 0 0 30mm; }
+  .closing .contact { font-size: 11px; color: #9a84c0; letter-spacing: 0.5px; }
+  .closing .contact strong { color: #e9d2ff; }
 </style>
 </head>
 <body>
 
   <!-- PORTADA -->
   <div class="page cover">
-    <div>
+    <div class="cover-blob cover-blob-1"></div>
+    <div class="cover-blob cover-blob-2"></div>
+
+    <div class="cover-top">
       <img class="logo" src="{{LOGO_SRC}}" alt="Conectux" />
       <div class="eyebrow">Reporte mensual de gestión digital</div>
       <h1>{{CLIENTE}}</h1>
-      <div class="periodo">{{PERIODO}}</div>
+      <div class="periodo-pill">{{PERIODO}}</div>
     </div>
 
     <div class="hero-row">{{HERO_STATS}}</div>
 
     <div class="cover-summary">
-      <h3>Lo más destacado</h3>
+      <h3>Lo más destacado del mes</h3>
       <ul class="punch-list">{{RESUMEN_PUNCH}}</ul>
-      <div class="footer-cover">Generado por Conectux · conectux.com</div>
     </div>
+    <div class="footer-cover"><span>Generado por Conectux</span><span>conectux.com</span></div>
   </div>
 
   <!-- 2. ENFOQUE DEL MES + 3. GESTIÓN -->
   <div class="page">
-    <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
-    <div class="section-head"><div class="section-num">2</div><h2>Enfoque del mes</h2></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">02 / 07</span></div>
+    <p class="section-kicker">Estrategia</p>
+    <div class="section-head"><div class="section-icon">🎯</div><h2>Enfoque del mes</h2></div>
     <div class="punch-grid">{{ENFOQUE_PUNCH}}</div>
 
-    <div style="height:26px;"></div>
+    <div style="height:34px;"></div>
 
-    <div class="section-head"><div class="section-num">3</div><h2>Qué hicimos</h2></div>
+    <p class="section-kicker">Operación</p>
+    <div class="section-head"><div class="section-icon">⚙️</div><h2>Qué hicimos</h2></div>
     <div class="punch-grid">{{ENTREGABLES_PUNCH}}</div>
 
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
@@ -212,13 +245,15 @@
 
   <!-- 4. RESULTADOS REDES + 5. PUBLICIDAD -->
   <div class="page">
-    <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
-    <div class="section-head"><div class="section-num">4</div><h2>Redes sociales</h2></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">03 / 07</span></div>
+    <p class="section-kicker">Alcance</p>
+    <div class="section-head"><div class="section-icon">📱</div><h2>Redes sociales</h2></div>
     <div class="big-stat-grid">{{REDES_STATS}}</div>
 
-    <div style="height:14px;"></div>
+    <div style="height:18px;"></div>
 
-    <div class="section-head"><div class="section-num">5</div><h2>Publicidad paga</h2></div>
+    <p class="section-kicker">Inversión</p>
+    <div class="section-head"><div class="section-icon">💰</div><h2>Publicidad paga</h2></div>
     <div class="big-stat-grid">{{ADS_STATS}}</div>
     <div class="campaign-rows">{{CAMPAIGNS_ROWS}}</div>
 
@@ -227,42 +262,58 @@
 
   <!-- 6. MEJORES CONTENIDOS -->
   <div class="page">
-    <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
-    <div class="section-head"><div class="section-num">6</div><h2>Lo que mejor funcionó</h2></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">04 / 07</span></div>
+    <p class="section-kicker">Creatividad</p>
+    <div class="section-head"><div class="section-icon">🏆</div><h2>Lo que mejor funcionó</h2></div>
     <div class="content-grid">{{CONTENT_CARDS}}</div>
 
-    <div style="height:26px;"></div>
+    <div style="height:34px;"></div>
 
-    <div class="section-head"><div class="section-num">7</div><h2>Resultados comerciales</h2></div>
+    <p class="section-kicker">Negocio</p>
+    <div class="section-head"><div class="section-icon">📈</div><h2>Resultados comerciales</h2></div>
     <div class="big-stat-grid">{{COMERCIAL_STATS}}</div>
 
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
   </div>
 
-  <!-- 8. ANÁLISIS + 9. PLAN -->
+  <!-- 8. ANÁLISIS -->
   <div class="page">
-    <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
-    <div class="section-head"><div class="section-num">8</div><h2>Lo que aprendimos</h2></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">05 / 07</span></div>
+    <p class="section-kicker">Balance</p>
+    <div class="section-head"><div class="section-icon">🔍</div><h2>Lo que aprendimos</h2></div>
     <div class="two-col">
       <div>
-        <p class="subhead">✅ Funcionó</p>
+        <p class="subhead"><span class="subhead-dot" style="background:#22c55e;"></span>Funcionó</p>
         <div class="punch-grid">{{FUNCIONO_PUNCH}}</div>
       </div>
       <div>
-        <p class="subhead">🔍 Oportunidad</p>
+        <p class="subhead"><span class="subhead-dot" style="background:#A100FF;"></span>Oportunidad</p>
         <div class="punch-grid">{{OPORTUNIDADES_PUNCH}}</div>
       </div>
     </div>
 
-    <div style="height:24px;"></div>
+    <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
+  </div>
 
-    <div class="section-head"><div class="section-num">9</div><h2>Plan — próximo mes</h2></div>
+  <!-- 9. PLAN -->
+  <div class="page">
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">06 / 07</span></div>
+    <p class="section-kicker">Siguiente paso</p>
+    <div class="section-head"><div class="section-icon">🚀</div><h2>Plan de acción — próximo mes</h2></div>
     <div class="callout">
       <h3>Lo que viene</h3>
-      <ul class="punch-list">{{PLAN_PUNCH}}</ul>
+      <ul class="punch-list" style="margin:0;">{{PLAN_PUNCH}}</ul>
     </div>
 
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux · conectux.com</span></div>
+  </div>
+
+  <!-- CIERRE -->
+  <div class="page closing">
+    <img class="logo" src="{{LOGO_SRC}}" alt="Conectux" />
+    <h2>Seguimos construyendo juntos 🚀</h2>
+    <p>Este es solo el resumen del mes — detrás hay un equipo trabajando todos los días para que {{CLIENTE}} siga creciendo.</p>
+    <div class="contact"><strong>Conectux</strong> · conectux.com</div>
   </div>
 
 </body>
