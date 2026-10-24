@@ -68,6 +68,27 @@ await put(manifestPath, JSON.stringify(manifest, null, 2), {
   allowOverwrite: true,
 })
 
+// ── Marcar como resuelta cualquier solicitud pendiente de este cliente ──
+try {
+  const solicitudesResult = await get('solicitudes.json', { access: 'private', useCache: false })
+  if (solicitudesResult?.statusCode === 200) {
+    let solicitudes = await new Response(solicitudesResult.stream).json()
+    const antes = solicitudes.length
+    solicitudes = solicitudes.filter((s) => !(s.slug === slug && s.estado === 'pendiente'))
+    if (solicitudes.length !== antes) {
+      await put('solicitudes.json', JSON.stringify(solicitudes, null, 2), {
+        access: 'private',
+        contentType: 'application/json',
+        addRandomSuffix: false,
+        allowOverwrite: true,
+      })
+      console.log('Solicitud pendiente marcada como resuelta.')
+    }
+  }
+} catch {
+  // No hay solicitudes.json todavía, no pasa nada
+}
+
 console.log(`Reporte publicado para "${clienteArg}" (${periodoArg}).`)
 console.log(`  pathname en Blob: ${pdfBlob.pathname}`)
 console.log('Ya debería verse en /reportes una vez desplegado (vía /api/reportes-manifest).')
