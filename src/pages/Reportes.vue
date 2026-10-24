@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import logo from '../assets/logo-conectux.png'
 
 // ── Slug helper (debe coincidir con el usado en tools/reportes/publicar.mjs) ──
@@ -81,7 +81,16 @@ const cargarEstado = async () => {
   }
 }
 
-onMounted(cargarEstado)
+let intervalo = null
+onMounted(() => {
+  cargarEstado()
+  // Refresca sola cada 5s mientras la pestaña esté abierta, para ver en vivo
+  // cuándo empieza a generarse un reporte y cuándo queda listo, sin recargar.
+  intervalo = setInterval(cargarEstado, 5000)
+})
+onUnmounted(() => {
+  if (intervalo) clearInterval(intervalo)
+})
 
 const clientesConEstado = computed(() =>
   clientes.map((c) => ({
@@ -179,7 +188,7 @@ const eliminarReporte = async (item) => {
       <img :src="logo" alt="Conectux" class="rp-logo" />
       <div class="rp-header-text">
         <h1>Reportes de gestión</h1>
-        <p>Pide el reporte del período que quieras — se genera y publica cuando lo procesemos, no están pregenerados.</p>
+        <p>Pide el reporte del período que quieras — se genera y publica cuando lo procesemos, no están pregenerados. Esta página se actualiza sola cada 5 segundos.</p>
       </div>
     </header>
 
