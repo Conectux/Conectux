@@ -52,7 +52,9 @@ try {
   // No existe aún: empezamos con manifest vacío
 }
 
-manifest = manifest.filter((item) => item.slug !== slug)
+// Reemplaza solo si ya existía un reporte para este mismo cliente+período (re-generación).
+// Reportes de otros períodos del mismo cliente se conservan como historial.
+manifest = manifest.filter((item) => item.pathname !== pdfBlob.pathname)
 manifest.push({
   cliente: clienteArg,
   slug,

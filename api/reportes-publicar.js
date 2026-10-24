@@ -40,7 +40,9 @@ export default async function handler(req, res) {
       for await (const chunk of manifestResult.stream) chunks.push(chunk)
       manifest = JSON.parse(Buffer.concat(chunks.map((c) => Buffer.from(c))).toString('utf-8'))
     }
-    manifest = manifest.filter((item) => item.slug !== slug)
+    // Reemplaza solo si ya existía un reporte para este mismo cliente+período (re-generación).
+    // Reportes de otros períodos del mismo cliente se conservan como historial.
+    manifest = manifest.filter((item) => item.pathname !== pdfBlob.pathname)
     manifest.push({
       cliente,
       slug,
