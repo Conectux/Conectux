@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Reporte Conectux</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #1c1230;
+    background: #ffffff;
+    font-size: 11.5px;
+    line-height: 1.55;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 16mm 16mm 20mm 16mm;
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ── Cover ───────────────────────────────── */
+  .cover {
+    background: radial-gradient(circle at 20% 15%, #2a0f4d 0%, #0b0515 55%, #070410 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20mm 18mm;
+  }
+  .cover img.logo { width: 150px; margin-bottom: 40mm; }
+  .cover .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 11px;
+    color: #c89bff;
+    margin-bottom: 10px;
+  }
+  .cover h1 { font-size: 34px; margin: 0 0 6px; font-weight: 700; }
+  .cover .periodo { font-size: 16px; color: #d9c4ff; margin-bottom: 0; }
+  .cover .footer-cover { font-size: 10px; color: #9a84c0; }
+
+  /* ── Section header ──────────────────────── */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-num {
+    background: #A100FF;
+    color: #fff;
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+    flex-shrink: 0;
+  }
+  .section-head h2 { font-size: 18px; margin: 0; color: #1c1230; }
+  .page-logo { position: absolute; top: 10mm; right: 16mm; width: 70px; opacity: 0.9; }
+
+  /* ── Generic blocks ──────────────────────── */
+  .lead { font-size: 12.5px; color: #4a3d63; margin-bottom: 18px; }
+  .bullets { list-style: none; margin: 0; padding: 0; }
+  .bullets li {
+    padding: 9px 0 9px 22px;
+    position: relative;
+    border-bottom: 1px solid #efe8fa;
+    font-size: 12px;
+  }
+  .bullets li:before {
+    content: "✓";
+    position: absolute; left: 0; top: 9px;
+    color: #A100FF; font-weight: 700;
+  }
+
+  /* ── Stat grid ────────────────────────────── */
+  .stat-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .stat-card {
+    background: linear-gradient(145deg, #f6eeff, #fbf8ff);
+    border: 1px solid #ecdcff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    width: 30%;
+    flex-grow: 1;
+  }
+  .stat-card .value { font-size: 20px; font-weight: 700; color: #A100FF; }
+  .stat-card .label { font-size: 10px; color: #665583; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  table.campaigns { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 10.5px; }
+  table.campaigns th {
+    background: #1c1230; color: #fff; text-align: left;
+    padding: 7px 8px; font-weight: 600;
+  }
+  table.campaigns td { padding: 7px 8px; border-bottom: 1px solid #eee2fa; }
+  table.campaigns tr:nth-child(even) td { background: #faf6ff; }
+
+  /* ── Content cards (best posts) ───────────── */
+  .content-grid { display: flex; gap: 12px; }
+  .content-card {
+    flex: 1;
+    border: 1px solid #ecdcff;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .content-card img { width: 100%; height: 110px; object-fit: cover; display: block; background: #eee; }
+  .content-card .body { padding: 10px 12px; }
+  .content-card .tag {
+    display: inline-block; background: #A100FF; color: #fff;
+    font-size: 9px; padding: 2px 8px; border-radius: 20px; margin-bottom: 6px;
+  }
+  .content-card .result { font-weight: 700; color: #1c1230; font-size: 12px; margin: 4px 0; }
+  .content-card .why { font-size: 10.5px; color: #4a3d63; }
+
+  .callout {
+    background: #1c1230;
+    color: #fff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-top: 10px;
+  }
+  .callout h3 { margin: 0 0 8px; font-size: 13px; color: #d9b8ff; }
+  .callout p { margin: 0; font-size: 11.5px; color: #e8ddf7; }
+
+  .two-col { display: flex; gap: 16px; }
+  .two-col > div { flex: 1; }
+  .subhead { font-size: 12.5px; font-weight: 700; color: #A100FF; margin: 0 0 8px; }
+
+  .footer-band {
+    position: absolute; bottom: 10mm; left: 16mm; right: 16mm;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 9px; color: #a994c9; border-top: 1px solid #eee2fa; padding-top: 6px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- PORTADA -->
+  <div class="page cover">
+    <div>
+      <img class="logo" src="{{LOGO_SRC}}" alt="Conectux" />
+      <div class="eyebrow">Reporte mensual de gestión digital</div>
+      <h1>{{CLIENTE}}</h1>
+      <div class="periodo">{{PERIODO}}</div>
+    </div>
+    <div>
+      <div class="callout" style="background:rgba(161,0,255,0.15); border:1px solid rgba(161,0,255,0.4);">
+        <h3>Resumen ejecutivo</h3>
+        <ul class="bullets" style="color:#fff;">
+          {{RESUMEN_BULLETS}}
+        </ul>
+      </div>
+      <div class="footer-cover" style="margin-top:14px;">Generado por Conectux · conectux.com</div>
+    </div>
+  </div>
+
+  <!-- 2. ENFOQUE DEL MES + 3. GESTIÓN -->
+  <div class="page">
+    <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
+    <div class="section-head"><div class="section-num">2</div><h2>Enfoque y objetivos del mes</h2></div>
+    <p class="lead">{{ENFOQUE_INTRO}}</p>
+    <ul class="bullets">{{ENFOQUE_BULLETS}}</ul>
+
+    <div style="height:24px;"></div>
+
+    <div class="section-head"><div class="section-num">3</div><h2>Gestión y entregables realizados</h2></div>
+    <ul class="bullets">{{ENTREGABLES_BULLETS}}</ul>
+
+    <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
+  </div>
+
+  <!-- 4. RESULTADOS REDES + 5. PUBLICIDAD -->
+  <div class="page">
+    <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
+    <div class="section-head"><div class="section-num">4</div><h2>Resultados en redes sociales</h2></div>
+    <div class="stat-grid">{{REDES_STATS}}</div>
+    <p class="lead">{{REDES_NOTA}}</p>
+
+    <div style="height:10px;"></div>
+
+    <div class="section-head"><div class="section-num">5</div><h2>Resultados de publicidad paga (Meta Ads)</h2></div>
+    <div class="stat-grid">{{ADS_STATS}}</div>
+    <table class="campaigns">
+      <thead><tr><th>Campaña</th><th>Objetivo</th><th>Inversión</th><th>Resultado principal</th><th>Costo / resultado</th></tr></thead>
+      <tbody>{{CAMPAIGNS_ROWS}}</tbody>
+    </table>
+
+    <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
+  </div>
+
+  <!-- 6. MEJORES CONTENIDOS -->
+  <div class="page">
+    <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
+    <div class="section-head"><div class="section-num">6</div><h2>Mejores contenidos del mes</h2></div>
+    <p class="lead">Los anuncios y piezas que mejor conectaron con tu audiencia este mes:</p>
+    <div class="content-grid">{{CONTENT_CARDS}}</div>
+
+    <div style="height:24px;"></div>
+
+    <div class="section-head"><div class="section-num">7</div><h2>Resultados comerciales</h2></div>
+    <div class="stat-grid">{{COMERCIAL_STATS}}</div>
+    <p class="lead">{{COMERCIAL_NOTA}}</p>
+
+    <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
+  </div>
+
+  <!-- 8. ANÁLISIS + 9. PLAN -->
+  <div class="page">
+    <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
+    <div class="section-head"><div class="section-num">8</div><h2>Análisis y aprendizajes</h2></div>
+    <div class="two-col">
+      <div>
+        <p class="subhead">✅ Qué funcionó</p>
+        <ul class="bullets">{{FUNCIONO_BULLETS}}</ul>
+      </div>
+      <div>
+        <p class="subhead">🔍 Oportunidades detectadas</p>
+        <ul class="bullets">{{OPORTUNIDADES_BULLETS}}</ul>
+      </div>
+    </div>
+
+    <div style="height:22px;"></div>
+
+    <div class="section-head"><div class="section-num">9</div><h2>Plan de acción — próximo mes</h2></div>
+    <div class="callout">
+      <h3>Lo que viene</h3>
+      <ul class="bullets" style="color:#fff;">{{PLAN_BULLETS}}</ul>
+    </div>
+
+    <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux · conectux.com</span></div>
+  </div>
+
+</body>
+</html>

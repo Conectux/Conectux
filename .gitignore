@@ -25,3 +25,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Reportes de clientes (datos sensibles de Meta Ads, repo público)
+tools/reportes/data/
+tools/reportes/salida/
+.env.local

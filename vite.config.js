@@ -17,6 +17,7 @@ export default defineConfig({
         briefSalud: resolve(__dirname, 'brief-salud/index.html'),
         propuestaManual: resolve(__dirname, 'propuesta-manual/index.html'),
         briefManuales: resolve(__dirname, 'brief-manuales/index.html'),
+        reportes: resolve(__dirname, 'reportes/index.html'),
       },
     },
   },
