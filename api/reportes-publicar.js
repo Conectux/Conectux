@@ -63,7 +63,7 @@ export default async function handler(req, res) {
       const chunks = []
       for await (const chunk of solicitudesResult.stream) chunks.push(chunk)
       let solicitudes = JSON.parse(Buffer.concat(chunks.map((c) => Buffer.from(c))).toString('utf-8'))
-      solicitudes = solicitudes.filter((s) => !(s.slug === slug && s.estado === 'pendiente'))
+      solicitudes = solicitudes.filter((s) => s.slug !== slug)
       await put('solicitudes.json', JSON.stringify(solicitudes, null, 2), {
         access: 'private',
         contentType: 'application/json',

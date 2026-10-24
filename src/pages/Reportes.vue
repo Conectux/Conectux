@@ -69,7 +69,7 @@ const cargarEstado = async () => {
       const solicitudes = await resSolicitudes.json()
       const mapS = {}
       for (const s of solicitudes) {
-        if (s.estado === 'pendiente') mapS[s.slug] = s
+        if (s.estado === 'pendiente' || s.estado === 'en_proceso') mapS[s.slug] = s
       }
       solicitudesPorSlug.value = mapS
     }
@@ -193,11 +193,9 @@ const eliminarReporte = async (item) => {
         <div class="rp-card-category">{{ c.categoria }}</div>
         <h3 class="rp-card-title">{{ c.nombre }}</h3>
 
-        <div v-if="!cargando && !c.reportes.length && !c.solicitud" class="rp-estado rp-estado--rojo">
-          <span class="rp-estado-dot"></span> Sin generar reporte
-        </div>
-        <div v-if="c.solicitud" class="rp-estado rp-estado--verde">
-          <span class="rp-estado-dot"></span> Generando reporte
+        <div v-if="!cargando" class="rp-estado" :class="c.solicitud?.estado === 'en_proceso' ? 'rp-estado--verde' : 'rp-estado--rojo'">
+          <span class="rp-estado-dot"></span>
+          {{ c.solicitud?.estado === 'en_proceso' ? 'Generando reporte' : 'Sin generar reporte' }}
         </div>
 
         <ul v-if="c.reportes.length" class="rp-card-reportes">

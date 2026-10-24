@@ -76,7 +76,7 @@ try {
   if (solicitudesResult?.statusCode === 200) {
     let solicitudes = await new Response(solicitudesResult.stream).json()
     const antes = solicitudes.length
-    solicitudes = solicitudes.filter((s) => !(s.slug === slug && s.estado === 'pendiente'))
+    solicitudes = solicitudes.filter((s) => s.slug !== slug)
     if (solicitudes.length !== antes) {
       await put('solicitudes.json', JSON.stringify(solicitudes, null, 2), {
         access: 'private',
