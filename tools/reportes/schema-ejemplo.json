@@ -1,0 +1,67 @@
+{
+  "_comentario": "Ejemplo de referencia para la estructura y el estilo de los datos de un reporte. No contiene datos reales de ningún cliente. Ver tools/reportes/template.html y generar-pdf.mjs para cómo se usa cada campo. Estilo: frases cortas (3-6 palabras), no oraciones largas; tono optimista pero anclado en números reales.",
+  "cliente": "Nombre del Cliente",
+  "periodo": "Septiembre 2026",
+  "fuente": {
+    "ad_account_id": "0000000000000",
+    "rango": "2026-09-01 a 2026-09-30"
+  },
+  "hero_stats": [
+    { "emoji": "👁️", "value": "882", "label": "Visitas a perfil" },
+    { "emoji": "💬", "value": "46", "label": "Chats de WhatsApp" },
+    { "emoji": "📈", "value": "2,92%", "label": "CTR" }
+  ],
+  "resumen_punch": [
+    "882 visitas a tu perfil",
+    "46 conversaciones de WhatsApp",
+    "CTR de 2,92% — por encima del sector",
+    "Solo $74 COP por cada visita",
+    "Oportunidad: reactivar remarketing de temporada"
+  ],
+  "enfoque_punch": [
+    { "emoji": "🎯", "texto": "Frase corta del enfoque principal" },
+    { "emoji": "💬", "texto": "Otro enfoque del mes" }
+  ],
+  "entregables_punch": [
+    { "emoji": "📊", "texto": "Qué se gestionó este mes" },
+    { "emoji": "🎨", "texto": "Piezas creativas en rotación" }
+  ],
+  "redes_stats": [
+    { "emoji": "👀", "value": "44.816", "label": "Impresiones" },
+    { "emoji": "🎯", "value": "33.326", "label": "Alcance único" },
+    { "emoji": "👁️", "value": "882", "label": "Visitas a perfil" },
+    { "emoji": "🔁", "value": "1,34", "label": "Frecuencia" }
+  ],
+  "ads_stats": [
+    { "emoji": "💰", "value": "$150.525", "label": "Inversión COP" },
+    { "emoji": "💬", "value": "$1.850", "label": "Costo por conversación" },
+    { "emoji": "🏷️", "value": "$115", "label": "CPC promedio" },
+    { "emoji": "📈", "value": "2,92%", "label": "CTR" }
+  ],
+  "campanas": [
+    { "nombre": "Nombre de campaña", "objetivo": "Tráfico", "resultado_valor": "882", "resultado_label": "visitas a perfil", "costo": "$74 COP" }
+  ],
+  "contenidos": [
+    {
+      "imagen": "https://... (thumbnail_url o image_url real del creativo, de ads_get_creatives)",
+      "tag": "Mejor alcance",
+      "titulo": "Nombre corto del anuncio",
+      "resultado": "877 visitas · CTR 2,77%",
+      "porque": "Una frase corta explicando por qué funcionó."
+    }
+  ],
+  "comercial_stats": [
+    { "emoji": "💬", "value": "46", "label": "Chats de WhatsApp" },
+    { "emoji": "👁️", "value": "882", "label": "Visitas con intención" }
+  ],
+  "funciono_punch": [
+    { "emoji": "🏆", "texto": "Qué funcionó, en pocas palabras" }
+  ],
+  "oportunidades_punch": [
+    { "emoji": "🗓️", "texto": "Una oportunidad concreta" }
+  ],
+  "plan_punch": [
+    "Una acción concreta para el próximo mes",
+    "Otra acción concreta"
+  ]
+}
