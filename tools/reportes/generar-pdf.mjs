@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync, mkdirSync } from 'node:fs'
 import { resolve, dirname, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import puppeteer from 'puppeteer'
@@ -95,10 +95,11 @@ for (const [token, value] of Object.entries(replacements)) {
 }
 
 const outDir = resolve(__dirname, 'salida')
+mkdirSync(outDir, { recursive: true })
 const slug = basename(resolvedDataPath, '.json')
 const outPath = resolve(outDir, `${slug}.pdf`)
 
-const browser = await puppeteer.launch({ headless: true })
+const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
 const page = await browser.newPage()
 await page.setContent(html, { waitUntil: 'networkidle0' })
 await page.pdf({
