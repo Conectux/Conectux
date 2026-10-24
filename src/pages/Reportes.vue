@@ -193,8 +193,11 @@ const eliminarReporte = async (item) => {
         <div class="rp-card-category">{{ c.categoria }}</div>
         <h3 class="rp-card-title">{{ c.nombre }}</h3>
 
-        <div v-if="!c.reportes.length && !c.solicitud" class="rp-card-period rp-card-period--muted">
-          {{ cargando ? 'Cargando…' : 'Sin reporte aún' }}
+        <div v-if="!cargando && !c.reportes.length && !c.solicitud" class="rp-estado rp-estado--rojo">
+          <span class="rp-estado-dot"></span> Sin generar reporte
+        </div>
+        <div v-if="c.solicitud" class="rp-estado rp-estado--verde">
+          <span class="rp-estado-dot"></span> Generando reporte
         </div>
 
         <ul v-if="c.reportes.length" class="rp-card-reportes">
@@ -222,9 +225,8 @@ const eliminarReporte = async (item) => {
           </li>
         </ul>
 
-        <div v-if="c.solicitud" class="rp-card-btn rp-card-btn--pending">
-          <v-icon icon="mdi-clock-outline" size="16" class="mr-1" />
-          Solicitado ({{ formatoFecha(c.solicitud.desde) }} – {{ formatoFecha(c.solicitud.hasta) }})
+        <div v-if="c.solicitud" class="rp-card-period rp-card-period--muted">
+          Rango pedido: {{ formatoFecha(c.solicitud.desde) }} – {{ formatoFecha(c.solicitud.hasta) }}
         </div>
         <button v-else class="rp-card-btn rp-card-btn--generar" @click="abrirDialogo(c)">
           <v-icon icon="mdi-refresh" size="16" class="mr-1" v-if="c.reportes.length" />
@@ -372,13 +374,39 @@ const eliminarReporte = async (item) => {
 }
 .rp-card-btn--ready:hover { filter: brightness(1.1); }
 .rp-card-btn--ready:disabled { opacity: 0.6; cursor: default; }
-.rp-card-btn--pending {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px dashed var(--border);
-  color: var(--text-muted);
-  cursor: default;
+.rp-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 8px;
+  padding: 7px 10px;
   font-size: 11.5px;
-  text-align: center;
+  font-weight: 700;
+  width: fit-content;
+}
+.rp-estado-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.rp-estado--rojo {
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  color: #fca5a5;
+}
+.rp-estado--rojo .rp-estado-dot { background: #f87171; }
+.rp-estado--verde {
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  color: #86efac;
+}
+.rp-estado--verde .rp-estado-dot {
+  background: #4ade80;
+  animation: rp-pulse 1.4s ease-in-out infinite;
+}
+@keyframes rp-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 .rp-card-btn--generar {
   background: rgba(161, 0, 255, 0.12);
