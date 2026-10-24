@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   try {
     // Solo se sirven rutas que estén listadas en el manifest publicado.
-    const manifestResult = await get('manifest.json', { access: 'private' })
+    const manifestResult = await get('manifest.json', { access: 'private', useCache: false })
     if (manifestResult?.statusCode !== 200) {
       return res.status(404).send('Not found')
     }
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       return res.status(404).send('Not found')
     }
 
-    const result = await get(pathname, { access: 'private' })
+    const result = await get(pathname, { access: 'private', useCache: false })
     if (result?.statusCode !== 200) {
       return res.status(404).send('Not found')
     }

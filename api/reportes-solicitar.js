@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
   try {
     let solicitudes = []
-    const existing = await get('solicitudes.json', { access: 'private' })
+    const existing = await get('solicitudes.json', { access: 'private', useCache: false })
     if (existing?.statusCode === 200) {
       const chunks = []
       for await (const chunk of existing.stream) chunks.push(chunk)
