@@ -41,9 +41,11 @@ const clientes = clientesRaw.map((c) => ({ ...c, slug: slugify(c.nombre) }))
 
 // ── Manifest de reportes publicados + solicitudes pendientes ───────────
 const reportesPorSlug = ref({})
+const todosLosReportes = ref([])
 const solicitudesPorSlug = ref({})
 const cargando = ref(true)
 const errorCarga = ref(false)
+const eliminandoPathname = ref(null)
 
 const cargarEstado = async () => {
   try {
@@ -61,6 +63,7 @@ const cargarEstado = async () => {
       }
     }
     reportesPorSlug.value = map
+    todosLosReportes.value = [...items].sort((a, b) => b.publicado_en.localeCompare(a.publicado_en))
 
     if (resSolicitudes.ok) {
       const solicitudes = await resSolicitudes.json()
@@ -140,6 +143,30 @@ const formatoFecha = (iso) => {
   const [y, m, d] = iso.split('-')
   return `${d}/${m}/${y}`
 }
+
+const formatoFechaHora = (iso) => {
+  const d = new Date(iso)
+  return d.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })
+}
+
+const eliminarReporte = async (item) => {
+  const ok = window.confirm(`¿Eliminar el reporte de "${item.cliente}" (${item.periodo})? Esta acción no se puede deshacer.`)
+  if (!ok) return
+  eliminandoPathname.value = item.pathname
+  try {
+    const res = await fetch('/api/reportes-eliminar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pathname: item.pathname }),
+    })
+    if (!res.ok) throw new Error('No se pudo eliminar')
+    await cargarEstado()
+  } catch (e) {
+    window.alert('No se pudo eliminar el reporte. Intenta de nuevo.')
+  } finally {
+    eliminandoPathname.value = null
+  }
+}
 </script>
 
 <template>
@@ -191,6 +218,34 @@ const formatoFecha = (iso) => {
           </button>
         </template>
       </article>
+    </section>
+
+    <section class="rp-historial">
+      <h2 class="rp-historial-title">Reportes generados</h2>
+      <div v-if="!cargando && !todosLosReportes.length" class="rp-card-period--muted" style="padding: 12px 0;">
+        Todavía no hay ningún reporte publicado.
+      </div>
+      <div v-for="item in todosLosReportes" :key="item.pathname" class="rp-historial-row glass-card">
+        <div class="rp-historial-info">
+          <div class="rp-historial-cliente">{{ item.cliente }}</div>
+          <div class="rp-historial-meta">{{ item.periodo }} · publicado el {{ formatoFechaHora(item.publicado_en) }}</div>
+        </div>
+        <div class="rp-historial-acciones">
+          <a
+            :href="`/api/reportes-descargar?pathname=${encodeURIComponent(item.pathname)}`"
+            target="_blank" rel="noopener" class="rp-historial-btn rp-historial-btn--descargar"
+          >
+            <v-icon icon="mdi-download" size="16" />
+          </a>
+          <button
+            class="rp-historial-btn rp-historial-btn--eliminar"
+            :disabled="eliminandoPathname === item.pathname"
+            @click="eliminarReporte(item)"
+          >
+            <v-icon icon="mdi-trash-can-outline" size="16" />
+          </button>
+        </div>
+      </div>
     </section>
 
     <v-dialog v-model="dialogAbierto" max-width="420">
@@ -346,6 +401,49 @@ const formatoFecha = (iso) => {
   margin-top: 4px;
 }
 .rp-card-btn--generar:hover { background: rgba(161, 0, 255, 0.2); }
+
+.rp-historial {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 48px auto 0;
+}
+.rp-historial-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 14px;
+}
+.rp-historial-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  gap: 12px;
+}
+.rp-historial-cliente { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.rp-historial-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.rp-historial-acciones { display: flex; gap: 8px; flex-shrink: 0; }
+.rp-historial-btn {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+.rp-historial-btn--descargar { background: rgba(161, 0, 255, 0.12); color: var(--primary-light); }
+.rp-historial-btn--descargar:hover { background: rgba(161, 0, 255, 0.22); }
+.rp-historial-btn--eliminar { background: rgba(248, 113, 113, 0.08); border-color: rgba(248, 113, 113, 0.3); color: #fca5a5; }
+.rp-historial-btn--eliminar:hover { background: rgba(248, 113, 113, 0.18); }
+.rp-historial-btn--eliminar:disabled { opacity: 0.5; cursor: default; }
+
+@media (max-width: 480px) {
+  .rp-historial-row { flex-wrap: wrap; }
+}
 
 .rp-dialog { background: var(--dark-card) !important; }
 .rp-dialog-title { color: #fff; }
