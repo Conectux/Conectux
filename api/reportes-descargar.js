@@ -1,35 +1,40 @@
 import { get } from '@vercel/blob'
 
-export default async function handler(request) {
-  const { searchParams } = new URL(request.url)
-  const pathname = searchParams.get('pathname')
+export default async function handler(req, res) {
+  const { pathname } = req.query
 
   if (!pathname) {
-    return new Response(JSON.stringify({ error: 'Falta pathname' }), { status: 400 })
+    return res.status(400).json({ error: 'Falta pathname' })
   }
 
-  // Solo se sirven rutas que estén listadas en el manifest publicado.
-  const manifestResult = await get('manifest.json', { access: 'private' })
-  if (manifestResult?.statusCode !== 200) {
-    return new Response('Not found', { status: 404 })
-  }
-  const manifest = await new Response(manifestResult.stream).json()
-  const match = manifest.find((item) => item.pathname === pathname)
-  if (!match) {
-    return new Response('Not found', { status: 404 })
-  }
+  try {
+    // Solo se sirven rutas que estén listadas en el manifest publicado.
+    const manifestResult = await get('manifest.json', { access: 'private' })
+    if (manifestResult?.statusCode !== 200) {
+      return res.status(404).send('Not found')
+    }
+    const manifestChunks = []
+    for await (const chunk of manifestResult.stream) manifestChunks.push(chunk)
+    const manifest = JSON.parse(Buffer.concat(manifestChunks.map((c) => Buffer.from(c))).toString('utf-8'))
+    const match = manifest.find((item) => item.pathname === pathname)
+    if (!match) {
+      return res.status(404).send('Not found')
+    }
 
-  const result = await get(pathname, { access: 'private' })
-  if (result?.statusCode !== 200) {
-    return new Response('Not found', { status: 404 })
-  }
+    const result = await get(pathname, { access: 'private' })
+    if (result?.statusCode !== 200) {
+      return res.status(404).send('Not found')
+    }
 
-  return new Response(result.stream, {
-    headers: {
-      'Content-Type': 'application/pdf',
-      'X-Content-Type-Options': 'nosniff',
-      'Content-Disposition': `inline; filename="${match.slug}-${match.periodo.replace(/\s+/g, '-')}.pdf"`,
-      'Cache-Control': 'private, no-cache',
-    },
-  })
+    res.setHeader('Content-Type', 'application/pdf')
+    res.setHeader('X-Content-Type-Options', 'nosniff')
+    res.setHeader('Content-Disposition', `inline; filename="${match.slug}-${match.periodo.replace(/\s+/g, '-')}.pdf"`)
+    res.setHeader('Cache-Control', 'private, no-cache')
+    const chunks = []
+    for await (const chunk of result.stream) chunks.push(chunk)
+    res.status(200).send(Buffer.concat(chunks.map((c) => Buffer.from(c))))
+  } catch (err) {
+    console.error('reportes-descargar error:', err)
+    res.status(500).json({ error: 'Error interno' })
+  }
 }
