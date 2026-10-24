@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
 import { resolve, dirname, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import puppeteer from 'puppeteer'
@@ -28,20 +28,36 @@ const esc = (s) => String(s)
   .replace(/</g, '&lt;')
   .replace(/>/g, '&gt;')
 
-const bullets = (items = []) => items.map((i) => `<li>${esc(i)}</li>`).join('\n')
+// Frases cortas y directas (resumen, plan de acción) — usan el ícono 🚀 del CSS.
+const punchList = (items = []) => items.map((i) => `<li>${esc(i)}</li>`).join('\n')
 
-const statCards = (stats = []) => stats.map(
-  (s) => `<div class="stat-card"><div class="value">${esc(s.value)}</div><div class="label">${esc(s.label)}</div></div>`
+// Tarjetas cortas con emoji propio (enfoque, entregables, qué funcionó, oportunidades)
+const punchCards = (items = []) => items.map(
+  (i) => `<div class="punch-card"><span class="emoji">${esc(i.emoji)}</span><span class="txt">${esc(i.texto)}</span></div>`
 ).join('\n')
 
+// Números grandes para la portada
+const heroStats = (items = []) => items.map(
+  (s) => `<div class="hero-stat"><span class="emoji">${esc(s.emoji)}</span><div class="value">${esc(s.value)}</div><div class="label">${esc(s.label)}</div></div>`
+).join('\n')
+
+// Números grandes para secciones internas (redes, publicidad, comercial)
+const bigStats = (items = []) => items.map(
+  (s) => `<div class="big-stat"><span class="emoji">${esc(s.emoji)}</span><div class="value">${esc(s.value)}</div><div class="label">${esc(s.label)}</div></div>`
+).join('\n')
+
+// Filas de campaña tipo tarjeta, con el resultado como número grande
 const campaignRows = (campanas = []) => campanas.map((c) => `
-  <tr>
-    <td>${esc(c.nombre)}</td>
-    <td>${esc(c.objetivo)}</td>
-    <td>${esc(c.inversion)}</td>
-    <td>${esc(c.resultado)}</td>
-    <td>${esc(c.costo)}</td>
-  </tr>`).join('\n')
+  <div class="campaign-row">
+    <div>
+      <div class="name">${esc(c.nombre)}</div>
+      <div class="obj">${esc(c.objetivo)}</div>
+    </div>
+    <div>
+      <div class="result">${esc(c.resultado_valor)}</div>
+      <div class="cost">${esc(c.resultado_label)} · ${esc(c.costo)}</div>
+    </div>
+  </div>`).join('\n')
 
 const contentCards = (contenidos = []) => contenidos.map((c) => `
   <div class="content-card">
@@ -60,20 +76,18 @@ const replacements = {
   LOGO_SRC: logoSrc,
   CLIENTE: esc(data.cliente),
   PERIODO: esc(data.periodo),
-  RESUMEN_BULLETS: bullets(data.resumen),
-  ENFOQUE_INTRO: esc(data.enfoque_intro || ''),
-  ENFOQUE_BULLETS: bullets(data.enfoque),
-  ENTREGABLES_BULLETS: bullets(data.entregables),
-  REDES_STATS: statCards(data.redes_stats),
-  REDES_NOTA: esc(data.redes_nota || ''),
-  ADS_STATS: statCards(data.ads_stats),
+  HERO_STATS: heroStats(data.hero_stats),
+  RESUMEN_PUNCH: punchList(data.resumen_punch),
+  ENFOQUE_PUNCH: punchCards(data.enfoque_punch),
+  ENTREGABLES_PUNCH: punchCards(data.entregables_punch),
+  REDES_STATS: bigStats(data.redes_stats),
+  ADS_STATS: bigStats(data.ads_stats),
   CAMPAIGNS_ROWS: campaignRows(data.campanas),
   CONTENT_CARDS: contentCards(data.contenidos),
-  COMERCIAL_STATS: statCards(data.comercial_stats),
-  COMERCIAL_NOTA: esc(data.comercial_nota || ''),
-  FUNCIONO_BULLETS: bullets(data.funciono),
-  OPORTUNIDADES_BULLETS: bullets(data.oportunidades),
-  PLAN_BULLETS: bullets(data.plan),
+  COMERCIAL_STATS: bigStats(data.comercial_stats),
+  FUNCIONO_PUNCH: punchCards(data.funciono_punch),
+  OPORTUNIDADES_PUNCH: punchCards(data.oportunidades_punch),
+  PLAN_PUNCH: punchList(data.plan_punch),
 }
 
 for (const [token, value] of Object.entries(replacements)) {

@@ -11,8 +11,8 @@
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #1c1230;
     background: #ffffff;
-    font-size: 11.5px;
-    line-height: 1.55;
+    font-size: 12px;
+    line-height: 1.45;
   }
   .page {
     width: 210mm;
@@ -30,9 +30,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20mm 18mm;
+    padding: 18mm 18mm;
   }
-  .cover img.logo { width: 150px; margin-bottom: 40mm; }
+  .cover img.logo { width: 140px; margin-bottom: 14mm; }
   .cover .eyebrow {
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -40,96 +40,134 @@
     color: #c89bff;
     margin-bottom: 10px;
   }
-  .cover h1 { font-size: 34px; margin: 0 0 6px; font-weight: 700; }
+  .cover h1 { font-size: 36px; margin: 0 0 6px; font-weight: 800; }
   .cover .periodo { font-size: 16px; color: #d9c4ff; margin-bottom: 0; }
-  .cover .footer-cover { font-size: 10px; color: #9a84c0; }
+
+  .hero-row { display: flex; gap: 14px; margin: 10mm 0; }
+  .hero-stat {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(161,0,255,0.35);
+    border-radius: 18px;
+    padding: 18px 14px;
+    text-align: center;
+  }
+  .hero-stat .emoji { font-size: 26px; margin-bottom: 6px; display: block; }
+  .hero-stat .value { font-size: 34px; font-weight: 800; color: #fff; line-height: 1; }
+  .hero-stat .label { font-size: 10px; color: #c89bff; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; }
+
+  .cover-summary {
+    background: rgba(161, 0, 255, 0.12);
+    border: 1px solid rgba(161, 0, 255, 0.35);
+    border-radius: 18px;
+    padding: 16px 18px;
+  }
+  .cover-summary h3 { margin: 0 0 10px; font-size: 13px; color: #d9b8ff; text-transform: uppercase; letter-spacing: 1px; }
+  .punch-list { list-style: none; margin: 0; padding: 0; }
+  .punch-list li {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    padding: 7px 0 7px 26px;
+    position: relative;
+  }
+  .punch-list li:before { content: "🚀"; position: absolute; left: 0; top: 6px; font-size: 13px; }
+  .footer-cover { margin-top: 12px; font-size: 10px; color: #9a84c0; }
 
   /* ── Section header ──────────────────────── */
   .section-head {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
   .section-num {
     background: #A100FF;
     color: #fff;
-    width: 26px; height: 26px;
-    border-radius: 7px;
+    width: 28px; height: 28px;
+    border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 13px;
+    font-weight: 800; font-size: 14px;
     flex-shrink: 0;
   }
-  .section-head h2 { font-size: 18px; margin: 0; color: #1c1230; }
-  .page-logo { position: absolute; top: 10mm; right: 16mm; width: 70px; opacity: 0.9; }
+  .section-head h2 { font-size: 20px; margin: 0; color: #1c1230; font-weight: 800; }
+  .page-logo { position: absolute; top: 10mm; right: 16mm; width: 65px; opacity: 0.9; }
 
-  /* ── Generic blocks ──────────────────────── */
-  .lead { font-size: 12.5px; color: #4a3d63; margin-bottom: 18px; }
-  .bullets { list-style: none; margin: 0; padding: 0; }
-  .bullets li {
-    padding: 9px 0 9px 22px;
-    position: relative;
-    border-bottom: 1px solid #efe8fa;
-    font-size: 12px;
-  }
-  .bullets li:before {
-    content: "✓";
-    position: absolute; left: 0; top: 9px;
-    color: #A100FF; font-weight: 700;
-  }
-
-  /* ── Stat grid ────────────────────────────── */
-  .stat-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
-  .stat-card {
+  /* ── Big stat grid ────────────────────────── */
+  .big-stat-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .big-stat {
+    flex: 1;
+    min-width: 42%;
     background: linear-gradient(145deg, #f6eeff, #fbf8ff);
     border: 1px solid #ecdcff;
-    border-radius: 12px;
-    padding: 12px 14px;
-    width: 30%;
-    flex-grow: 1;
+    border-radius: 16px;
+    padding: 18px 16px;
+    text-align: center;
   }
-  .stat-card .value { font-size: 20px; font-weight: 700; color: #A100FF; }
-  .stat-card .label { font-size: 10px; color: #665583; text-transform: uppercase; letter-spacing: 0.5px; }
+  .big-stat .emoji { font-size: 24px; display: block; margin-bottom: 4px; }
+  .big-stat .value { font-size: 38px; font-weight: 800; color: #A100FF; line-height: 1; }
+  .big-stat .label { font-size: 10.5px; color: #665583; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; font-weight: 600; }
 
-  table.campaigns { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 10.5px; }
-  table.campaigns th {
-    background: #1c1230; color: #fff; text-align: left;
-    padding: 7px 8px; font-weight: 600;
+  /* ── Punch cards (short-phrase lists) ────── */
+  .punch-grid { display: flex; flex-direction: column; gap: 8px; }
+  .punch-card {
+    background: #faf6ff;
+    border: 1px solid #ecdcff;
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
-  table.campaigns td { padding: 7px 8px; border-bottom: 1px solid #eee2fa; }
-  table.campaigns tr:nth-child(even) td { background: #faf6ff; }
+  .punch-card .emoji { font-size: 18px; flex-shrink: 0; }
+  .punch-card .txt { font-size: 13px; font-weight: 700; color: #1c1230; }
+
+  /* ── Result badges table replacement ─────── */
+  .campaign-rows { display: flex; flex-direction: column; gap: 10px; }
+  .campaign-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1c1230;
+    border-radius: 14px;
+    padding: 12px 16px;
+    color: #fff;
+  }
+  .campaign-row .name { font-size: 12.5px; font-weight: 700; }
+  .campaign-row .obj { font-size: 9.5px; color: #c89bff; text-transform: uppercase; letter-spacing: 0.5px; }
+  .campaign-row .result { font-size: 22px; font-weight: 800; color: #d9b8ff; text-align: right; }
+  .campaign-row .cost { font-size: 9.5px; color: #a994c9; text-align: right; }
 
   /* ── Content cards (best posts) ───────────── */
   .content-grid { display: flex; gap: 12px; }
   .content-card {
     flex: 1;
     border: 1px solid #ecdcff;
-    border-radius: 14px;
+    border-radius: 16px;
     overflow: hidden;
     background: #fff;
   }
-  .content-card img { width: 100%; height: 110px; object-fit: cover; display: block; background: #eee; }
-  .content-card .body { padding: 10px 12px; }
+  .content-card img { width: 100%; height: 125px; object-fit: cover; display: block; background: #eee; }
+  .content-card .body { padding: 12px 14px; }
   .content-card .tag {
     display: inline-block; background: #A100FF; color: #fff;
-    font-size: 9px; padding: 2px 8px; border-radius: 20px; margin-bottom: 6px;
+    font-size: 9.5px; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; font-weight: 700;
   }
-  .content-card .result { font-weight: 700; color: #1c1230; font-size: 12px; margin: 4px 0; }
+  .content-card .result { font-weight: 800; color: #A100FF; font-size: 18px; margin: 4px 0; }
   .content-card .why { font-size: 10.5px; color: #4a3d63; }
 
   .callout {
     background: #1c1230;
     color: #fff;
-    border-radius: 14px;
-    padding: 16px 18px;
+    border-radius: 16px;
+    padding: 18px 20px;
     margin-top: 10px;
   }
-  .callout h3 { margin: 0 0 8px; font-size: 13px; color: #d9b8ff; }
-  .callout p { margin: 0; font-size: 11.5px; color: #e8ddf7; }
+  .callout h3 { margin: 0 0 10px; font-size: 13px; color: #d9b8ff; text-transform: uppercase; letter-spacing: 1px; }
 
   .two-col { display: flex; gap: 16px; }
   .two-col > div { flex: 1; }
-  .subhead { font-size: 12.5px; font-weight: 700; color: #A100FF; margin: 0 0 8px; }
+  .subhead { font-size: 13px; font-weight: 800; color: #A100FF; margin: 0 0 10px; }
 
   .footer-band {
     position: absolute; bottom: 10mm; left: 16mm; right: 16mm;
@@ -148,28 +186,26 @@
       <h1>{{CLIENTE}}</h1>
       <div class="periodo">{{PERIODO}}</div>
     </div>
-    <div>
-      <div class="callout" style="background:rgba(161,0,255,0.15); border:1px solid rgba(161,0,255,0.4);">
-        <h3>Resumen ejecutivo</h3>
-        <ul class="bullets" style="color:#fff;">
-          {{RESUMEN_BULLETS}}
-        </ul>
-      </div>
-      <div class="footer-cover" style="margin-top:14px;">Generado por Conectux · conectux.com</div>
+
+    <div class="hero-row">{{HERO_STATS}}</div>
+
+    <div class="cover-summary">
+      <h3>Lo más destacado</h3>
+      <ul class="punch-list">{{RESUMEN_PUNCH}}</ul>
+      <div class="footer-cover">Generado por Conectux · conectux.com</div>
     </div>
   </div>
 
   <!-- 2. ENFOQUE DEL MES + 3. GESTIÓN -->
   <div class="page">
     <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
-    <div class="section-head"><div class="section-num">2</div><h2>Enfoque y objetivos del mes</h2></div>
-    <p class="lead">{{ENFOQUE_INTRO}}</p>
-    <ul class="bullets">{{ENFOQUE_BULLETS}}</ul>
+    <div class="section-head"><div class="section-num">2</div><h2>Enfoque del mes</h2></div>
+    <div class="punch-grid">{{ENFOQUE_PUNCH}}</div>
 
-    <div style="height:24px;"></div>
+    <div style="height:26px;"></div>
 
-    <div class="section-head"><div class="section-num">3</div><h2>Gestión y entregables realizados</h2></div>
-    <ul class="bullets">{{ENTREGABLES_BULLETS}}</ul>
+    <div class="section-head"><div class="section-num">3</div><h2>Qué hicimos</h2></div>
+    <div class="punch-grid">{{ENTREGABLES_PUNCH}}</div>
 
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
   </div>
@@ -177,18 +213,14 @@
   <!-- 4. RESULTADOS REDES + 5. PUBLICIDAD -->
   <div class="page">
     <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
-    <div class="section-head"><div class="section-num">4</div><h2>Resultados en redes sociales</h2></div>
-    <div class="stat-grid">{{REDES_STATS}}</div>
-    <p class="lead">{{REDES_NOTA}}</p>
+    <div class="section-head"><div class="section-num">4</div><h2>Redes sociales</h2></div>
+    <div class="big-stat-grid">{{REDES_STATS}}</div>
 
-    <div style="height:10px;"></div>
+    <div style="height:14px;"></div>
 
-    <div class="section-head"><div class="section-num">5</div><h2>Resultados de publicidad paga (Meta Ads)</h2></div>
-    <div class="stat-grid">{{ADS_STATS}}</div>
-    <table class="campaigns">
-      <thead><tr><th>Campaña</th><th>Objetivo</th><th>Inversión</th><th>Resultado principal</th><th>Costo / resultado</th></tr></thead>
-      <tbody>{{CAMPAIGNS_ROWS}}</tbody>
-    </table>
+    <div class="section-head"><div class="section-num">5</div><h2>Publicidad paga</h2></div>
+    <div class="big-stat-grid">{{ADS_STATS}}</div>
+    <div class="campaign-rows">{{CAMPAIGNS_ROWS}}</div>
 
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
   </div>
@@ -196,15 +228,13 @@
   <!-- 6. MEJORES CONTENIDOS -->
   <div class="page">
     <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
-    <div class="section-head"><div class="section-num">6</div><h2>Mejores contenidos del mes</h2></div>
-    <p class="lead">Los anuncios y piezas que mejor conectaron con tu audiencia este mes:</p>
+    <div class="section-head"><div class="section-num">6</div><h2>Lo que mejor funcionó</h2></div>
     <div class="content-grid">{{CONTENT_CARDS}}</div>
 
-    <div style="height:24px;"></div>
+    <div style="height:26px;"></div>
 
     <div class="section-head"><div class="section-num">7</div><h2>Resultados comerciales</h2></div>
-    <div class="stat-grid">{{COMERCIAL_STATS}}</div>
-    <p class="lead">{{COMERCIAL_NOTA}}</p>
+    <div class="big-stat-grid">{{COMERCIAL_STATS}}</div>
 
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
   </div>
@@ -212,24 +242,24 @@
   <!-- 8. ANÁLISIS + 9. PLAN -->
   <div class="page">
     <img class="page-logo" src="{{LOGO_SRC}}" alt="" />
-    <div class="section-head"><div class="section-num">8</div><h2>Análisis y aprendizajes</h2></div>
+    <div class="section-head"><div class="section-num">8</div><h2>Lo que aprendimos</h2></div>
     <div class="two-col">
       <div>
-        <p class="subhead">✅ Qué funcionó</p>
-        <ul class="bullets">{{FUNCIONO_BULLETS}}</ul>
+        <p class="subhead">✅ Funcionó</p>
+        <div class="punch-grid">{{FUNCIONO_PUNCH}}</div>
       </div>
       <div>
-        <p class="subhead">🔍 Oportunidades detectadas</p>
-        <ul class="bullets">{{OPORTUNIDADES_BULLETS}}</ul>
+        <p class="subhead">🔍 Oportunidad</p>
+        <div class="punch-grid">{{OPORTUNIDADES_PUNCH}}</div>
       </div>
     </div>
 
-    <div style="height:22px;"></div>
+    <div style="height:24px;"></div>
 
-    <div class="section-head"><div class="section-num">9</div><h2>Plan de acción — próximo mes</h2></div>
+    <div class="section-head"><div class="section-num">9</div><h2>Plan — próximo mes</h2></div>
     <div class="callout">
       <h3>Lo que viene</h3>
-      <ul class="bullets" style="color:#fff;">{{PLAN_BULLETS}}</ul>
+      <ul class="punch-list">{{PLAN_PUNCH}}</ul>
     </div>
 
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux · conectux.com</span></div>
