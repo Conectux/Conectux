@@ -1,11 +1,18 @@
 import { get, put, del } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
-import { generarContratoSinFirmar } from '../lib/contrato-pdf.js'
+import {
+  generarContratoSinFirmar,
+  CLAUSULA_TITULARIDAD_DEFAULT,
+  CLAUSULA_TERMINACION_DEFAULT,
+  CLAUSULA_SERVICIOS_DEFAULT,
+} from '../lib/contrato-pdf.js'
 
 // Uso interno (protegido por middleware vía cookie de /api/contratos-login):
-// GET              → listar contratos
-// POST accion=crear    → crear contrato nuevo
-// POST accion=eliminar → eliminar contrato existente
+// GET  accion=defaults      → texto estándar de las cláusulas editables
+// GET  (sin accion)         → listar contratos
+// POST accion=crear         → crear contrato nuevo
+// POST accion=previsualizar → generar el PDF sin guardarlo (para revisar antes de enviar)
+// POST accion=eliminar      → eliminar contrato existente
 
 const slugify = (s) => s
   .toLowerCase()
@@ -37,25 +44,49 @@ async function listar(req, res) {
   res.status(200).json(manifest)
 }
 
-async function crear(req, res, body) {
-  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, nombreRepresentante } = body || {}
-
-  if (!cliente || !documentoCliente || !ciudad || !fechaInicioContrato || !fechaInicioTrabajo || !plan || !nombreRepresentante) {
-    return res.status(400).json({ error: 'Faltan campos requeridos' })
-  }
-
-  let firmaRepresentanteBytes = null
+async function leerFirmaRepresentante() {
   const firmaResult = await get('contratos/firma-representante.png', { access: 'private' })
-  if (firmaResult?.statusCode === 200) {
-    const chunks = []
-    for await (const chunk of firmaResult.stream) chunks.push(chunk)
-    firmaRepresentanteBytes = Buffer.concat(chunks.map((c) => Buffer.from(c)))
-  }
+  if (firmaResult?.statusCode !== 200) return null
+  const chunks = []
+  for await (const chunk of firmaResult.stream) chunks.push(chunk)
+  return Buffer.concat(chunks.map((c) => Buffer.from(c)))
+}
 
-  const { pdfBytes, firmaClienteRect } = await generarContratoSinFirmar(
-    { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, nombreRepresentante },
-    firmaRepresentanteBytes
-  )
+function validarCampos(body) {
+  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, nombreRepresentante } = body || {}
+  if (!cliente || !documentoCliente || !ciudad || !fechaInicioContrato || !fechaInicioTrabajo || !plan || !nombreRepresentante) {
+    return 'Faltan campos requeridos'
+  }
+  return null
+}
+
+async function defaults(req, res) {
+  res.status(200).json({
+    clausulaTitularidad: CLAUSULA_TITULARIDAD_DEFAULT,
+    clausulaTerminacion: CLAUSULA_TERMINACION_DEFAULT,
+    clausulaServiciosAdicionales: CLAUSULA_SERVICIOS_DEFAULT,
+  })
+}
+
+async function previsualizar(req, res, body) {
+  const errorValidacion = validarCampos(body)
+  if (errorValidacion) return res.status(400).json({ error: errorValidacion })
+
+  const firmaRepresentanteBytes = await leerFirmaRepresentante()
+  const { pdfBytes } = await generarContratoSinFirmar(body, firmaRepresentanteBytes)
+
+  res.setHeader('Content-Type', 'application/pdf')
+  res.setHeader('Content-Disposition', 'inline; filename="vista-previa-contrato.pdf"')
+  res.status(200).send(Buffer.from(pdfBytes))
+}
+
+async function crear(req, res, body) {
+  const errorValidacion = validarCampos(body)
+  if (errorValidacion) return res.status(400).json({ error: errorValidacion })
+  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, nombreRepresentante } = body
+
+  const firmaRepresentanteBytes = await leerFirmaRepresentante()
+  const { pdfBytes, firmaClienteRect } = await generarContratoSinFirmar(body, firmaRepresentanteBytes)
 
   const slug = slugify(cliente)
   const id = `${slug}-${Date.now()}`
@@ -107,7 +138,10 @@ async function eliminar(req, res, body) {
 
 export default async function handler(req, res) {
   try {
-    if (req.method === 'GET') return await listar(req, res)
+    if (req.method === 'GET') {
+      if (req.query.accion === 'defaults') return await defaults(req, res)
+      return await listar(req, res)
+    }
 
     if (req.method === 'POST') {
       let body = req.body
@@ -115,6 +149,7 @@ export default async function handler(req, res) {
         try { body = JSON.parse(body || '{}') } catch { body = {} }
       }
       if (body.accion === 'eliminar') return await eliminar(req, res, body)
+      if (body.accion === 'previsualizar') return await previsualizar(req, res, body)
       return await crear(req, res, body)
     }
 

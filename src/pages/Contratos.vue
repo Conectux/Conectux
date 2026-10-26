@@ -15,8 +15,13 @@ const contratos = ref([])
 const cargandoLista = ref(false)
 
 const dialogNuevo = ref(false)
-const nuevoForm = ref({ ciudad: '', cliente: '', documentoCliente: '', fechaInicioContrato: '', fechaInicioTrabajo: '', plan: '' })
+const formVacio = () => ({
+  ciudad: '', cliente: '', documentoCliente: '', fechaInicioContrato: '', fechaInicioTrabajo: '', plan: '',
+  clausulaTitularidad: '', clausulaTerminacion: '', clausulaServiciosAdicionales: '',
+})
+const nuevoForm = ref(formVacio())
 const creando = ref(false)
+const previsualizando = ref(false)
 const errorCrear = ref('')
 const linkGenerado = ref('')
 const copiado = ref(false)
@@ -61,12 +66,47 @@ const iniciarSesion = async () => {
   }
 }
 
-const abrirNuevo = () => {
-  nuevoForm.value = { ciudad: '', cliente: '', documentoCliente: '', fechaInicioContrato: '', fechaInicioTrabajo: '', plan: '' }
+const abrirNuevo = async () => {
+  nuevoForm.value = formVacio()
   errorCrear.value = ''
   linkGenerado.value = ''
   copiado.value = false
   dialogNuevo.value = true
+  try {
+    const res = await fetch('/api/contratos-admin?accion=defaults')
+    if (res.ok) {
+      const d = await res.json()
+      nuevoForm.value.clausulaTitularidad = d.clausulaTitularidad
+      nuevoForm.value.clausulaTerminacion = d.clausulaTerminacion
+      nuevoForm.value.clausulaServiciosAdicionales = d.clausulaServiciosAdicionales
+    }
+  } catch {
+    // Si falla, el usuario puede escribir las cláusulas manualmente.
+  }
+}
+
+const previsualizar = async () => {
+  const f = nuevoForm.value
+  if (!f.ciudad || !f.cliente || !f.documentoCliente || !f.fechaInicioContrato || !f.fechaInicioTrabajo || !f.plan) {
+    errorCrear.value = 'Completa todos los campos antes de previsualizar.'
+    return
+  }
+  previsualizando.value = true
+  errorCrear.value = ''
+  try {
+    const res = await fetch('/api/contratos-admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ accion: 'previsualizar', ...f, nombreRepresentante: NOMBRE_REPRESENTANTE }),
+    })
+    if (!res.ok) throw new Error()
+    const blob = await res.blob()
+    window.open(URL.createObjectURL(blob), '_blank')
+  } catch {
+    errorCrear.value = 'No se pudo generar la vista previa. Intenta de nuevo.'
+  } finally {
+    previsualizando.value = false
+  }
 }
 
 const crearContrato = async () => {
@@ -81,7 +121,7 @@ const crearContrato = async () => {
     const res = await fetch('/api/contratos-admin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ accion: 'crear', ...f, nombreRepresentante: NOMBRE_REPRESENTANTE }),
+      body: JSON.stringify({ ...f, nombreRepresentante: NOMBRE_REPRESENTANTE }),
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error || 'No se pudo crear el contrato')
@@ -221,6 +261,20 @@ const formatoFecha = (iso) => {
                 <textarea class="ct-input ct-textarea" v-model="nuevoForm.plan" placeholder="Ej: Plan Pro — contenido + pauta, $1.500.000 COP/mes" rows="3"></textarea>
               </label>
             </div>
+
+            <details class="ct-condiciones">
+              <summary>Condiciones del contrato (editable, opcional)</summary>
+              <label class="ct-form-full">Cláusula de titularidad de la estrategia y campañas
+                <textarea class="ct-input ct-textarea" v-model="nuevoForm.clausulaTitularidad" rows="4"></textarea>
+              </label>
+              <label class="ct-form-full">Cláusula de terminación y preaviso
+                <textarea class="ct-input ct-textarea" v-model="nuevoForm.clausulaTerminacion" rows="4"></textarea>
+              </label>
+              <label class="ct-form-full">Cláusula de servicios adicionales
+                <textarea class="ct-input ct-textarea" v-model="nuevoForm.clausulaServiciosAdicionales" rows="4"></textarea>
+              </label>
+            </details>
+
             <p v-if="errorCrear" class="ct-error">{{ errorCrear }}</p>
           </template>
           <template v-else>
@@ -237,7 +291,10 @@ const formatoFecha = (iso) => {
         <v-card-actions>
           <v-spacer />
           <button v-if="!linkGenerado" class="ct-dialog-cancel" @click="dialogNuevo = false" :disabled="creando">Cancelar</button>
-          <button v-if="!linkGenerado" class="ct-btn ct-btn--primary" :disabled="creando" @click="crearContrato">
+          <button v-if="!linkGenerado" class="ct-btn ct-btn--ghost" :disabled="previsualizando || creando" @click="previsualizar">
+            {{ previsualizando ? 'Generando…' : 'Vista previa' }}
+          </button>
+          <button v-if="!linkGenerado" class="ct-btn ct-btn--primary" :disabled="creando || previsualizando" @click="crearContrato">
             {{ creando ? 'Generando…' : 'Generar contrato' }}
           </button>
           <button v-else class="ct-btn ct-btn--primary" @click="dialogNuevo = false">Listo</button>
@@ -320,6 +377,10 @@ const formatoFecha = (iso) => {
 .ct-dialog-title { color: #fff; }
 .ct-form-grid { display: flex; flex-direction: column; gap: 14px; }
 .ct-form-grid label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+
+.ct-condiciones { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 14px; }
+.ct-condiciones summary { cursor: pointer; font-size: 12.5px; color: var(--primary-light); font-weight: 600; margin-bottom: 12px; }
+.ct-condiciones label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-top: 12px; }
 .ct-dialog-cancel { background: transparent; border: none; color: var(--text-secondary); padding: 10px 14px; cursor: pointer; font-family: inherit; font-size: 13px; }
 
 .ct-link-generado-titulo { color: #86efac; font-weight: 700; font-size: 15px; margin: 0 0 6px; }
