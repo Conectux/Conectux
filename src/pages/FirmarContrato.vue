@@ -33,7 +33,7 @@ onMounted(async () => {
     return
   }
   try {
-    const res = await fetch(`/api/contratos-detalle?token=${encodeURIComponent(token)}`)
+    const res = await fetch(`/api/contratos-publico?accion=detalle&token=${encodeURIComponent(token)}`)
     if (!res.ok) {
       error.value = 'No se encontró este contrato. Verifica el link.'
       return
@@ -122,10 +122,10 @@ const confirmarFirma = async () => {
       firmaTipo = archivoFirma.value.tipo
     }
 
-    const res = await fetch('/api/contratos-firmar', {
+    const res = await fetch('/api/contratos-publico', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token, nombreFirmante: nombreFirmante.value.trim(), firmaBase64, firmaTipo }),
+      body: JSON.stringify({ accion: 'firmar', token, nombreFirmante: nombreFirmante.value.trim(), firmaBase64, firmaTipo }),
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error || 'No se pudo firmar')
@@ -151,7 +151,7 @@ const confirmarFirma = async () => {
         <div class="fc-check">✅</div>
         <h1>Contrato firmado</h1>
         <p class="fc-texto">Gracias — tu contrato con Conectux quedó firmado correctamente.</p>
-        <a :href="`/api/contratos-descargar?token=${token}`" target="_blank" rel="noopener" class="fc-btn fc-btn--primary">
+        <a :href="`/api/contratos-publico?accion=descargar&token=${token}`" target="_blank" rel="noopener" class="fc-btn fc-btn--primary">
           Descargar copia del contrato
         </a>
       </template>
@@ -166,7 +166,7 @@ const confirmarFirma = async () => {
           <div><strong>Inicio del contrato:</strong> {{ formatoFecha(contrato.fechaInicioContrato) }}</div>
           <div><strong>Inicio del trabajo:</strong> {{ formatoFecha(contrato.fechaInicioTrabajo) }}</div>
         </div>
-        <a :href="`/api/contratos-descargar?token=${token}`" target="_blank" rel="noopener" class="fc-link-ver">
+        <a :href="`/api/contratos-publico?accion=descargar&token=${token}`" target="_blank" rel="noopener" class="fc-link-ver">
           📄 Ver el contrato completo
         </a>
 

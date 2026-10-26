@@ -1,5 +1,5 @@
 export const config = {
-  matcher: ['/api/contratos-listar', '/api/contratos-crear', '/api/contratos-eliminar'],
+  matcher: ['/api/contratos-admin'],
 }
 
 const COOKIE_NAME = 'contratos_sesion'

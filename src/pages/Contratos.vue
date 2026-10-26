@@ -25,7 +25,7 @@ const eliminandoId = ref(null)
 
 const cargarContratos = async () => {
   cargandoLista.value = true
-  const res = await fetch('/api/contratos-listar', { cache: 'no-store' })
+  const res = await fetch('/api/contratos-admin', { cache: 'no-store' })
   if (res.status === 401) {
     autenticado.value = false
   } else if (res.ok) {
@@ -78,10 +78,10 @@ const crearContrato = async () => {
   creando.value = true
   errorCrear.value = ''
   try {
-    const res = await fetch('/api/contratos-crear', {
+    const res = await fetch('/api/contratos-admin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...f, nombreRepresentante: NOMBRE_REPRESENTANTE }),
+      body: JSON.stringify({ accion: 'crear', ...f, nombreRepresentante: NOMBRE_REPRESENTANTE }),
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error || 'No se pudo crear el contrato')
@@ -111,10 +111,10 @@ const eliminarContrato = async (contrato) => {
   if (!ok) return
   eliminandoId.value = contrato.id
   try {
-    const res = await fetch('/api/contratos-eliminar', {
+    const res = await fetch('/api/contratos-admin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: contrato.id }),
+      body: JSON.stringify({ accion: 'eliminar', id: contrato.id }),
     })
     if (!res.ok) throw new Error()
     await cargarContratos()
@@ -195,7 +195,7 @@ const formatoFecha = (iso) => {
               <v-icon icon="mdi-content-copy" size="16" class="mr-1" /> Copiar link
             </button>
           </template>
-          <a v-else :href="`/api/contratos-descargar?id=${c.id}`" target="_blank" rel="noopener" class="ct-btn ct-btn--ghost">
+          <a v-else :href="`/api/contratos-publico?accion=descargar&id=${c.id}`" target="_blank" rel="noopener" class="ct-btn ct-btn--ghost">
             <v-icon icon="mdi-download" size="16" class="mr-1" /> Descargar PDF firmado
           </a>
           <button class="ct-btn ct-btn--eliminar" :disabled="eliminandoId === c.id" @click="eliminarContrato(c)">
