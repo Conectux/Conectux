@@ -193,6 +193,9 @@ const preguntasRespondidas = (b) => Object.keys(b.respuestas || {}).filter((k) =
           <a :href="linkDe(b)" target="_blank" rel="noopener" class="bp-btn bp-btn--ghost">
             <v-icon icon="mdi-eye-outline" size="16" class="mr-1" /> Ver / completar
           </a>
+          <a :href="`/api/brief?accion=pdf&id=${b.id}`" target="_blank" rel="noopener" class="bp-btn bp-btn--ghost">
+            <v-icon icon="mdi-download" size="16" class="mr-1" /> Descargar PDF
+          </a>
           <button class="bp-btn bp-btn--eliminar" :disabled="eliminandoId === b.id" @click="eliminarBrief(b)">
             <v-icon icon="mdi-trash-can-outline" size="16" />
           </button>

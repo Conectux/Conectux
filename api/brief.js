@@ -1,13 +1,15 @@
 import { get, put, del } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
 import { estaAutenticado } from '../lib/contratos-auth.js'
+import { generarBriefPdf } from '../lib/brief-pdf.js'
 
 // Un solo archivo (el proyecto está cerca del límite de funciones serverless
 // del plan Hobby de Vercel) que maneja todo /brief. La autenticación interna
 // se valida adentro con la misma cookie/contraseña de /contratos, en vez de
 // usar middleware de Vercel por ruta.
 //
-// GET  ?token=          → detalle de un brief (público, para precargar el formulario)
+// GET  ?accion=pdf&id=   → descargar el brief en PDF (requiere sesión admin)
+// GET  ?token=           → detalle de un brief (público, para precargar el formulario)
 // GET  (sin token)       → listar todos los briefs (requiere sesión admin)
 // POST accion=crear      → crear un brief nuevo (requiere sesión admin)
 // POST accion=eliminar   → eliminar un brief (requiere sesión admin)
@@ -48,6 +50,22 @@ async function detalle(req, res, token) {
   const brief = manifest.find((b) => b.token === token)
   if (!brief) return res.status(404).json({ error: 'No encontrado' })
   res.status(200).json({ cliente: brief.cliente, respuestas: brief.respuestas || {} })
+}
+
+async function descargarPdf(req, res, id) {
+  if (!estaAutenticado(req)) return res.status(401).json({ error: 'No autenticado' })
+  if (!id) return res.status(400).json({ error: 'Falta id' })
+
+  const manifest = await leerManifest()
+  const brief = manifest.find((b) => b.id === id)
+  if (!brief) return res.status(404).send('Not found')
+
+  const pdfBytes = await generarBriefPdf(brief.cliente, brief.respuestas || {})
+  res.setHeader('Content-Type', 'application/pdf')
+  res.setHeader('X-Content-Type-Options', 'nosniff')
+  res.setHeader('Content-Disposition', `inline; filename="brief-${brief.id}.pdf"`)
+  res.setHeader('Cache-Control', 'private, no-cache')
+  res.status(200).send(Buffer.from(pdfBytes))
 }
 
 async function crear(req, res, body) {
@@ -108,6 +126,7 @@ async function guardar(req, res, body) {
 export default async function handler(req, res) {
   try {
     if (req.method === 'GET') {
+      if (req.query.accion === 'pdf') return await descargarPdf(req, res, req.query.id)
       if (req.query.token) return await detalle(req, res, req.query.token)
       return await listar(req, res)
     }
