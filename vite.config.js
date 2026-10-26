@@ -20,6 +20,8 @@ export default defineConfig({
         reportes: resolve(__dirname, 'reportes/index.html'),
         contratos: resolve(__dirname, 'contratos/index.html'),
         firmarContrato: resolve(__dirname, 'firmar-contrato/index.html'),
+        brief: resolve(__dirname, 'brief/index.html'),
+        llenarBrief: resolve(__dirname, 'llenar-brief/index.html'),
       },
     },
   },
