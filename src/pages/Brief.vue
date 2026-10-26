@@ -181,7 +181,7 @@ const preguntasRespondidas = (b) => Object.keys(b.respuestas || {}).filter((k) =
           </div>
           <div class="bp-estado" :class="b.estado === 'lleno' ? 'bp-estado--verde' : 'bp-estado--rojo'">
             <span class="bp-estado-dot"></span>
-            {{ b.estado === 'lleno' ? 'Respondido' : 'Por llenar' }}
+            {{ b.estado === 'lleno' ? 'Completado' : 'Por llenar' }}
           </div>
         </div>
 
