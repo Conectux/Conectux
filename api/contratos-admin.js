@@ -1,11 +1,6 @@
 import { get, put, del } from '@vercel/blob'
 import { v4 as uuidv4 } from 'uuid'
-import {
-  generarContratoSinFirmar,
-  CLAUSULA_TITULARIDAD_DEFAULT,
-  CLAUSULA_TERMINACION_DEFAULT,
-  CLAUSULA_SERVICIOS_DEFAULT,
-} from '../lib/contrato-pdf.js'
+import { generarContratoSinFirmar, CLAUSULAS_DEFAULT } from '../lib/contrato-pdf.js'
 
 // Uso interno (protegido por middleware vía cookie de /api/contratos-login):
 // GET  accion=defaults      → texto estándar de las cláusulas editables
@@ -62,11 +57,7 @@ function validarCampos(body) {
 }
 
 async function defaults(req, res) {
-  res.status(200).json({
-    clausulaTitularidad: CLAUSULA_TITULARIDAD_DEFAULT,
-    clausulaTerminacion: CLAUSULA_TERMINACION_DEFAULT,
-    clausulaServiciosAdicionales: CLAUSULA_SERVICIOS_DEFAULT,
-  })
+  res.status(200).json({ clausulas: CLAUSULAS_DEFAULT })
 }
 
 async function previsualizar(req, res, body) {
@@ -83,8 +74,10 @@ async function previsualizar(req, res, body) {
 
 const camposEditables = (body) => {
   const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan } = body
-  const { clausulaTitularidad, clausulaTerminacion, clausulaServiciosAdicionales } = body
-  return { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, clausulaTitularidad, clausulaTerminacion, clausulaServiciosAdicionales }
+  const clausulas = Array.isArray(body.clausulas)
+    ? body.clausulas.map((c) => ({ titulo: c.titulo || '', texto: c.texto || '' }))
+    : []
+  return { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, clausulas }
 }
 
 async function crear(req, res, body) {

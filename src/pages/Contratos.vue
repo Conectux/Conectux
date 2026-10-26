@@ -17,7 +17,7 @@ const cargandoLista = ref(false)
 const dialogNuevo = ref(false)
 const formVacio = () => ({
   ciudad: '', cliente: '', documentoCliente: '', fechaInicioContrato: '', fechaInicioTrabajo: '', plan: '',
-  clausulaTitularidad: '', clausulaTerminacion: '', clausulaServiciosAdicionales: '',
+  clausulas: [],
 })
 const nuevoForm = ref(formVacio())
 const editandoId = ref(null)
@@ -85,11 +85,7 @@ const abrirNuevo = async () => {
   copiado.value = false
   dialogNuevo.value = true
   const d = await cargarDefaults()
-  if (d) {
-    nuevoForm.value.clausulaTitularidad = d.clausulaTitularidad
-    nuevoForm.value.clausulaTerminacion = d.clausulaTerminacion
-    nuevoForm.value.clausulaServiciosAdicionales = d.clausulaServiciosAdicionales
-  }
+  if (d) nuevoForm.value.clausulas = d.clausulas.map((c) => ({ ...c }))
 }
 
 const abrirEditar = async (contrato) => {
@@ -97,7 +93,8 @@ const abrirEditar = async (contrato) => {
   errorCrear.value = ''
   linkGenerado.value = ''
   copiado.value = false
-  const d = await cargarDefaults()
+  const tieneClausulas = Array.isArray(contrato.clausulas) && contrato.clausulas.length
+  const clausulas = tieneClausulas ? contrato.clausulas.map((c) => ({ ...c })) : (await cargarDefaults())?.clausulas?.map((c) => ({ ...c })) || []
   nuevoForm.value = {
     ciudad: contrato.ciudad,
     cliente: contrato.cliente,
@@ -105,11 +102,16 @@ const abrirEditar = async (contrato) => {
     fechaInicioContrato: contrato.fechaInicioContrato,
     fechaInicioTrabajo: contrato.fechaInicioTrabajo,
     plan: contrato.plan,
-    clausulaTitularidad: contrato.clausulaTitularidad || d?.clausulaTitularidad || '',
-    clausulaTerminacion: contrato.clausulaTerminacion || d?.clausulaTerminacion || '',
-    clausulaServiciosAdicionales: contrato.clausulaServiciosAdicionales || d?.clausulaServiciosAdicionales || '',
+    clausulas,
   }
   dialogNuevo.value = true
+}
+
+const agregarClausula = () => {
+  nuevoForm.value.clausulas.push({ titulo: '', texto: '' })
+}
+const quitarClausula = (i) => {
+  nuevoForm.value.clausulas.splice(i, 1)
 }
 
 const previsualizar = async () => {
@@ -302,17 +304,20 @@ const formatoFecha = (iso) => {
               </label>
             </div>
 
-            <details class="ct-condiciones">
-              <summary>Condiciones del contrato (editable, opcional)</summary>
-              <label class="ct-form-full">Cláusula de titularidad de la estrategia y campañas
-                <textarea class="ct-input ct-textarea" v-model="nuevoForm.clausulaTitularidad" rows="4"></textarea>
-              </label>
-              <label class="ct-form-full">Cláusula de terminación y preaviso
-                <textarea class="ct-input ct-textarea" v-model="nuevoForm.clausulaTerminacion" rows="4"></textarea>
-              </label>
-              <label class="ct-form-full">Cláusula de servicios adicionales
-                <textarea class="ct-input ct-textarea" v-model="nuevoForm.clausulaServiciosAdicionales" rows="4"></textarea>
-              </label>
+            <details class="ct-condiciones" open>
+              <summary>Condiciones del contrato (editable — PRIMERA y SEGUNDA son fijas, estas empiezan en TERCERA)</summary>
+              <div v-for="(c, i) in nuevoForm.clausulas" :key="i" class="ct-clausula">
+                <div class="ct-clausula-top">
+                  <input class="ct-input ct-clausula-titulo" v-model="c.titulo" placeholder="Título de la cláusula" />
+                  <button class="ct-btn ct-btn--eliminar ct-btn--clausula-quitar" title="Quitar cláusula" @click="quitarClausula(i)">
+                    <v-icon icon="mdi-trash-can-outline" size="14" />
+                  </button>
+                </div>
+                <textarea class="ct-input ct-textarea" v-model="c.texto" placeholder="Texto de la cláusula" rows="4"></textarea>
+              </div>
+              <button class="ct-btn ct-btn--ghost ct-btn-clausula" @click="agregarClausula">
+                <v-icon icon="mdi-plus" size="16" class="mr-1" /> Agregar condición
+              </button>
             </details>
 
             <p v-if="errorCrear" class="ct-error">{{ errorCrear }}</p>
@@ -421,6 +426,15 @@ const formatoFecha = (iso) => {
 .ct-condiciones { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 14px; }
 .ct-condiciones summary { cursor: pointer; font-size: 12.5px; color: var(--primary-light); font-weight: 600; margin-bottom: 12px; }
 .ct-condiciones label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-top: 12px; }
+
+.ct-clausula {
+  background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px; margin-top: 12px;
+}
+.ct-clausula-top { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.ct-clausula-titulo { font-weight: 600; }
+.ct-btn--clausula-quitar { width: 32px; height: 32px; flex-shrink: 0; }
+.ct-btn-clausula { margin-top: 12px; }
 .ct-dialog-cancel { background: transparent; border: none; color: var(--text-secondary); padding: 10px 14px; cursor: pointer; font-family: inherit; font-size: 13px; }
 
 .ct-link-generado-titulo { color: #86efac; font-weight: 700; font-size: 15px; margin: 0 0 6px; }
