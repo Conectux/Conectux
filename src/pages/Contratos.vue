@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import logo from '../assets/logo-conectux.png'
 
 // Nombre fijo del representante legal — se incrusta en cada contrato nuevo.
-const NOMBRE_REPRESENTANTE = 'Felipe Villa' // TODO: confirmar nombre completo exacto
+const NOMBRE_REPRESENTANTE = 'Juan Felipe Villa Londoño'
 
 const autenticado = ref(false)
 const verificando = ref(true)
