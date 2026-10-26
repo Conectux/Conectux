@@ -166,16 +166,16 @@ const confirmarFirma = async () => {
           <div><strong>Inicio del contrato:</strong> {{ formatoFecha(contrato.fechaInicioContrato) }}</div>
           <div><strong>Inicio del trabajo:</strong> {{ formatoFecha(contrato.fechaInicioTrabajo) }}</div>
         </div>
-        <a :href="`/api/contratos-publico?accion=descargar&token=${token}`" target="_blank" rel="noopener" class="fc-link-ver">
-          📄 Ver el contrato completo
+        <a :href="`/api/contratos-publico?accion=descargar&token=${token}`" target="_blank" rel="noopener" class="fc-btn fc-btn--ver-contrato fc-btn--full">
+          <v-icon icon="mdi-file-document-outline" size="20" class="mr-2" /> Ver el contrato completo
         </a>
 
         <div class="fc-divider"></div>
 
-        <label class="fc-label">Tu nombre completo</label>
-        <input class="fc-input" v-model="nombreFirmante" placeholder="Nombre y apellido" />
+        <label class="fc-label">Tu nombre completo <span class="fc-obligatorio">*</span></label>
+        <input class="fc-input" v-model="nombreFirmante" placeholder="Nombre y apellido" required />
 
-        <label class="fc-label" style="margin-top:16px;">Tu firma</label>
+        <label class="fc-label" style="margin-top:16px;">Tu firma <span class="fc-obligatorio">*</span></label>
         <div class="fc-tabs">
           <button class="fc-tab" :class="{ 'fc-tab--activo': modoFirma === 'dibujar' }" @click="modoFirma = 'dibujar'; iniciarCanvas()">Dibujar</button>
           <button class="fc-tab" :class="{ 'fc-tab--activo': modoFirma === 'subir' }" @click="modoFirma = 'subir'">Subir imagen</button>
@@ -190,16 +190,17 @@ const confirmarFirma = async () => {
           <button class="fc-btn fc-btn--ghost fc-btn--sm" @click="limpiarCanvas">Limpiar</button>
         </div>
         <div v-show="modoFirma === 'subir'" class="fc-subir-wrap">
-          <input type="file" accept="image/png,image/jpeg" @change="manejarArchivo" class="fc-input" />
+          <input type="file" accept="image/png,image/jpeg" @change="manejarArchivo" class="fc-input" required />
           <img v-if="archivoFirma" :src="archivoFirma.dataUrl" class="fc-preview-firma" />
         </div>
 
         <label class="fc-checkbox">
-          <input type="checkbox" v-model="acepto" />
-          <span>He leído el contrato y acepto sus términos.</span>
+          <input type="checkbox" v-model="acepto" required />
+          <span>He leído el contrato y acepto sus términos. <span class="fc-obligatorio">*</span></span>
         </label>
 
         <p v-if="errorEnvio" class="fc-error">{{ errorEnvio }}</p>
+        <p v-else-if="!puedeFirmar()" class="fc-ayuda">Completa tu nombre, tu firma y acepta los términos para poder firmar.</p>
 
         <button class="fc-btn fc-btn--primary fc-btn--full" :disabled="!puedeFirmar() || enviando" @click="confirmarFirma">
           {{ enviando ? 'Firmando…' : 'Firmar contrato' }}
@@ -235,10 +236,10 @@ const confirmarFirma = async () => {
   padding: 14px 16px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 12px;
 }
 .fc-resumen strong { color: #fff; font-weight: 600; }
-.fc-link-ver { display: inline-block; font-size: 12.5px; color: var(--primary-light); text-decoration: none; margin-bottom: 18px; }
-.fc-link-ver:hover { text-decoration: underline; }
-
 .fc-divider { height: 1px; background: var(--border); margin: 8px 0 18px; }
+
+.fc-obligatorio { color: #fca5a5; }
+.fc-ayuda { color: var(--text-muted); font-size: 11.5px; margin: 0 0 10px; }
 
 .fc-label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; }
 .fc-input {
@@ -279,4 +280,19 @@ const confirmarFirma = async () => {
 .fc-btn--full { width: 100%; }
 .fc-btn--ghost { background: rgba(0,0,0,0.5); border: 1px solid rgba(0,0,0,0.1); color: #1c1230; }
 .fc-btn--sm { padding: 5px 10px; font-size: 11px; }
+
+.fc-btn--ver-contrato {
+  background: rgba(161, 0, 255, 0.14);
+  border: 1.5px solid var(--primary-light);
+  color: #fff;
+  font-size: 15px;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+  animation: fc-pulso-contrato 2.2s ease-in-out infinite;
+}
+.fc-btn--ver-contrato:hover { background: rgba(161, 0, 255, 0.24); }
+@keyframes fc-pulso-contrato {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(161, 0, 255, 0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(161, 0, 255, 0); }
+}
 </style>
