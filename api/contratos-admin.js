@@ -12,6 +12,7 @@ import {
 // GET  (sin accion)         → listar contratos
 // POST accion=crear         → crear contrato nuevo
 // POST accion=previsualizar → generar el PDF sin guardarlo (para revisar antes de enviar)
+// POST accion=editar        → regenerar el PDF de un contrato aún no firmado (mismo link/token)
 // POST accion=eliminar      → eliminar contrato existente
 
 const slugify = (s) => s
@@ -80,10 +81,16 @@ async function previsualizar(req, res, body) {
   res.status(200).send(Buffer.from(pdfBytes))
 }
 
+const camposEditables = (body) => {
+  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan } = body
+  const { clausulaTitularidad, clausulaTerminacion, clausulaServiciosAdicionales } = body
+  return { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, clausulaTitularidad, clausulaTerminacion, clausulaServiciosAdicionales }
+}
+
 async function crear(req, res, body) {
   const errorValidacion = validarCampos(body)
   if (errorValidacion) return res.status(400).json({ error: errorValidacion })
-  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, nombreRepresentante } = body
+  const { cliente } = body
 
   const firmaRepresentanteBytes = await leerFirmaRepresentante()
   const { pdfBytes, firmaClienteRect } = await generarContratoSinFirmar(body, firmaRepresentanteBytes)
@@ -103,8 +110,7 @@ async function crear(req, res, body) {
   const manifest = await leerJson('contratos-manifest.json', [])
   manifest.push({
     id, slug, token, pathname,
-    cliente, documentoCliente, ciudad,
-    fechaInicioContrato, fechaInicioTrabajo, plan,
+    ...camposEditables(body),
     firmaClienteRect,
     estado: 'pendiente_firma',
     creado_en: new Date().toISOString(),
@@ -118,6 +124,36 @@ async function crear(req, res, body) {
   const linkCliente = `${protocolo}://${host}/firmar-contrato/?token=${token}`
 
   res.status(200).json({ ok: true, id, linkCliente })
+}
+
+async function editar(req, res, body) {
+  const { id } = body || {}
+  if (!id) return res.status(400).json({ error: 'Falta id' })
+  const errorValidacion = validarCampos(body)
+  if (errorValidacion) return res.status(400).json({ error: errorValidacion })
+
+  const manifest = await leerJson('contratos-manifest.json', null)
+  if (!manifest) return res.status(404).json({ error: 'No hay contratos' })
+  const idx = manifest.findIndex((c) => c.id === id)
+  if (idx === -1) return res.status(404).json({ error: 'No encontrado' })
+  if (manifest[idx].estado === 'firmado') {
+    return res.status(409).json({ error: 'No se puede editar un contrato ya firmado' })
+  }
+
+  const firmaRepresentanteBytes = await leerFirmaRepresentante()
+  const { pdfBytes, firmaClienteRect } = await generarContratoSinFirmar(body, firmaRepresentanteBytes)
+
+  await put(manifest[idx].pathname, Buffer.from(pdfBytes), {
+    access: 'private',
+    contentType: 'application/pdf',
+    addRandomSuffix: false,
+    allowOverwrite: true,
+  })
+
+  manifest[idx] = { ...manifest[idx], ...camposEditables(body), firmaClienteRect }
+  await escribirJson('contratos-manifest.json', manifest)
+
+  res.status(200).json({ ok: true })
 }
 
 async function eliminar(req, res, body) {
@@ -150,6 +186,7 @@ export default async function handler(req, res) {
       }
       if (body.accion === 'eliminar') return await eliminar(req, res, body)
       if (body.accion === 'previsualizar') return await previsualizar(req, res, body)
+      if (body.accion === 'editar') return await editar(req, res, body)
       return await crear(req, res, body)
     }
 

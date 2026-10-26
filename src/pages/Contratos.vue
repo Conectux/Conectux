@@ -20,6 +20,7 @@ const formVacio = () => ({
   clausulaTitularidad: '', clausulaTerminacion: '', clausulaServiciosAdicionales: '',
 })
 const nuevoForm = ref(formVacio())
+const editandoId = ref(null)
 const creando = ref(false)
 const previsualizando = ref(false)
 const errorCrear = ref('')
@@ -66,23 +67,49 @@ const iniciarSesion = async () => {
   }
 }
 
+const cargarDefaults = async () => {
+  try {
+    const res = await fetch('/api/contratos-admin?accion=defaults')
+    if (!res.ok) return null
+    return await res.json()
+  } catch {
+    return null
+  }
+}
+
 const abrirNuevo = async () => {
+  editandoId.value = null
   nuevoForm.value = formVacio()
   errorCrear.value = ''
   linkGenerado.value = ''
   copiado.value = false
   dialogNuevo.value = true
-  try {
-    const res = await fetch('/api/contratos-admin?accion=defaults')
-    if (res.ok) {
-      const d = await res.json()
-      nuevoForm.value.clausulaTitularidad = d.clausulaTitularidad
-      nuevoForm.value.clausulaTerminacion = d.clausulaTerminacion
-      nuevoForm.value.clausulaServiciosAdicionales = d.clausulaServiciosAdicionales
-    }
-  } catch {
-    // Si falla, el usuario puede escribir las cláusulas manualmente.
+  const d = await cargarDefaults()
+  if (d) {
+    nuevoForm.value.clausulaTitularidad = d.clausulaTitularidad
+    nuevoForm.value.clausulaTerminacion = d.clausulaTerminacion
+    nuevoForm.value.clausulaServiciosAdicionales = d.clausulaServiciosAdicionales
   }
+}
+
+const abrirEditar = async (contrato) => {
+  editandoId.value = contrato.id
+  errorCrear.value = ''
+  linkGenerado.value = ''
+  copiado.value = false
+  const d = await cargarDefaults()
+  nuevoForm.value = {
+    ciudad: contrato.ciudad,
+    cliente: contrato.cliente,
+    documentoCliente: contrato.documentoCliente,
+    fechaInicioContrato: contrato.fechaInicioContrato,
+    fechaInicioTrabajo: contrato.fechaInicioTrabajo,
+    plan: contrato.plan,
+    clausulaTitularidad: contrato.clausulaTitularidad || d?.clausulaTitularidad || '',
+    clausulaTerminacion: contrato.clausulaTerminacion || d?.clausulaTerminacion || '',
+    clausulaServiciosAdicionales: contrato.clausulaServiciosAdicionales || d?.clausulaServiciosAdicionales || '',
+  }
+  dialogNuevo.value = true
 }
 
 const previsualizar = async () => {
@@ -109,7 +136,7 @@ const previsualizar = async () => {
   }
 }
 
-const crearContrato = async () => {
+const guardarContrato = async () => {
   const f = nuevoForm.value
   if (!f.ciudad || !f.cliente || !f.documentoCliente || !f.fechaInicioContrato || !f.fechaInicioTrabajo || !f.plan) {
     errorCrear.value = 'Completa todos los campos.'
@@ -118,17 +145,24 @@ const crearContrato = async () => {
   creando.value = true
   errorCrear.value = ''
   try {
+    const body = editandoId.value
+      ? { accion: 'editar', id: editandoId.value, ...f, nombreRepresentante: NOMBRE_REPRESENTANTE }
+      : { ...f, nombreRepresentante: NOMBRE_REPRESENTANTE }
     const res = await fetch('/api/contratos-admin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...f, nombreRepresentante: NOMBRE_REPRESENTANTE }),
+      body: JSON.stringify(body),
     })
     const data = await res.json()
-    if (!res.ok) throw new Error(data.error || 'No se pudo crear el contrato')
-    linkGenerado.value = data.linkCliente
+    if (!res.ok) throw new Error(data.error || 'No se pudo guardar el contrato')
     await cargarContratos()
+    if (editandoId.value) {
+      dialogNuevo.value = false
+    } else {
+      linkGenerado.value = data.linkCliente
+    }
   } catch (e) {
-    errorCrear.value = e.message || 'No se pudo crear el contrato.'
+    errorCrear.value = e.message || 'No se pudo guardar el contrato.'
   } finally {
     creando.value = false
   }
@@ -234,6 +268,12 @@ const formatoFecha = (iso) => {
             <button class="ct-btn ct-btn--ghost" @click="copiarLink(linkDe(c))">
               <v-icon icon="mdi-content-copy" size="16" class="mr-1" /> Copiar link
             </button>
+            <a :href="`/api/contratos-publico?accion=descargar&id=${c.id}`" target="_blank" rel="noopener" class="ct-btn ct-btn--ghost">
+              <v-icon icon="mdi-eye-outline" size="16" class="mr-1" /> Ver PDF
+            </a>
+            <button class="ct-btn ct-btn--ghost" @click="abrirEditar(c)">
+              <v-icon icon="mdi-pencil-outline" size="16" class="mr-1" /> Editar
+            </button>
           </template>
           <a v-else :href="`/api/contratos-publico?accion=descargar&id=${c.id}`" target="_blank" rel="noopener" class="ct-btn ct-btn--ghost">
             <v-icon icon="mdi-download" size="16" class="mr-1" /> Descargar PDF firmado
@@ -248,7 +288,7 @@ const formatoFecha = (iso) => {
     <!-- DIÁLOGO NUEVO CONTRATO -->
     <v-dialog v-model="dialogNuevo" max-width="480">
       <v-card class="ct-dialog">
-        <v-card-title class="ct-dialog-title">Nuevo contrato</v-card-title>
+        <v-card-title class="ct-dialog-title">{{ editandoId ? 'Editar contrato' : 'Nuevo contrato' }}</v-card-title>
         <v-card-text>
           <template v-if="!linkGenerado">
             <div class="ct-form-grid">
@@ -294,8 +334,8 @@ const formatoFecha = (iso) => {
           <button v-if="!linkGenerado" class="ct-btn ct-btn--ghost" :disabled="previsualizando || creando" @click="previsualizar">
             {{ previsualizando ? 'Generando…' : 'Vista previa' }}
           </button>
-          <button v-if="!linkGenerado" class="ct-btn ct-btn--primary" :disabled="creando || previsualizando" @click="crearContrato">
-            {{ creando ? 'Generando…' : 'Generar contrato' }}
+          <button v-if="!linkGenerado" class="ct-btn ct-btn--primary" :disabled="creando || previsualizando" @click="guardarContrato">
+            {{ creando ? 'Guardando…' : (editandoId ? 'Guardar cambios' : 'Generar contrato') }}
           </button>
           <button v-else class="ct-btn ct-btn--primary" @click="dialogNuevo = false">Listo</button>
         </v-card-actions>
