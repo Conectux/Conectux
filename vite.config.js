@@ -18,6 +18,8 @@ export default defineConfig({
         propuestaManual: resolve(__dirname, 'propuesta-manual/index.html'),
         briefManuales: resolve(__dirname, 'brief-manuales/index.html'),
         reportes: resolve(__dirname, 'reportes/index.html'),
+        contratos: resolve(__dirname, 'contratos/index.html'),
+        firmarContrato: resolve(__dirname, 'firmar-contrato/index.html'),
       },
     },
   },

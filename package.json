@@ -11,7 +11,9 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "@vercel/blob": "^2.8.2",
+    "pdf-lib": "^1.17.1",
     "swiper": "^11.0.6",
+    "uuid": "^14.0.3",
     "vue": "^3.4.38",
     "vuetify": "^3.5.4"
   },

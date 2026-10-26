@@ -30,3 +30,9 @@ dist-ssr
 tools/reportes/data/
 tools/reportes/salida/
 .env.local
+
+# Contratos (firma del representante legal, documentos de clientes, repo público)
+tools/contratos/firma*
+tools/contratos/*.png
+tools/contratos/*.jpg
+tools/contratos/*.jpeg
