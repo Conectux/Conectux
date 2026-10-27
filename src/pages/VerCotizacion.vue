@@ -161,6 +161,16 @@ onMounted(async () => {
         </div>
       </section>
 
+      <!-- CONDICIONES GENERALES (igual en todas las cotizaciones) -->
+      <section class="vc-section vc-section--sin-top">
+        <div class="vc-condiciones">
+          <div class="vc-condicion"><v-icon icon="mdi-calendar-clock-outline" size="16" /> Esta cotización tiene una vigencia de 15 días calendario a partir de la fecha de envío.</div>
+          <div class="vc-condicion"><v-icon icon="mdi-receipt-text-outline" size="16" /> Los precios indicados no incluyen IVA, salvo que se indique lo contrario.</div>
+          <div class="vc-condicion"><v-icon icon="mdi-credit-card-outline" size="16" /> Pago mensual anticipado, dentro de los primeros 5 días de cada mes.</div>
+          <div class="vc-condicion"><v-icon icon="mdi-shield-check-outline" size="16" /> CONECTUX S.A.S. · NIT 901.562.623. Los términos definitivos de la relación comercial se formalizan en el contrato de prestación de servicios.</div>
+        </div>
+      </section>
+
       <footer class="vc-footer">
         <img :src="logo" alt="Conectux" class="vc-footer-logo" />
         <p>Propuesta confidencial <span class="vc-footer-dot">·</span> {{ cot.cliente }} <span class="vc-footer-dot">·</span> conectux.com</p>
@@ -328,6 +338,14 @@ onMounted(async () => {
 .vc-nota ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .vc-nota li { font-size: 13px; color: rgba(210,195,110,0.95); line-height: 1.7; padding-left: 16px; position: relative; }
 .vc-nota li::before { content: '–'; position: absolute; left: 0; }
+
+/* ── Condiciones generales ── */
+.vc-condiciones {
+  display: flex; flex-direction: column; gap: 10px; max-width: 760px; margin: 0 auto;
+  padding: 22px 24px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 14px;
+}
+.vc-condicion { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+.vc-condicion .v-icon { color: var(--primary-light); flex-shrink: 0; margin-top: 1px; }
 
 /* ── Footer ── */
 .vc-footer {
