@@ -236,6 +236,7 @@ const eliminarCotizacion = async (c) => {
           <div class="cz-form-grid">
             <label class="cz-form-full">Cliente<input class="cz-input" v-model="form.cliente" placeholder="Nombre del cliente" /></label>
             <label class="cz-form-full">Descripción corta (lo que se ve en la tarjeta del panel)<textarea class="cz-input cz-textarea" v-model="form.descripcionCorta" rows="2" placeholder="Ej: Redes sociales y pauta digital para posicionar la marca y aumentar ventas."></textarea></label>
+            <label class="cz-form-full">Nota especial (opcional)<input class="cz-input" v-model="form.planesBadge" placeholder="Ej: Precio especial este mes, Oferta por tiempo limitado..." /></label>
           </div>
 
           <h3 class="cz-subtitulo">{{ form.planes.length > 1 ? 'Planes' : 'Plan de trabajo' }}</h3>
@@ -297,7 +298,6 @@ const eliminarCotizacion = async (c) => {
             <div class="cz-form-grid">
               <label class="cz-form-full">Título de sección<input class="cz-input" v-model="form.planesTitulo" placeholder="Plan de trabajo" /></label>
               <label class="cz-form-full">Subtítulo de sección<textarea class="cz-input cz-textarea" v-model="form.planesSubtitulo" rows="2"></textarea></label>
-              <label class="cz-form-full">Nota especial<input class="cz-input" v-model="form.planesBadge" placeholder="Precio Especial Daniel Gil" /></label>
             </div>
 
             <h3 class="cz-subtitulo">Resumen económico (tabla aparte, opcional)</h3>
