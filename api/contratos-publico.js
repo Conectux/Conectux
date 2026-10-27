@@ -1,12 +1,27 @@
 import { get, put } from '@vercel/blob'
 import { insertarFirmaCliente } from '../lib/contrato-pdf.js'
-import { estaAutenticado } from '../lib/contratos-auth.js'
+import { COOKIE_NAME, estaAutenticado, valorCookieEsperado } from '../lib/contratos-auth.js'
 
 // Acceso público por token (cliente firmando) + descarga interna por id:
 // GET  ?accion=detalle&token=       → datos del contrato para la página de firma
 // GET  ?accion=descargar&token=     → PDF (cliente, vía token)
 // GET  ?accion=descargar&id=        → PDF (interno, requiere cookie de sesión)
 // POST accion=firmar                → estampa la firma del cliente
+// POST accion=login                 → inicia sesión admin (misma cookie usada por /contratos, /brief, /cotizaciones)
+
+async function login(req, res, body) {
+  const { password } = body || {}
+  if (!process.env.CONTRATOS_PASSWORD) {
+    return res.status(500).json({ error: 'CONTRATOS_PASSWORD no configurada en el servidor' })
+  }
+  if (password !== process.env.CONTRATOS_PASSWORD) {
+    return res.status(401).json({ error: 'Contraseña incorrecta' })
+  }
+  const valor = valorCookieEsperado()
+  const maxAge = 60 * 60 * 24 * 30 // 30 días
+  res.setHeader('Set-Cookie', `${COOKIE_NAME}=${valor}; Path=/; Max-Age=${maxAge}; HttpOnly; Secure; SameSite=Lax`)
+  res.status(200).json({ ok: true })
+}
 
 async function leerManifest() {
   const result = await get('contratos-manifest.json', { access: 'private', useCache: false })
@@ -132,6 +147,7 @@ export default async function handler(req, res) {
       if (!body || typeof body === 'string') {
         try { body = JSON.parse(body || '{}') } catch { body = {} }
       }
+      if (body.accion === 'login') return await login(req, res, body)
       return await firmar(req, res, body)
     }
 

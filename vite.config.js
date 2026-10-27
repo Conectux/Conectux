@@ -22,6 +22,8 @@ export default defineConfig({
         firmarContrato: resolve(__dirname, 'firmar-contrato/index.html'),
         brief: resolve(__dirname, 'brief/index.html'),
         llenarBrief: resolve(__dirname, 'llenar-brief/index.html'),
+        cotizaciones: resolve(__dirname, 'cotizaciones/index.html'),
+        verCotizacion: resolve(__dirname, 'ver-cotizacion/index.html'),
       },
     },
   },

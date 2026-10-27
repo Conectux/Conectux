@@ -48,10 +48,10 @@ const iniciarSesion = async () => {
   loginCargando.value = true
   loginError.value = ''
   try {
-    const res = await fetch('/api/contratos-login', {
+    const res = await fetch('/api/contratos-publico', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: passwordInput.value }),
+      body: JSON.stringify({ accion: 'login', password: passwordInput.value }),
     })
     if (!res.ok) {
       const data = await res.json().catch(() => ({}))
