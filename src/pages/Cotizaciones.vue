@@ -17,16 +17,19 @@ const editandoSlug = ref(null)
 const guardando = ref(false)
 const errorGuardar = ref('')
 
+const planVacio = () => ({ avatar: '', nombre: '', tipo: '', acento: 'purple', itemsTexto: '', precioAntes: '', precioLabel: 'Precio', precioMostrado: '', periodo: 'COP / mes' })
+
 const formVacio = () => ({
   slug: '', cliente: '', periodo: '', heroTitulo: '', heroSubtitulo: '',
   estadoLabel: 'Activa', descripcionCorta: '', etiquetasTexto: '',
   precioLabel: '', precioMostrado: '',
   pilaresTitulo: '', pilaresSubtitulo: '', pilares: [],
-  planesTitulo: '', planesSubtitulo: '', planesBadge: '', planes: [],
+  planesTitulo: '', planesSubtitulo: '', planesBadge: '', planes: [planVacio()],
   resumenFilas: [], resumenTotalAntes: '', resumenTotalMonto: '', resumenTotalPeriodo: '',
   cierreTitulo: '', cierreTexto: '', exclusionesTexto: '',
 })
 const form = ref(formVacio())
+const avanzado = ref(false)
 
 const cargarCotizaciones = async () => {
   cargandoLista.value = true
@@ -68,6 +71,7 @@ const iniciarSesion = async () => {
 const abrirNueva = () => {
   editandoSlug.value = null
   form.value = formVacio()
+  avanzado.value = false
   errorGuardar.value = ''
   dialogAbierto.value = true
 }
@@ -81,18 +85,20 @@ const abrirEditar = (c) => {
     precioLabel: c.precioLabel, precioMostrado: c.precioMostrado,
     pilaresTitulo: c.pilaresTitulo, pilaresSubtitulo: c.pilaresSubtitulo, pilares: (c.pilares || []).map((p) => ({ ...p })),
     planesTitulo: c.planesTitulo, planesSubtitulo: c.planesSubtitulo, planesBadge: c.planesBadge,
-    planes: (c.planes || []).map((p) => ({ ...p, itemsTexto: (p.items || []).join('\n') })),
+    planes: (c.planes?.length ? c.planes : [{}]).map((p) => ({ ...planVacio(), ...p, itemsTexto: (p.items || []).join('\n') })),
     resumenFilas: (c.resumenFilas || []).map((f) => ({ ...f })),
     resumenTotalAntes: c.resumenTotal?.antes || '', resumenTotalMonto: c.resumenTotal?.monto || '', resumenTotalPeriodo: c.resumenTotal?.periodo || '',
     cierreTitulo: c.cierreTitulo, cierreTexto: c.cierreTexto, exclusionesTexto: (c.exclusiones || []).join('\n'),
   }
+  // Las cotizaciones migradas usan las secciones avanzadas (pilares, hero propio, etc.) — se muestran abiertas al editar.
+  avanzado.value = !!(c.pilares?.length || c.heroTitulo || c.resumenFilas?.length)
   dialogAbierto.value = true
 }
 
 const agregarPilar = () => form.value.pilares.push({ numero: String(form.value.pilares.length + 1).padStart(2, '0'), titulo: '', descripcion: '' })
 const quitarPilar = (i) => form.value.pilares.splice(i, 1)
 
-const agregarPlan = () => form.value.planes.push({ avatar: '', nombre: '', tipo: '', acento: 'purple', itemsTexto: '', precioAntes: '', precioLabel: 'Precio', precioMostrado: '', periodo: 'COP / mes' })
+const agregarPlan = () => form.value.planes.push(planVacio())
 const quitarPlan = (i) => form.value.planes.splice(i, 1)
 
 const agregarFilaResumen = () => form.value.resumenFilas.push({ servicio: '', antes: '', precio: '' })
@@ -225,86 +231,95 @@ const eliminarCotizacion = async (c) => {
       <v-card class="cz-dialog">
         <v-card-title class="cz-dialog-title">{{ editandoSlug ? 'Editar cotización' : 'Nueva cotización' }}</v-card-title>
         <v-card-text>
+          <p class="cz-ayuda">Completa esto y ya queda lista para enviar. Lo demás (textos de portada, enfoque, tabla resumen) se arma solo — si quieres personalizarlo, abre "Opciones avanzadas" al final.</p>
+
           <div class="cz-form-grid">
-            <label>Cliente<input class="cz-input" v-model="form.cliente" placeholder="Nombre del cliente" /></label>
-            <label v-if="!editandoSlug">Slug (opcional, se genera del nombre)<input class="cz-input" v-model="form.slug" placeholder="daniel-gil" /></label>
-            <label>Período<input class="cz-input" v-model="form.periodo" placeholder="Agosto 2026" /></label>
-            <label>Estado<input class="cz-input" v-model="form.estadoLabel" placeholder="Activa / -20% Descuento" /></label>
+            <label class="cz-form-full">Cliente<input class="cz-input" v-model="form.cliente" placeholder="Nombre del cliente" /></label>
+            <label class="cz-form-full">Descripción corta (lo que se ve en la tarjeta del panel)<textarea class="cz-input cz-textarea" v-model="form.descripcionCorta" rows="2" placeholder="Ej: Redes sociales y pauta digital para posicionar la marca y aumentar ventas."></textarea></label>
           </div>
 
-          <h3 class="cz-subtitulo">Hero</h3>
-          <div class="cz-form-grid">
-            <label class="cz-form-full">Título<input class="cz-input" v-model="form.heroTitulo" placeholder="Posicionamiento de marca y ventas para..." /></label>
-            <label class="cz-form-full">Subtítulo<textarea class="cz-input cz-textarea" v-model="form.heroSubtitulo" rows="2"></textarea></label>
-          </div>
-
-          <h3 class="cz-subtitulo">Tarjeta en el panel</h3>
-          <div class="cz-form-grid">
-            <label class="cz-form-full">Descripción corta<textarea class="cz-input cz-textarea" v-model="form.descripcionCorta" rows="2"></textarea></label>
-            <label class="cz-form-full">Etiquetas (separadas por coma)<input class="cz-input" v-model="form.etiquetasTexto" placeholder="Redes Sociales, Pauta Digital" /></label>
-            <label>Etiqueta de precio<input class="cz-input" v-model="form.precioLabel" placeholder="Total mensual / Desde / Valor único" /></label>
-            <label>Precio mostrado<input class="cz-input" v-model="form.precioMostrado" placeholder="$1.500.000" /></label>
-          </div>
-
-          <h3 class="cz-subtitulo">Pilares / enfoque (opcional)</h3>
-          <div class="cz-form-grid">
-            <label class="cz-form-full">Título de sección<input class="cz-input" v-model="form.pilaresTitulo" /></label>
-            <label class="cz-form-full">Subtítulo de sección<textarea class="cz-input cz-textarea" v-model="form.pilaresSubtitulo" rows="2"></textarea></label>
-          </div>
-          <div v-for="(p, i) in form.pilares" :key="i" class="cz-item-box">
-            <div class="cz-item-top">
-              <input class="cz-input cz-item-num" v-model="p.numero" placeholder="01" />
-              <input class="cz-input" v-model="p.titulo" placeholder="Título del pilar" />
-              <button class="cz-btn cz-btn--eliminar cz-btn--chico" @click="quitarPilar(i)"><v-icon icon="mdi-trash-can-outline" size="14" /></button>
-            </div>
-            <textarea class="cz-input cz-textarea" v-model="p.descripcion" placeholder="Descripción" rows="2"></textarea>
-          </div>
-          <button class="cz-btn cz-btn--ghost cz-btn-agregar" @click="agregarPilar"><v-icon icon="mdi-plus" size="16" class="mr-1" /> Agregar pilar</button>
-
-          <h3 class="cz-subtitulo">Planes</h3>
-          <div class="cz-form-grid">
-            <label class="cz-form-full">Título de sección<input class="cz-input" v-model="form.planesTitulo" /></label>
-            <label class="cz-form-full">Subtítulo de sección<textarea class="cz-input cz-textarea" v-model="form.planesSubtitulo" rows="2"></textarea></label>
-            <label class="cz-form-full">Nota especial (opcional)<input class="cz-input" v-model="form.planesBadge" placeholder="Precio Especial Daniel Gil" /></label>
-          </div>
+          <h3 class="cz-subtitulo">{{ form.planes.length > 1 ? 'Planes' : 'Plan de trabajo' }}</h3>
           <div v-for="(p, i) in form.planes" :key="i" class="cz-item-box">
-            <div class="cz-item-top">
-              <input class="cz-input cz-item-num" v-model="p.avatar" placeholder="RS" maxlength="3" />
-              <input class="cz-input" v-model="p.nombre" placeholder="Nombre del plan" />
-              <select class="cz-input cz-select" v-model="p.acento"><option value="purple">Morado</option><option value="cyan">Cyan</option></select>
-              <button class="cz-btn cz-btn--eliminar cz-btn--chico" @click="quitarPlan(i)"><v-icon icon="mdi-trash-can-outline" size="14" /></button>
+            <div class="cz-item-top" v-if="form.planes.length > 1 || avanzado">
+              <input v-if="avanzado" class="cz-input cz-item-num" v-model="p.avatar" placeholder="RS" maxlength="3" />
+              <input class="cz-input" v-model="p.nombre" :placeholder="form.planes.length > 1 ? 'Nombre de este plan' : 'Nombre del plan (opcional)'" />
+              <select v-if="avanzado" class="cz-input cz-select" v-model="p.acento"><option value="purple">Morado</option><option value="cyan">Cyan</option></select>
+              <button v-if="form.planes.length > 1" class="cz-btn cz-btn--eliminar cz-btn--chico" @click="quitarPlan(i)"><v-icon icon="mdi-trash-can-outline" size="14" /></button>
             </div>
-            <input class="cz-input" v-model="p.tipo" placeholder="Subtítulo / tipo de plan" style="margin-bottom:8px;" />
-            <textarea class="cz-input cz-textarea" v-model="p.itemsTexto" placeholder="Un ítem incluido por línea" rows="4" style="margin-bottom:8px;"></textarea>
-            <div class="cz-form-grid cz-form-grid--4">
-              <label>Antes<input class="cz-input" v-model="p.precioAntes" placeholder="$2.000.000" /></label>
-              <label>Etiqueta<input class="cz-input" v-model="p.precioLabel" placeholder="Precio especial" /></label>
+            <input v-if="avanzado" class="cz-input" v-model="p.tipo" placeholder="Subtítulo / tipo de plan (opcional)" style="margin-bottom:8px;" />
+            <textarea class="cz-input cz-textarea" v-model="p.itemsTexto" placeholder="Qué incluye — un ítem por línea" rows="4" style="margin-bottom:8px;"></textarea>
+            <div class="cz-form-grid" :class="avanzado ? 'cz-form-grid--4' : 'cz-form-grid--3'">
+              <label v-if="avanzado">Antes (tachado)<input class="cz-input" v-model="p.precioAntes" placeholder="$2.000.000" /></label>
+              <label v-if="avanzado">Etiqueta<input class="cz-input" v-model="p.precioLabel" placeholder="Precio especial" /></label>
               <label>Precio<input class="cz-input" v-model="p.precioMostrado" placeholder="$1.500.000" /></label>
               <label>Período<input class="cz-input" v-model="p.periodo" placeholder="COP / mes" /></label>
             </div>
           </div>
-          <button class="cz-btn cz-btn--ghost cz-btn-agregar" @click="agregarPlan"><v-icon icon="mdi-plus" size="16" class="mr-1" /> Agregar plan</button>
+          <button class="cz-btn cz-btn--ghost cz-btn-agregar" @click="agregarPlan"><v-icon icon="mdi-plus" size="16" class="mr-1" /> Agregar otro plan</button>
 
-          <h3 class="cz-subtitulo">Resumen económico (opcional)</h3>
-          <div v-for="(f, i) in form.resumenFilas" :key="i" class="cz-item-top" style="margin-bottom:8px;">
-            <input class="cz-input" v-model="f.servicio" placeholder="Servicio" />
-            <input class="cz-input cz-item-num" v-model="f.antes" placeholder="Antes" />
-            <input class="cz-input cz-item-num" v-model="f.precio" placeholder="Precio" />
-            <button class="cz-btn cz-btn--eliminar cz-btn--chico" @click="quitarFilaResumen(i)"><v-icon icon="mdi-trash-can-outline" size="14" /></button>
-          </div>
-          <button class="cz-btn cz-btn--ghost cz-btn-agregar" @click="agregarFilaResumen"><v-icon icon="mdi-plus" size="16" class="mr-1" /> Agregar fila</button>
-          <div class="cz-form-grid cz-form-grid--3" style="margin-top:12px;">
-            <label>Total antes<input class="cz-input" v-model="form.resumenTotalAntes" placeholder="$3.500.000" /></label>
-            <label>Total<input class="cz-input" v-model="form.resumenTotalMonto" placeholder="$2.500.000" /></label>
-            <label>Período<input class="cz-input" v-model="form.resumenTotalPeriodo" placeholder="COP / mes" /></label>
-          </div>
+          <h3 class="cz-subtitulo">Esta cotización no incluye (opcional)</h3>
+          <textarea class="cz-input cz-textarea" v-model="form.exclusionesTexto" placeholder="Una exclusión por línea, ej: La inversión en pauta digital (Meta Ads, Google Ads) se define aparte." rows="3"></textarea>
 
-          <h3 class="cz-subtitulo">Cierre y exclusiones</h3>
-          <div class="cz-form-grid">
-            <label class="cz-form-full">Título de cierre<input class="cz-input" v-model="form.cierreTitulo" placeholder="Listos para empezar" /></label>
-            <label class="cz-form-full">Texto de cierre<textarea class="cz-input cz-textarea" v-model="form.cierreTexto" rows="2"></textarea></label>
-            <label class="cz-form-full">Esta cotización no incluye (una por línea)<textarea class="cz-input cz-textarea" v-model="form.exclusionesTexto" rows="3"></textarea></label>
-          </div>
+          <details class="cz-avanzado" :open="avanzado" @toggle="avanzado = $event.target.open">
+            <summary>Opciones avanzadas</summary>
+
+            <div class="cz-form-grid" style="margin-top:14px;">
+              <label v-if="!editandoSlug">Slug (opcional, se genera del nombre)<input class="cz-input" v-model="form.slug" placeholder="daniel-gil" /></label>
+              <label>Período<input class="cz-input" v-model="form.periodo" placeholder="Agosto 2026" /></label>
+              <label>Estado<input class="cz-input" v-model="form.estadoLabel" placeholder="Activa / -20% Descuento" /></label>
+              <label>Etiquetas (separadas por coma)<input class="cz-input" v-model="form.etiquetasTexto" placeholder="Redes Sociales, Pauta Digital" /></label>
+              <label>Etiqueta de precio (tarjeta)<input class="cz-input" v-model="form.precioLabel" placeholder="Total mensual / Desde / Valor único" /></label>
+              <label>Precio mostrado (tarjeta)<input class="cz-input" v-model="form.precioMostrado" placeholder="$1.500.000" /></label>
+            </div>
+
+            <h3 class="cz-subtitulo">Portada (hero)</h3>
+            <div class="cz-form-grid">
+              <label class="cz-form-full">Título<input class="cz-input" v-model="form.heroTitulo" placeholder="Posicionamiento de marca y ventas para..." /></label>
+              <label class="cz-form-full">Subtítulo<textarea class="cz-input cz-textarea" v-model="form.heroSubtitulo" rows="2"></textarea></label>
+            </div>
+
+            <h3 class="cz-subtitulo">Pilares / enfoque</h3>
+            <div class="cz-form-grid">
+              <label class="cz-form-full">Título de sección<input class="cz-input" v-model="form.pilaresTitulo" /></label>
+              <label class="cz-form-full">Subtítulo de sección<textarea class="cz-input cz-textarea" v-model="form.pilaresSubtitulo" rows="2"></textarea></label>
+            </div>
+            <div v-for="(p, i) in form.pilares" :key="i" class="cz-item-box">
+              <div class="cz-item-top">
+                <input class="cz-input cz-item-num" v-model="p.numero" placeholder="01" />
+                <input class="cz-input" v-model="p.titulo" placeholder="Título del pilar" />
+                <button class="cz-btn cz-btn--eliminar cz-btn--chico" @click="quitarPilar(i)"><v-icon icon="mdi-trash-can-outline" size="14" /></button>
+              </div>
+              <textarea class="cz-input cz-textarea" v-model="p.descripcion" placeholder="Descripción" rows="2"></textarea>
+            </div>
+            <button class="cz-btn cz-btn--ghost cz-btn-agregar" @click="agregarPilar"><v-icon icon="mdi-plus" size="16" class="mr-1" /> Agregar pilar</button>
+
+            <h3 class="cz-subtitulo">Sección de planes</h3>
+            <div class="cz-form-grid">
+              <label class="cz-form-full">Título de sección<input class="cz-input" v-model="form.planesTitulo" placeholder="Plan de trabajo" /></label>
+              <label class="cz-form-full">Subtítulo de sección<textarea class="cz-input cz-textarea" v-model="form.planesSubtitulo" rows="2"></textarea></label>
+              <label class="cz-form-full">Nota especial<input class="cz-input" v-model="form.planesBadge" placeholder="Precio Especial Daniel Gil" /></label>
+            </div>
+
+            <h3 class="cz-subtitulo">Resumen económico (tabla aparte, opcional)</h3>
+            <div v-for="(f, i) in form.resumenFilas" :key="i" class="cz-item-top" style="margin-bottom:8px;">
+              <input class="cz-input" v-model="f.servicio" placeholder="Servicio" />
+              <input class="cz-input cz-item-num" v-model="f.antes" placeholder="Antes" />
+              <input class="cz-input cz-item-num" v-model="f.precio" placeholder="Precio" />
+              <button class="cz-btn cz-btn--eliminar cz-btn--chico" @click="quitarFilaResumen(i)"><v-icon icon="mdi-trash-can-outline" size="14" /></button>
+            </div>
+            <button class="cz-btn cz-btn--ghost cz-btn-agregar" @click="agregarFilaResumen"><v-icon icon="mdi-plus" size="16" class="mr-1" /> Agregar fila</button>
+            <div class="cz-form-grid cz-form-grid--3" style="margin-top:12px;">
+              <label>Total antes<input class="cz-input" v-model="form.resumenTotalAntes" placeholder="$3.500.000" /></label>
+              <label>Total<input class="cz-input" v-model="form.resumenTotalMonto" placeholder="$2.500.000" /></label>
+              <label>Período<input class="cz-input" v-model="form.resumenTotalPeriodo" placeholder="COP / mes" /></label>
+            </div>
+
+            <h3 class="cz-subtitulo">Cierre</h3>
+            <div class="cz-form-grid">
+              <label class="cz-form-full">Título de cierre<input class="cz-input" v-model="form.cierreTitulo" placeholder="Listos para empezar" /></label>
+              <label class="cz-form-full">Texto de cierre<textarea class="cz-input cz-textarea" v-model="form.cierreTexto" rows="2"></textarea></label>
+            </div>
+          </details>
 
           <p v-if="errorGuardar" class="cz-error">{{ errorGuardar }}</p>
         </v-card-text>
@@ -386,6 +401,10 @@ const eliminarCotizacion = async (c) => {
 .cz-dialog { background: var(--dark-card) !important; }
 .cz-dialog-title { color: #fff; }
 .cz-subtitulo { color: var(--primary-light); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin: 22px 0 12px; border-top: 1px solid var(--border); padding-top: 18px; }
+.cz-ayuda { color: var(--text-muted); font-size: 12px; line-height: 1.5; margin: 0 0 18px; }
+.cz-avanzado { margin-top: 22px; border-top: 1px solid var(--border); padding-top: 14px; }
+.cz-avanzado summary { cursor: pointer; font-size: 12.5px; color: var(--primary-light); font-weight: 600; }
+.cz-avanzado .cz-subtitulo:first-of-type { margin-top: 22px; }
 .cz-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .cz-form-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
 .cz-form-grid--4 { grid-template-columns: 1fr 1fr 1fr 1fr; }

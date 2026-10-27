@@ -72,28 +72,55 @@ async function crear(req, res, body) {
   const manifest = await leerManifest()
   const idx = manifest.findIndex((c) => c.slug === slug)
 
+  const inicialesDe = (texto) => (texto || '')
+    .split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase()
+
+  const descripcionCorta = body.descripcionCorta || ''
+  const planesCrudos = Array.isArray(body.planes) ? body.planes : []
+  // Descarta bloques de plan que el admin dejó completamente vacíos (el
+  // formulario simple siempre arranca con uno por defecto).
+  const planes = planesCrudos
+    .filter((p) => (p.nombre || '').trim() || (p.items?.length) || (p.precioMostrado || '').trim())
+    .map((p) => ({ ...p, nombre: p.nombre || cliente, avatar: p.avatar || inicialesDe(p.nombre || cliente) }))
+  const primerPlan = planes[0] || {}
+
+  // Campos "avanzados": si el admin no los llena (formulario simple), se
+  // derivan solos a partir del cliente/planes para que la cotización igual
+  // quede completa y bien presentada.
+  const heroTitulo = body.heroTitulo || `Propuesta de marketing digital para ${cliente}`
+  const heroSubtitulo = body.heroSubtitulo || descripcionCorta
+  const precioLabel = body.precioLabel || primerPlan.precioLabel || (planes.length > 1 ? 'Desde' : 'Precio')
+  const precioMostrado = body.precioMostrado || primerPlan.precioMostrado || ''
+  const planesTitulo = body.planesTitulo || 'Plan de trabajo'
+  let resumenFilas = Array.isArray(body.resumenFilas) ? body.resumenFilas : []
+  if (!resumenFilas.length && planes.length > 1) {
+    resumenFilas = planes.map((p) => ({ servicio: p.nombre, antes: p.precioAntes || '', precio: p.precioMostrado || '' }))
+  }
+  const cierreTitulo = body.cierreTitulo || (body.cierreTexto ? '' : 'Listos para empezar')
+  const cierreTexto = body.cierreTexto || (body.cierreTitulo ? '' : 'Queremos ser tu aliado digital. Más clientes, más presencia, más resultados, mes a mes.')
+
   const cot = {
     slug,
     cliente,
     periodo: body.periodo || '',
-    heroTitulo: body.heroTitulo || '',
-    heroSubtitulo: body.heroSubtitulo || '',
+    heroTitulo,
+    heroSubtitulo,
     estadoLabel: body.estadoLabel || 'Activa',
-    descripcionCorta: body.descripcionCorta || '',
+    descripcionCorta,
     etiquetas: Array.isArray(body.etiquetas) ? body.etiquetas : [],
-    precioLabel: body.precioLabel || '',
-    precioMostrado: body.precioMostrado || '',
+    precioLabel,
+    precioMostrado,
     pilaresTitulo: body.pilaresTitulo || '',
     pilaresSubtitulo: body.pilaresSubtitulo || '',
     pilares: Array.isArray(body.pilares) ? body.pilares : [],
-    planesTitulo: body.planesTitulo || '',
+    planesTitulo,
     planesSubtitulo: body.planesSubtitulo || '',
     planesBadge: body.planesBadge || '',
-    planes: Array.isArray(body.planes) ? body.planes : [],
-    resumenFilas: Array.isArray(body.resumenFilas) ? body.resumenFilas : [],
+    planes,
+    resumenFilas,
     resumenTotal: body.resumenTotal || null,
-    cierreTitulo: body.cierreTitulo || '',
-    cierreTexto: body.cierreTexto || '',
+    cierreTitulo,
+    cierreTexto,
     exclusiones: Array.isArray(body.exclusiones) ? body.exclusiones : [],
     creado_en: idx === -1 ? new Date().toISOString() : manifest[idx].creado_en,
     actualizado_en: new Date().toISOString(),
