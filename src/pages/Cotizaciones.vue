@@ -209,7 +209,7 @@ const eliminarCotizacion = async (c) => {
             <span class="cz-card-precio-monto">{{ c.precioMostrado }}</span>
           </div>
           <div class="cz-card-acciones">
-            <a :href="`/ver-cotizacion?slug=${c.slug}`" target="_blank" rel="noopener" class="cz-btn cz-btn--ghost">
+            <a :href="`/cotizacion/${c.slug}`" target="_blank" rel="noopener" class="cz-btn cz-btn--ghost">
               <v-icon icon="mdi-eye-outline" size="16" class="mr-1" /> Ver
             </a>
             <a :href="`/api/cotizaciones?accion=pdf&slug=${c.slug}`" target="_blank" rel="noopener" class="cz-btn cz-btn--ghost">

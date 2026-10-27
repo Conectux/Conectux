@@ -5,6 +5,8 @@
     { "source": "/presentacion-salud", "destination": "/presentacion-salud/index.html" },
     { "source": "/presentacion-salud/", "destination": "/presentacion-salud/index.html" },
     { "source": "/brief-salud", "destination": "/brief-salud/index.html" },
-    { "source": "/brief-salud/", "destination": "/brief-salud/index.html" }
+    { "source": "/brief-salud/", "destination": "/brief-salud/index.html" },
+    { "source": "/cotizacion/:slug", "destination": "/ver-cotizacion/index.html" },
+    { "source": "/cotizacion/:slug/", "destination": "/ver-cotizacion/index.html" }
   ]
 }

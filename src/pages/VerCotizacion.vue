@@ -2,7 +2,8 @@
 import { ref, onMounted } from 'vue'
 import logo from '../assets/logo-conectux.png'
 
-const slug = new URLSearchParams(location.search).get('slug') || ''
+const slugDeRuta = location.pathname.match(/\/cotizacion\/([^/]+)/)?.[1]
+const slug = slugDeRuta ? decodeURIComponent(slugDeRuta) : (new URLSearchParams(location.search).get('slug') || '')
 
 const cargando = ref(true)
 const error = ref('')
