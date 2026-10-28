@@ -16,7 +16,7 @@ const cargandoLista = ref(false)
 
 const dialogNuevo = ref(false)
 const formVacio = () => ({
-  ciudad: '', cliente: '', documentoCliente: '', fechaInicioContrato: '', fechaInicioTrabajo: '', plan: '',
+  ciudad: '', cliente: '', documentoCliente: '', fechaInicioContrato: '', fechaInicioTrabajo: '', plan: '', valor: '',
   clausulas: [],
 })
 const nuevoForm = ref(formVacio())
@@ -102,6 +102,7 @@ const abrirEditar = async (contrato) => {
     fechaInicioContrato: contrato.fechaInicioContrato,
     fechaInicioTrabajo: contrato.fechaInicioTrabajo,
     plan: contrato.plan,
+    valor: contrato.valor || '',
     clausulas,
   }
   dialogNuevo.value = true
@@ -116,7 +117,7 @@ const quitarClausula = (i) => {
 
 const previsualizar = async () => {
   const f = nuevoForm.value
-  if (!f.ciudad || !f.cliente || !f.documentoCliente || !f.fechaInicioContrato || !f.fechaInicioTrabajo || !f.plan) {
+  if (!f.ciudad || !f.cliente || !f.documentoCliente || !f.fechaInicioContrato || !f.fechaInicioTrabajo || !f.plan || !f.valor) {
     errorCrear.value = 'Completa todos los campos antes de previsualizar.'
     return
   }
@@ -140,7 +141,7 @@ const previsualizar = async () => {
 
 const guardarContrato = async () => {
   const f = nuevoForm.value
-  if (!f.ciudad || !f.cliente || !f.documentoCliente || !f.fechaInicioContrato || !f.fechaInicioTrabajo || !f.plan) {
+  if (!f.ciudad || !f.cliente || !f.documentoCliente || !f.fechaInicioContrato || !f.fechaInicioTrabajo || !f.plan || !f.valor) {
     errorCrear.value = 'Completa todos los campos.'
     return
   }
@@ -253,6 +254,7 @@ const formatoFecha = (iso) => {
             <div class="ct-card-meta">{{ c.ciudad }} · Doc. {{ c.documentoCliente }}</div>
             <div class="ct-card-meta">Inicio contrato: {{ formatoFecha(c.fechaInicioContrato) }} · Inicio trabajo: {{ formatoFecha(c.fechaInicioTrabajo) }}</div>
             <div class="ct-card-plan">{{ c.plan }}</div>
+            <div v-if="c.valor" class="ct-card-valor">{{ c.valor }}</div>
           </div>
           <div class="ct-estado" :class="c.estado === 'firmado' ? 'ct-estado--verde' : 'ct-estado--rojo'">
             <span class="ct-estado-dot"></span>
@@ -299,8 +301,11 @@ const formatoFecha = (iso) => {
               <label>Documento del cliente<input class="ct-input" v-model="nuevoForm.documentoCliente" placeholder="C.C. o NIT" /></label>
               <label>Fecha de inicio del contrato<input class="ct-input" type="date" v-model="nuevoForm.fechaInicioContrato" /></label>
               <label>Fecha de inicio del trabajo<input class="ct-input" type="date" v-model="nuevoForm.fechaInicioTrabajo" /></label>
-              <label class="ct-form-full">Plan de trabajo (incluye el valor mensual)
-                <textarea class="ct-input ct-textarea" v-model="nuevoForm.plan" placeholder="Ej: Plan Pro — contenido + pauta, $1.500.000 COP/mes" rows="3"></textarea>
+              <label class="ct-form-full">Plan de trabajo
+                <textarea class="ct-input ct-textarea" v-model="nuevoForm.plan" placeholder="Ej: Plan Pro — estrategia, contenido y pauta digital" rows="3"></textarea>
+              </label>
+              <label class="ct-form-full">Valor a pagar por el cliente
+                <input class="ct-input" v-model="nuevoForm.valor" placeholder="Ej: $1.500.000 COP/mes" />
               </label>
             </div>
 
@@ -382,6 +387,7 @@ const formatoFecha = (iso) => {
 .ct-card-cliente { font-size: 16px; font-weight: 800; color: #fff; }
 .ct-card-meta { font-size: 11.5px; color: var(--text-secondary); margin-top: 2px; }
 .ct-card-plan { font-size: 12px; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+.ct-card-valor { font-size: 13px; color: var(--primary-light); font-weight: 700; margin-top: 4px; }
 .ct-card-firmado { font-size: 11.5px; color: #86efac; margin-top: 10px; }
 .ct-card-acciones { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; align-items: center; }
 

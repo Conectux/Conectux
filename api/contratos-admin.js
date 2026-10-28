@@ -49,8 +49,8 @@ async function leerFirmaRepresentante() {
 }
 
 function validarCampos(body) {
-  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, nombreRepresentante } = body || {}
-  if (!cliente || !documentoCliente || !ciudad || !fechaInicioContrato || !fechaInicioTrabajo || !plan || !nombreRepresentante) {
+  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, valor, nombreRepresentante } = body || {}
+  if (!cliente || !documentoCliente || !ciudad || !fechaInicioContrato || !fechaInicioTrabajo || !plan || !valor || !nombreRepresentante) {
     return 'Faltan campos requeridos'
   }
   return null
@@ -73,11 +73,11 @@ async function previsualizar(req, res, body) {
 }
 
 const camposEditables = (body) => {
-  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan } = body
+  const { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, valor } = body
   const clausulas = Array.isArray(body.clausulas)
     ? body.clausulas.map((c) => ({ titulo: c.titulo || '', texto: c.texto || '' }))
     : []
-  return { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, clausulas }
+  return { cliente, documentoCliente, ciudad, fechaInicioContrato, fechaInicioTrabajo, plan, valor, clausulas }
 }
 
 async function crear(req, res, body) {
