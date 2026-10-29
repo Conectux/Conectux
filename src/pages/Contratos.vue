@@ -28,6 +28,21 @@ const linkGenerado = ref('')
 const copiado = ref(false)
 
 const eliminandoId = ref(null)
+const abriendoPdfId = ref(null)
+
+const verPdf = async (id) => {
+  abriendoPdfId.value = id
+  try {
+    const res = await fetch(`/api/contratos-publico?accion=descargar&id=${id}`)
+    if (!res.ok) throw new Error()
+    const blob = await res.blob()
+    window.open(URL.createObjectURL(blob), '_blank')
+  } catch {
+    window.alert('No se pudo abrir el PDF. Intenta de nuevo.')
+  } finally {
+    abriendoPdfId.value = null
+  }
+}
 
 const cargarContratos = async () => {
   cargandoLista.value = true
@@ -272,16 +287,21 @@ const formatoFecha = (iso) => {
             <button class="ct-btn ct-btn--ghost" @click="copiarLink(linkDe(c))">
               <v-icon icon="mdi-content-copy" size="16" class="mr-1" /> Copiar link
             </button>
-            <a :href="`/api/contratos-publico?accion=descargar&id=${c.id}`" target="_blank" rel="noopener" class="ct-btn ct-btn--ghost">
-              <v-icon icon="mdi-eye-outline" size="16" class="mr-1" /> Ver PDF
-            </a>
+            <button class="ct-btn ct-btn--ghost" :disabled="abriendoPdfId === c.id" @click="verPdf(c.id)">
+              <v-icon icon="mdi-eye-outline" size="16" class="mr-1" /> {{ abriendoPdfId === c.id ? 'Abriendo…' : 'Ver PDF' }}
+            </button>
             <button class="ct-btn ct-btn--ghost" @click="abrirEditar(c)">
               <v-icon icon="mdi-pencil-outline" size="16" class="mr-1" /> Editar
             </button>
           </template>
-          <a v-else :href="`/api/contratos-publico?accion=descargar&id=${c.id}`" target="_blank" rel="noopener" class="ct-btn ct-btn--ghost">
-            <v-icon icon="mdi-download" size="16" class="mr-1" /> Descargar PDF firmado
-          </a>
+          <template v-else>
+            <button class="ct-btn ct-btn--ghost" :disabled="abriendoPdfId === c.id" @click="verPdf(c.id)">
+              <v-icon icon="mdi-eye-outline" size="16" class="mr-1" /> {{ abriendoPdfId === c.id ? 'Abriendo…' : 'Ver PDF firmado' }}
+            </button>
+            <a :href="`/api/contratos-publico?accion=descargar&id=${c.id}`" download class="ct-btn ct-btn--ghost" title="Descargar">
+              <v-icon icon="mdi-download" size="16" />
+            </a>
+          </template>
           <button class="ct-btn ct-btn--eliminar" :disabled="eliminandoId === c.id" @click="eliminarContrato(c)">
             <v-icon icon="mdi-trash-can-outline" size="16" />
           </button>
