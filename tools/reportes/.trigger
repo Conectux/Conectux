@@ -1,4 +1,4 @@
 {
-  "ultimo_disparo": "2026-11-04T01:57:17.632Z",
-  "cliente_slug": "modam-tienda"
+  "ultimo_disparo": "2026-11-04T02:04:38.591Z",
+  "cliente_slug": "dr-wilmar-escobar"
 }
