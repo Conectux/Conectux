@@ -142,7 +142,7 @@ const replacements = {
   LOGO_SRC: logoSrc,
   CLIENTE: esc(data.cliente),
   PERIODO: esc(data.periodo),
-  TOTAL_PAGINAS: '06',
+  TOTAL_PAGINAS: '07',
   HERO_STATS: heroStats(data.hero_stats),
   RESUMEN_PUNCH: punchList(data.resumen_punch),
   ENFOQUE_PUNCH: punchCards(data.enfoque_punch),
