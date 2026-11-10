@@ -1,4 +1,4 @@
 {
-  "ultimo_disparo": "2026-10-24T22:47:47.189Z",
-  "cliente_slug": "hotel-central-plaza"
+  "ultimo_disparo": "2026-11-10T21:30:03.757Z",
+  "cliente_slug": "dr-wilmar-escobar"
 }
