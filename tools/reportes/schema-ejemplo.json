@@ -1,5 +1,5 @@
 {
-  "_comentario": "Ejemplo de referencia para la estructura y el estilo de los datos de un reporte. No contiene datos reales de ningún cliente. Ver tools/reportes/template.html y generar-pdf.mjs para cómo se usa cada campo. Estilo: frases cortas (3-6 palabras), no oraciones largas; tono optimista pero anclado en números reales. Cada campaña necesita 'gasto_numero' (el amount_spent real, sin formatear, como número) — se usa para la barra de participación de gasto.",
+  "_comentario": "Ejemplo de referencia para la estructura y el estilo de los datos de un reporte. No contiene datos reales de ningún cliente. Estilo: frases cortas (3-6 palabras), no oraciones largas; tono optimista pero anclado en números reales. Cada campaña necesita 'gasto_numero' (el amount_spent real, sin formatear) para la barra de participación de gasto. Todo stat admite un campo opcional 'delta' (ej. '+18% vs agosto') que se muestra como pastilla bajo el número. Las secciones completas 'engagement_stats', 'audiencia_stats'/'audiencia_desglose', 'plataformas', 'balance_stats' y 'metas_stats' son OPCIONALES: si el array no existe o está vacío, esa sección entera se omite del PDF (nunca inventar el dato solo para llenar espacio).",
   "cliente": "Nombre del Cliente",
   "periodo": "Septiembre 2026",
   "fuente": {
@@ -7,8 +7,8 @@
     "rango": "2026-09-01 a 2026-09-30"
   },
   "hero_stats": [
-    { "emoji": "👁️", "value": "882", "label": "Visitas a perfil" },
-    { "emoji": "💬", "value": "46", "label": "Chats de WhatsApp" },
+    { "emoji": "👁️", "value": "882", "label": "Visitas a perfil", "delta": "+18% vs agosto" },
+    { "emoji": "💬", "value": "46", "label": "Chats de WhatsApp", "delta": "+9 vs agosto" },
     { "emoji": "📈", "value": "2,92%", "label": "CTR" }
   ],
   "resumen_punch": [
@@ -27,19 +27,50 @@
     { "emoji": "🎨", "texto": "Piezas creativas en rotación" }
   ],
   "redes_stats": [
-    { "emoji": "👀", "value": "44.816", "label": "Impresiones" },
+    { "emoji": "👀", "value": "44.816", "label": "Impresiones", "delta": "+12% vs agosto" },
     { "emoji": "🎯", "value": "33.326", "label": "Alcance único" },
     { "emoji": "👁️", "value": "882", "label": "Visitas a perfil" },
     { "emoji": "🔁", "value": "1,34", "label": "Frecuencia" }
   ],
+  "engagement_stats_comentario": "OPCIONAL (solo si hay Meta Page Insights u organic data conectado) — reacciones, comentarios, compartidos, nuevos seguidores.",
+  "engagement_stats": [
+    { "emoji": "❤️", "value": "612", "label": "Reacciones" },
+    { "emoji": "💭", "value": "58", "label": "Comentarios" },
+    { "emoji": "🔄", "value": "41", "label": "Compartidos" },
+    { "emoji": "➕", "value": "27", "label": "Nuevos seguidores" }
+  ],
+  "audiencia_stats_comentario": "OPCIONAL — perfil demográfico principal de quien ve/interactúa con el contenido o la pauta.",
+  "audiencia_stats": [
+    { "emoji": "🎂", "value": "25-34", "label": "Edad principal" },
+    { "emoji": "🚻", "value": "68%", "label": "Mujeres" },
+    { "emoji": "📍", "value": "Medellín", "label": "Ciudad top" },
+    { "emoji": "📱", "value": "91%", "label": "Desde celular" }
+  ],
+  "audiencia_desglose_comentario": "OPCIONAL — hasta 3-4 segmentos con su % de participación, para la lista de barras.",
+  "audiencia_desglose": [
+    { "nombre": "25-34 años, mujeres", "pct": 38 },
+    { "nombre": "35-44 años, mujeres", "pct": 24 },
+    { "nombre": "25-34 años, hombres", "pct": 16 }
+  ],
   "ads_stats": [
     { "emoji": "💰", "value": "$150.525", "label": "Inversión COP" },
-    { "emoji": "💬", "value": "$1.850", "label": "Costo por conversación" },
+    { "emoji": "💬", "value": "$1.850", "label": "Costo por conversación", "delta": "-14% vs agosto" },
     { "emoji": "🏷️", "value": "$115", "label": "CPC promedio" },
     { "emoji": "📈", "value": "2,92%", "label": "CTR" }
   ],
+  "campanas_comentario": "cpm, frecuencia y alcance son OPCIONALES por campaña — si vienen, se muestran en una fila extra debajo de la barra.",
   "campanas": [
-    { "nombre": "Nombre de campaña", "objetivo": "Tráfico", "resultado_valor": "882", "resultado_label": "visitas a perfil", "costo": "$74 COP", "gasto_numero": 65443 }
+    {
+      "nombre": "Nombre de campaña", "objetivo": "Tráfico",
+      "resultado_valor": "882", "resultado_label": "visitas a perfil", "costo": "$74 COP", "gasto_numero": 65443,
+      "cpm": "$13.003", "frecuencia": "1,3", "alcance": "48.200"
+    }
+  ],
+  "plataformas_comentario": "OPCIONAL — desglose de inversión o alcance entre Instagram/Facebook/WhatsApp/Audience Network, etc.",
+  "plataformas": [
+    { "nombre": "Instagram", "pct": 64 },
+    { "nombre": "Facebook", "pct": 29 },
+    { "nombre": "Audience Network", "pct": 7 }
   ],
   "contenidos": [
     {
@@ -47,18 +78,31 @@
       "tag": "Mejor alcance",
       "titulo": "Nombre corto del anuncio",
       "resultado": "877 visitas · CTR 2,77%",
-      "porque": "Una frase corta explicando por qué funcionó."
+      "porque": "Una frase corta explicando por qué funcionó.",
+      "detalle": "OPCIONAL — una métrica secundaria, ej: '1.204 alcance · 18 guardados'"
     }
   ],
   "comercial_stats": [
     { "emoji": "💬", "value": "46", "label": "Chats de WhatsApp" },
-    { "emoji": "👁️", "value": "882", "label": "Visitas con intención" }
+    { "emoji": "👁️", "value": "882", "label": "Visitas con intención" },
+    { "emoji": "⏱️", "value": "12 min", "label": "Tiempo de respuesta" },
+    { "emoji": "✅", "value": "68%", "label": "Tasa de respuesta" }
+  ],
+  "balance_stats_comentario": "OPCIONAL — 2-3 indicadores clave comparados contra el mes anterior, arriba de 'Lo que aprendimos'.",
+  "balance_stats": [
+    { "emoji": "📈", "value": "2,92%", "label": "CTR", "delta": "+0,4pp vs agosto" },
+    { "emoji": "💬", "value": "$1.850", "label": "Costo por conversación", "delta": "-14% vs agosto" }
   ],
   "funciono_punch": [
     { "emoji": "🏆", "texto": "Qué funcionó, en pocas palabras" }
   ],
   "oportunidades_punch": [
     { "emoji": "🗓️", "texto": "Una oportunidad concreta" }
+  ],
+  "metas_stats_comentario": "OPCIONAL — metas numéricas propuestas para el próximo mes.",
+  "metas_stats": [
+    { "emoji": "💬", "value": "60", "label": "Chats de WhatsApp" },
+    { "emoji": "💰", "value": "<$1.700", "label": "Costo por conversación" }
   ],
   "plan_punch": [
     "Una acción concreta para el próximo mes",

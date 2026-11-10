@@ -27,7 +27,7 @@
 
   /* ── Cover ───────────────────────────────── */
   .cover {
-    background: radial-gradient(circle at 15% 8%, #3a1565 0%, #15082b 42%, #070410 100%);
+    background: #140a26;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -35,10 +35,10 @@
     padding: 20mm 18mm;
   }
   .cover-blob {
-    position: absolute; border-radius: 50%; filter: blur(2px); pointer-events: none;
+    position: absolute; border-radius: 50%; pointer-events: none;
   }
-  .cover-blob-1 { width: 320px; height: 320px; top: -120px; right: -100px; background: radial-gradient(circle, rgba(161,0,255,0.35) 0%, transparent 70%); }
-  .cover-blob-2 { width: 260px; height: 260px; bottom: 60px; left: -110px; background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%); }
+  .cover-blob-1 { width: 320px; height: 320px; top: -120px; right: -100px; background: rgba(161,0,255,0.32); filter: blur(75px); }
+  .cover-blob-2 { width: 260px; height: 260px; bottom: 60px; left: -110px; background: rgba(0,212,255,0.12); filter: blur(75px); }
 
   .cover-top { position: relative; z-index: 1; }
   .cover img.logo { width: 150px; margin-bottom: 18mm; }
@@ -70,13 +70,14 @@
   .hero-stat .icon-circle {
     width: 44px; height: 44px; margin: 0 auto 12px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(200,75,255,0.35), rgba(161,0,255,0.15));
+    background: rgba(161,0,255,0.28);
     border: 1px solid rgba(200,75,255,0.5);
     display: flex; align-items: center; justify-content: center;
     font-size: 20px;
   }
   .hero-stat .value { font-size: 40px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -1px; }
   .hero-stat .label { font-size: 10px; color: #c89bff; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 8px; font-weight: 700; }
+  .hero-stat .delta { display: inline-block; margin-top: 7px; font-size: 9.5px; font-weight: 700; color: #d9b8ff; background: rgba(255,255,255,0.08); padding: 2px 9px; border-radius: 10px; }
 
   .cover-summary { position: relative; z-index: 1; background: rgba(161, 0, 255, 0.1); border: 1px solid rgba(161, 0, 255, 0.35); border-radius: 20px; padding: 20px 22px; }
   .cover-summary h3 { margin: 0 0 14px; font-size: 13px; color: #d9b8ff; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; }
@@ -90,7 +91,7 @@
   .punch-list li .num {
     position: absolute; left: 0; top: 7px;
     width: 22px; height: 22px; border-radius: 50%;
-    background: linear-gradient(135deg, #c84bff, #A100FF);
+    background: #A100FF;
     color: #fff; font-size: 11px; font-weight: 800;
     display: flex; align-items: center; justify-content: center;
   }
@@ -100,12 +101,13 @@
   .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
   .section-icon {
     width: 40px; height: 40px; border-radius: 13px; flex-shrink: 0;
-    background: linear-gradient(135deg, #c84bff, #A100FF);
+    background: #A100FF;
     color: #fff; display: flex; align-items: center; justify-content: center;
-    font-size: 19px; box-shadow: 0 4px 14px rgba(161,0,255,0.35);
+    font-size: 19px;
   }
   .section-head h2 { font-size: 24px; margin: 0; color: #1c1230; font-weight: 800; letter-spacing: -0.5px; }
   .section-kicker { font-size: 10px; color: #A100FF; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin: 0 0 2px; }
+  .subsection-title { font-size: 14.5px; font-weight: 800; color: #1c1230; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
   .page-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8mm; }
   .page-logo { width: 68px; opacity: 0.92; }
   .page-badge { font-size: 10px; color: #a78bc4; font-weight: 700; background: #f6eeff; border: 1px solid #ecdcff; padding: 5px 12px; border-radius: 20px; }
@@ -114,10 +116,9 @@
   .big-stat-grid { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
   .big-stat {
     flex: 1; min-width: 42%;
-    background: linear-gradient(160deg, #faf5ff 0%, #ffffff 100%);
+    background: #faf6ff;
     border: 1px solid #ecdcff; border-radius: 20px;
     padding: 22px 18px; text-align: center;
-    box-shadow: 0 2px 10px rgba(161,0,255,0.06);
     break-inside: avoid; page-break-inside: avoid;
   }
   .big-stat .icon-circle {
@@ -127,6 +128,7 @@
   }
   .big-stat .value { font-size: 44px; font-weight: 800; line-height: 1; letter-spacing: -1px; color: #A100FF; }
   .big-stat .label { font-size: 10.5px; color: #665583; text-transform: uppercase; letter-spacing: 0.6px; margin-top: 8px; font-weight: 700; }
+  .big-stat .delta { display: inline-block; margin-top: 8px; font-size: 9.5px; font-weight: 700; color: #7a3ca8; background: #f1e3ff; padding: 2px 10px; border-radius: 10px; }
 
   /* ── Punch cards (short-phrase lists) ────── */
   .punch-grid { display: flex; flex-direction: column; gap: 9px; }
@@ -138,6 +140,15 @@
   }
   .punch-card .emoji { font-size: 20px; flex-shrink: 0; }
   .punch-card .txt { font-size: 13.5px; font-weight: 700; color: #1c1230; }
+
+  /* ── Bar list (audiencia, plataformas) ───── */
+  .bar-list { display: flex; flex-direction: column; gap: 12px; }
+  .bar-item { break-inside: avoid; page-break-inside: avoid; }
+  .bar-item-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+  .bar-item .nombre { font-size: 12.5px; font-weight: 700; color: #1c1230; }
+  .bar-item .pct { font-size: 13px; font-weight: 800; color: #A100FF; }
+  .bar-track { height: 9px; background: #f1e3ff; border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; background: #A100FF; border-radius: 6px; }
 
   /* ── Campaign rows with spend-share bar ──── */
   .campaign-rows { display: flex; flex-direction: column; gap: 12px; }
@@ -151,18 +162,21 @@
   .campaign-row .result { font-size: 26px; font-weight: 800; color: #e9d2ff; text-align: right; letter-spacing: -0.5px; }
   .campaign-row .cost { font-size: 9.5px; color: #a994c9; text-align: right; margin-top: 2px; }
   .campaign-bar-track { height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; }
-  .campaign-bar-fill { height: 100%; background: linear-gradient(90deg, #A100FF, #c84bff); border-radius: 6px; }
+  .campaign-bar-fill { height: 100%; background: #A100FF; border-radius: 6px; }
   .campaign-bar-label { font-size: 8.5px; color: #8a76ab; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .campaign-extra { display: flex; gap: 18px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .campaign-extra .item { font-size: 10px; color: #c7b3e6; }
+  .campaign-extra .item b { color: #fff; font-size: 12px; display: block; }
 
   /* ── Content cards (best posts) ───────────── */
-  .content-grid { display: flex; gap: 16px; }
+  .content-grid { display: flex; flex-wrap: wrap; gap: 16px; }
   .content-card {
-    flex: 1; border: 1px solid #ecdcff; border-radius: 20px; overflow: hidden; background: #fff;
-    box-shadow: 0 2px 10px rgba(161,0,255,0.07);
+    flex: 1 1 calc(50% - 8px); min-width: 220px;
+    border: 1px solid #ecdcff; border-radius: 20px; overflow: hidden; background: #fff;
     break-inside: avoid; page-break-inside: avoid;
   }
   .content-card .img-wrap { position: relative; }
-  .content-card img { width: 100%; height: 165px; object-fit: cover; display: block; background: #eee; }
+  .content-card img { width: 100%; height: 150px; object-fit: cover; display: block; background: #eee; }
   .content-card .tag {
     position: absolute; top: 12px; left: 12px;
     background: #1c1230; color: #fff; font-size: 9.5px; padding: 5px 13px;
@@ -172,11 +186,11 @@
   .content-card .titulo { font-weight: 800; font-size: 13px; color: #1c1230; margin-bottom: 6px; }
   .content-card .result { font-weight: 800; color: #A100FF; font-size: 22px; margin: 2px 0 8px; letter-spacing: -0.5px; }
   .content-card .why { font-size: 10.5px; color: #4a3d63; line-height: 1.5; }
+  .content-card .detalle { font-size: 9.5px; color: #8a76ab; margin-top: 6px; }
 
   .callout {
-    background: linear-gradient(150deg, #22093f 0%, #1c1230 100%);
+    background: #1c1230;
     color: #fff; border-radius: 20px; padding: 24px 26px; margin-top: 12px;
-    box-shadow: 0 8px 28px rgba(161,0,255,0.18);
   }
   .callout h3 { margin: 0 0 16px; font-size: 14px; color: #d9b8ff; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; }
 
@@ -184,6 +198,8 @@
   .two-col > div { flex: 1; }
   .subhead { font-size: 14px; font-weight: 800; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
   .subhead-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+  .section-divider { height: 1px; background: #f0e6fa; margin: 28px 0; }
 
   .footer-band {
     position: absolute; bottom: 12mm; left: 18mm; right: 18mm;
@@ -193,7 +209,7 @@
 
   /* ── Back / closing page ──────────────────── */
   .closing {
-    background: radial-gradient(circle at 80% 85%, #3a1565 0%, #15082b 45%, #070410 100%);
+    background: #140a26;
     color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; padding: 20mm;
   }
@@ -229,12 +245,12 @@
 
   <!-- 2. ENFOQUE DEL MES + 3. GESTIÓN -->
   <div class="page">
-    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">02 / 07</span></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">02 / {{TOTAL_PAGINAS}}</span></div>
     <p class="section-kicker">Estrategia</p>
     <div class="section-head"><div class="section-icon">🎯</div><h2>Enfoque del mes</h2></div>
     <div class="punch-grid">{{ENFOQUE_PUNCH}}</div>
 
-    <div style="height:34px;"></div>
+    <div class="section-divider"></div>
 
     <p class="section-kicker">Operación</p>
     <div class="section-head"><div class="section-icon">⚙️</div><h2>Qué hicimos</h2></div>
@@ -243,31 +259,37 @@
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
   </div>
 
-  <!-- 4. RESULTADOS REDES + 5. PUBLICIDAD -->
+  <!-- 4. RESULTADOS REDES + PUBLICIDAD -->
   <div class="page">
-    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">03 / 07</span></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">03 / {{TOTAL_PAGINAS}}</span></div>
     <p class="section-kicker">Alcance</p>
     <div class="section-head"><div class="section-icon">📱</div><h2>Redes sociales</h2></div>
     <div class="big-stat-grid">{{REDES_STATS}}</div>
 
-    <div style="height:18px;"></div>
+    {{ENGAGEMENT_SECTION}}
+
+    {{AUDIENCIA_SECTION}}
+
+    <div class="section-divider"></div>
 
     <p class="section-kicker">Inversión</p>
     <div class="section-head"><div class="section-icon">💰</div><h2>Publicidad paga</h2></div>
     <div class="big-stat-grid">{{ADS_STATS}}</div>
     <div class="campaign-rows">{{CAMPAIGNS_ROWS}}</div>
 
+    {{PLATAFORMAS_SECTION}}
+
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
   </div>
 
-  <!-- 6. MEJORES CONTENIDOS -->
+  <!-- 6. MEJORES CONTENIDOS + COMERCIAL -->
   <div class="page">
-    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">04 / 07</span></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">04 / {{TOTAL_PAGINAS}}</span></div>
     <p class="section-kicker">Creatividad</p>
     <div class="section-head"><div class="section-icon">🏆</div><h2>Lo que mejor funcionó</h2></div>
     <div class="content-grid">{{CONTENT_CARDS}}</div>
 
-    <div style="height:34px;"></div>
+    <div class="section-divider"></div>
 
     <p class="section-kicker">Negocio</p>
     <div class="section-head"><div class="section-icon">📈</div><h2>Resultados comerciales</h2></div>
@@ -276,11 +298,14 @@
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
   </div>
 
-  <!-- 8. ANÁLISIS -->
+  <!-- 7. ANÁLISIS -->
   <div class="page">
-    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">05 / 07</span></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">05 / {{TOTAL_PAGINAS}}</span></div>
     <p class="section-kicker">Balance</p>
     <div class="section-head"><div class="section-icon">🔍</div><h2>Lo que aprendimos</h2></div>
+
+    {{BALANCE_STATS_SECTION}}
+
     <div class="two-col">
       <div>
         <p class="subhead"><span class="subhead-dot" style="background:#22c55e;"></span>Funcionó</p>
@@ -295,11 +320,14 @@
     <div class="footer-band"><span>{{CLIENTE}} · {{PERIODO}}</span><span>Conectux</span></div>
   </div>
 
-  <!-- 9. PLAN -->
+  <!-- 8. PLAN -->
   <div class="page">
-    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">06 / 07</span></div>
+    <div class="page-top"><img class="page-logo" src="{{LOGO_SRC}}" alt="" /><span class="page-badge">06 / {{TOTAL_PAGINAS}}</span></div>
     <p class="section-kicker">Siguiente paso</p>
     <div class="section-head"><div class="section-icon">🚀</div><h2>Plan de acción — próximo mes</h2></div>
+
+    {{METAS_SECTION}}
+
     <div class="callout">
       <h3>Lo que viene</h3>
       <ul class="punch-list" style="margin:0;">{{PLAN_PUNCH}}</ul>
