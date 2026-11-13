@@ -9,10 +9,10 @@ onMounted(() => init(container.value))
 const steps = [
   {
     number: '01',
-    icon: 'mdi-stethoscope',
+    icon: 'mdi-magnify',
     title: 'Diagnóstico Comercial',
     description:
-      'Analizamos en profundidad tu situación actual: equipo de ventas, mercado objetivo, competencia, propuesta de valor y procesos comerciales. Identificamos las brechas y oportunidades específicas de tu negocio en el sector salud.',
+      'Analizamos en profundidad tu situación actual: equipo de ventas, mercado objetivo, competencia, propuesta de valor y procesos comerciales. Identificamos las brechas y oportunidades específicas de tu negocio.',
     outcomes: ['Mapa de oportunidades', 'Análisis de competencia', 'Perfil del cliente ideal'],
   },
   {
@@ -20,7 +20,7 @@ const steps = [
     icon: 'mdi-map-outline',
     title: 'Estrategia a la Medida',
     description:
-      'Diseñamos un plan comercial específico para tu empresa: canales de venta, mensajes clave, propuesta de valor diferenciada y el mix de herramientas IA que maximizará tus resultados en el sector salud.',
+      'Diseñamos un plan comercial específico para tu empresa: canales de venta, mensajes clave, propuesta de valor diferenciada y el mix de herramientas IA que maximizará tus resultados.',
     outcomes: ['Plan comercial 90 días', 'Scripts de ventas', 'Embudo personalizado'],
   },
   {
@@ -28,7 +28,7 @@ const steps = [
     icon: 'mdi-rocket-launch',
     title: 'Ejecución con Equipo Experto',
     description:
-      'Implementamos el plan con un equipo especializado en ventas de salud. Activamos la IA, ejecutamos las campañas y acompañamos cada cierre de negocio con supervisión continua.',
+      'Implementamos el plan con un equipo comercial experto. Activamos la IA, ejecutamos las campañas y acompañamos cada cierre de negocio con supervisión continua.',
     outcomes: ['Equipo activo desde semana 1', 'IA integrada', 'Reportes semanales'],
   },
   {
@@ -60,7 +60,7 @@ const steps = [
           </h2>
           <p class="reveal d2 section-subtitle">
             No improvisamos. Cada paso de nuestro proceso está respaldado por años de
-            trabajo con empresas del sector salud y cientos de ciclos de venta cerrados.
+            trabajo con empresas de distintos sectores y cientos de ciclos de venta cerrados.
           </p>
         </v-col>
       </v-row>
@@ -111,7 +111,7 @@ const steps = [
             </h3>
             <p class="cta-box-sub mb-8">
               Agenda un diagnóstico gratuito de 30 minutos y descubre cómo podemos
-              escalar las ventas de tu empresa del sector salud.
+              escalar las ventas de tu empresa.
             </p>
             <v-btn
               class="cta-btn"

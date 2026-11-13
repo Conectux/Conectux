@@ -5,7 +5,7 @@ const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior:
 
 const counters = ref([
   { label: 'Años de experiencia', value: 0, target: 6, suffix: '+', prefix: '' },
-  { label: 'Empresas del sector salud', value: 0, target: 50, suffix: '+', prefix: '' },
+  { label: 'Empresas atendidas', value: 0, target: 50, suffix: '+', prefix: '' },
   { label: 'ROI promedio documentado', value: 0, target: 300, suffix: '%', prefix: '+' },
 ])
 
@@ -51,21 +51,21 @@ onMounted(() => {
         <v-col cols="12" md="10" lg="8" class="text-center hero-content">
 
           <div class="section-badge mx-auto">
-            <v-icon size="16">mdi-medical-bag</v-icon>
-            Especialistas en Sector Salud
+            <v-icon size="16">mdi-rocket-launch-outline</v-icon>
+            Especialistas en Ventas y Crecimiento
           </div>
 
           <h1 class="hero-title">
-            Vendemos para el<br />
-            <span class="gradient-text">Sector Salud</span><br />
+            Hacemos crecer<br />
+            <span class="gradient-text">las ventas de tu empresa</span><br />
             con resultados reales
           </h1>
 
           <p class="hero-subtitle mx-auto">
             Más de <strong>6 años</strong> con un sistema comercial comprobado,
             potenciado con <strong>Inteligencia Artificial</strong>. Generamos ventas
-            reales para laboratorios, distribuidores médicos, clínicas y empresas de
-            salud en Colombia, LATAM y USA.
+            reales para empresas de servicios, comercio, tecnología, salud y más
+            en Colombia, LATAM y USA.
           </p>
 
           <div class="hero-ctas d-flex flex-wrap justify-center mt-10">

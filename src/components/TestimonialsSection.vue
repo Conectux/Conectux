@@ -84,12 +84,12 @@ const testimonials = [
             Casos de éxito
           </div>
           <h2 class="reveal d1 section-title">
-            Resultados reales en el<br />
-            <span class="gradient-text">Sector Salud</span>
+            Resultados reales para<br />
+            <span class="gradient-text">empresas que crecen</span>
           </h2>
           <p class="reveal d2 section-subtitle">
             Estas son las historias de empresas que confiaron en Conectux y transformaron
-            sus números comerciales en el sector salud.
+            sus números comerciales.
           </p>
         </v-col>
       </v-row>

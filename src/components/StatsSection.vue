@@ -6,8 +6,8 @@ const container = ref(null)
 const { init } = useReveal()
 
 const stats = ref([
-  { value: 0, target: 6, suffix: '+', label: 'Años en el sector salud', icon: 'mdi-calendar-star', color: '#a100ff' },
-  { value: 0, target: 50, suffix: '+', label: 'Empresas atendidas', icon: 'mdi-hospital-building', color: '#c84bff' },
+  { value: 0, target: 6, suffix: '+', label: 'Años de experiencia', icon: 'mdi-calendar-star', color: '#a100ff' },
+  { value: 0, target: 50, suffix: '+', label: 'Empresas atendidas', icon: 'mdi-office-building', color: '#c84bff' },
   { value: 0, target: 98, suffix: '%', label: 'Tasa de satisfacción', icon: 'mdi-star', color: '#00d4ff' },
   { value: 0, target: 300, suffix: '%', label: 'ROI promedio documentado', icon: 'mdi-trending-up', color: '#a100ff' },
 ])

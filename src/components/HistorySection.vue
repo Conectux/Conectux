@@ -25,7 +25,7 @@ const milestones = [
     year: '2021',
     icon: 'mdi-lightbulb-outline',
     title: 'Un giro que lo cambió todo',
-    desc: 'Después de varios años acompañando diferentes industrias, descubrimos que el sector salud era donde más podíamos aportar. La complejidad del mundo médico nos desafió — y nos enamoró.',
+    desc: 'Nos sumergimos en uno de los sectores más exigentes: la salud. Su complejidad nos obligó a perfeccionar cada etapa de nuestro sistema comercial — y nos hizo mucho más fuertes.',
     color: '#a100ff',
   },
   {
@@ -38,15 +38,15 @@ const milestones = [
   {
     year: '2024',
     icon: 'mdi-robot',
-    title: 'Inteligencia Artificial al servicio de la salud',
-    desc: 'Empezamos a integrar herramientas de IA en nuestros procesos: automatización de seguimientos, análisis de prospectos y asistentes virtuales pensados para el lenguaje del sector médico.',
+    title: 'Inteligencia Artificial al servicio de las ventas',
+    desc: 'Empezamos a integrar herramientas de IA en nuestros procesos: automatización de seguimientos, análisis de prospectos y asistentes virtuales pensados para el lenguaje de cada industria.',
     color: '#00d4ff',
   },
   {
     year: '2025',
-    icon: 'mdi-heart-pulse',
-    title: 'Enfocados en lo que importa',
-    desc: 'Hoy dedicamos toda nuestra energía al sector salud. Estamos construyendo algo en lo que creemos: que con las herramientas correctas, más personas pueden acceder a una atención médica de calidad.',
+    icon: 'mdi-earth',
+    title: 'Abiertos a todas las industrias',
+    desc: 'Hoy llevamos el sistema que perfeccionamos a empresas de cualquier sector. Creemos que con las herramientas correctas, cualquier negocio puede vender más y crecer de forma sostenible.',
     color: '#a100ff',
   },
 ]
@@ -70,9 +70,9 @@ const milestones = [
             <span class="gradient-text">con propósito</span>
           </h2>
           <p class="reveal d2 section-subtitle">
-            No llegamos al sector salud por casualidad. Llegamos después de años de
-            trabajo, aprendizaje y la convicción de que aquí es donde podemos
-            generar el mayor impacto.
+            Cada etapa de nuestro camino nos enseñó algo. Hoy ponemos años de
+            trabajo y aprendizaje en distintas industrias al servicio de
+            tu crecimiento.
           </p>
         </v-col>
       </v-row>
@@ -108,9 +108,9 @@ const milestones = [
         </v-col>
         <v-col
           v-for="(v, i) in [
-            { icon: 'mdi-shield-check', title: 'Especialización', desc: 'Solo trabajamos con el sector salud. Esto nos hace irreemplazables.' },
+            { icon: 'mdi-shield-check', title: 'Adaptabilidad', desc: 'Entendemos tu industria y ajustamos el sistema a tu negocio.' },
             { icon: 'mdi-chart-line', title: 'Resultados', desc: 'Medimos todo. Si no hay resultados, no hay excusas.' },
-            { icon: 'mdi-robot-happy', title: 'Innovación', desc: 'IA y tecnología al servicio de las ventas médicas.' },
+            { icon: 'mdi-robot-happy', title: 'Innovación', desc: 'IA y tecnología al servicio de tus ventas.' },
             { icon: 'mdi-handshake', title: 'Alianza', desc: 'No somos proveedores, somos parte de tu equipo comercial.' },
           ]"
           :key="i"

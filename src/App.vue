@@ -110,7 +110,7 @@ const scrollToSection = (target) => {
             <v-col cols="12" md="4" class="mb-10 mb-md-0">
               <v-img :src="logo" alt="Conectux" max-width="170" contain class="mb-6 logo-white" />
               <p class="footer-desc mb-6">
-                Especialistas en ventas para el sector salud. Más de 6 años generando resultados
+                Especialistas en ventas y crecimiento comercial. Más de 6 años generando resultados
                 reales con metodología comprobada e inteligencia artificial.
               </p>
               <div class="d-flex gap-3">
@@ -138,7 +138,7 @@ const scrollToSection = (target) => {
             <v-col cols="6" md="2" class="mb-8 mb-md-0">
               <h4 class="footer-title mb-5">Servicios</h4>
               <div
-                v-for="s in ['Outsourcing Comercial', 'Generación de Leads', 'Marketing para Salud', 'IA para Ventas', 'CRM & Automatización']"
+                v-for="s in ['Outsourcing Comercial', 'Generación de Leads', 'Marketing Digital', 'IA para Ventas', 'CRM & Automatización']"
                 :key="s"
                 class="footer-link mb-3"
               >{{ s }}</div>
@@ -176,7 +176,7 @@ const scrollToSection = (target) => {
               <p class="footer-copy">© {{ new Date().getFullYear() }} Conectux LLC · Todos los derechos reservados.</p>
             </v-col>
             <v-col cols="12" md="6" class="text-md-right">
-              <p class="footer-copy">Especialistas en Ventas para el Sector Salud</p>
+              <p class="footer-copy">Especialistas en Ventas y Crecimiento Comercial</p>
             </v-col>
           </v-row>
         </v-container>

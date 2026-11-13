@@ -11,24 +11,24 @@ const services = [
     icon: 'mdi-account-tie',
     title: 'Outsourcing Comercial',
     description:
-      'Ponemos a tu disposición un equipo de asesores especializados en salud, listos para abrir mercado y cerrar ventas desde el primer mes.',
-    tags: ['Representantes médicos', 'Fuerza de ventas', 'B2B Salud'],
+      'Ponemos a tu disposición un equipo de asesores comerciales expertos, listos para abrir mercado y cerrar ventas desde el primer mes.',
+    tags: ['Fuerza de ventas', 'B2B & B2C', 'Equipo dedicado'],
     color: '#a100ff',
   },
   {
     icon: 'mdi-target-account',
     title: 'Generación de Leads Calificados',
     description:
-      'Identificamos y pre-calificamos prospectos del sector salud: laboratorios, clínicas, distribuidores y hospitales con necesidades reales.',
-    tags: ['Prospección activa', 'Base de datos salud', 'Lead scoring'],
+      'Identificamos y pre-calificamos prospectos que encajan con tu cliente ideal y tienen necesidades reales de lo que vendes.',
+    tags: ['Prospección activa', 'Bases de datos', 'Lead scoring'],
     color: '#c84bff',
   },
   {
-    icon: 'mdi-hospital-box',
-    title: 'Marketing Digital para Salud',
+    icon: 'mdi-bullhorn-outline',
+    title: 'Marketing Digital',
     description:
-      'Campañas de pauta y contenido diseñadas para audiencias del sector salud, generando autoridad de marca y consultas calificadas.',
-    tags: ['Meta Ads', 'Google Ads', 'Contenido médico'],
+      'Campañas de pauta y contenido diseñadas para tu audiencia ideal, generando autoridad de marca y oportunidades calificadas.',
+    tags: ['Meta Ads', 'Google Ads', 'Contenido de valor'],
     color: '#a100ff',
   },
   {
@@ -51,8 +51,8 @@ const services = [
     icon: 'mdi-school',
     title: 'Capacitación Comercial',
     description:
-      'Entrenamos a tu equipo en técnicas de venta especializadas para el sector salud: médicos, compradores hospitalarios y decisores.',
-    tags: ['Ventas médicas', 'Técnicas de cierre', 'Formación in-house'],
+      'Entrenamos a tu equipo en técnicas de venta adaptadas a tu industria: prospección, negociación y cierre con decisores.',
+    tags: ['Ventas consultivas', 'Técnicas de cierre', 'Formación in-house'],
     color: '#a100ff',
   },
 ]
@@ -69,12 +69,12 @@ const services = [
             Lo que hacemos
           </div>
           <h2 class="reveal d1 section-title">
-            Servicios diseñados para el<br />
-            <span class="gradient-text">Sector Salud</span>
+            Servicios diseñados para<br />
+            <span class="gradient-text">vender más</span>
           </h2>
           <p class="reveal d2 section-subtitle">
-            No somos una agencia genérica. Cada servicio está construido con conocimiento
-            profundo del sector y un sistema comercial que lleva más de 6 años generando resultados.
+            No somos una agencia genérica. Cada servicio se adapta a tu industria y se apoya en
+            un sistema comercial que lleva más de 6 años generando resultados.
           </p>
         </v-col>
       </v-row>
@@ -108,7 +108,7 @@ const services = [
 
       <v-row justify="center" class="mt-14">
         <v-col cols="12" class="text-center reveal">
-          <p class="cta-sub mb-6">¿Necesitas una solución a medida para tu empresa del sector salud?</p>
+          <p class="cta-sub mb-6">¿Necesitas una solución a medida para tu empresa?</p>
           <v-btn
             class="cta-btn"
             size="large"

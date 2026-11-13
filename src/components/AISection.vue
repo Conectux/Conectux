@@ -10,7 +10,7 @@ const features = [
   {
     icon: 'mdi-account-search',
     title: 'Prospección inteligente',
-    desc: 'La IA identifica y califica automáticamente los mejores prospectos del sector salud basándose en patrones de compra y perfil ideal.',
+    desc: 'La IA identifica y califica automáticamente los mejores prospectos para tu negocio basándose en patrones de compra y perfil ideal.',
   },
   {
     icon: 'mdi-email-fast',
@@ -24,8 +24,8 @@ const features = [
   },
   {
     icon: 'mdi-chat-processing',
-    title: 'Chatbots especializados en salud',
-    desc: 'Asistentes virtuales entrenados con terminología médica que pre-califican leads 24/7 antes de pasarlos a tu equipo.',
+    title: 'Chatbots para tu negocio',
+    desc: 'Asistentes virtuales entrenados con el lenguaje de tu industria que pre-califican leads 24/7 antes de pasarlos a tu equipo.',
   },
   {
     icon: 'mdi-gauge',
@@ -60,8 +60,8 @@ const features = [
           </h2>
 
           <p class="reveal-left d2 section-subtitle mb-8">
-            Somos pioneros en la integración de IA dentro del proceso de ventas para el
-            sector salud. Nuestras herramientas automatizan tareas repetitivas y permiten
+            Somos pioneros en la integración de IA dentro del proceso de ventas de
+            empresas de todos los sectores. Nuestras herramientas automatizan tareas repetitivas y permiten
             a tu equipo enfocarse en lo que realmente importa: <strong>cerrar negocios.</strong>
           </p>
 

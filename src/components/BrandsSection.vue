@@ -26,31 +26,29 @@ const brands = Array.from({ length: 19 }, (_, i) => ({
       <v-row justify="center" class="mb-14">
         <v-col cols="12" md="9" lg="8" class="text-center">
           <div class="reveal section-badge">
-            <v-icon size="16">mdi-heart-pulse</v-icon>
+            <v-icon size="16">mdi-handshake-outline</v-icon>
             Nuestra historia
           </div>
 
           <h2 class="reveal d1 brands-title">
-            Todos los caminos<br />
-            <span class="gradient-text">nos llevaron a la salud</span>
+            Muchas industrias,<br />
+            <span class="gradient-text">un mismo propósito</span>
           </h2>
 
           <p class="reveal d2 brands-text">
             Tenemos muchas historias por contar. Durante años trabajamos junto a empresas
-            de distintos sectores — retail, tecnología, alimentos, hotelería — y en cada
+            de distintos sectores — retail, tecnología, alimentos, hotelería, salud — y en cada
             una de ellas aprendimos algo nuevo sobre cómo vender, conectar y crecer.
           </p>
           <p class="reveal d3 brands-text">
-            Pero todos esos caminos nos guiaron al mismo destino: el mundo médico.
-            Hoy somos referentes en ventas para el sector salud porque entendemos que
-            detrás de cada producto farmacéutico, cada dispositivo médico y cada clínica,
-            hay una persona que necesita atención, alivio o una segunda oportunidad.
+            Esa diversidad es nuestra mayor fortaleza. Sabemos adaptar un sistema comercial
+            probado a cualquier negocio, porque entendemos que detrás de cada producto,
+            cada servicio y cada marca hay personas que necesitan encontrarse.
           </p>
           <p class="reveal d4 brands-text brands-text--highlight">
-            Ahora solo queremos una cosa: mejorar el mundo de la salud, conectando
-            pacientes con consultorios, laboratorios con médicos y empresas con las
-            personas que más los necesitan — para que todos puedan vivir de manera
-            más tranquila, más sana y más plena.
+            Ahora solo queremos una cosa: conectar empresas con los clientes que más las
+            necesitan — para que cada negocio que acompañamos crezca de manera
+            sostenible, con más ventas y más tranquilidad.
           </p>
         </v-col>
       </v-row>
