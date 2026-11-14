@@ -284,7 +284,14 @@ const quoterEl = ref(null)
 const summaryEl = ref(null)
 const quoterVisible = ref(false)
 const summaryVisible = ref(false)
-const showBar = computed(() => quoterVisible.value && !summaryVisible.value)
+// 'price' dentro del cotizador (solo móvil), 'go' en el resto de la página
+const barMode = computed(() => {
+  if (summaryVisible.value) return null
+  return quoterVisible.value ? 'price' : 'go'
+})
+const isCustomized = computed(() => total.value !== PRICING.base)
+const goToQuoter = () =>
+  document.getElementById('cotizador')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
 let barObservers = []
 onMounted(() => {
   const watchEl = (el, target, options) => {
@@ -372,8 +379,53 @@ const whys = [
         </v-container>
       </section>
 
+      <!-- ─── RESUMEN EN 30 SEGUNDOS ─────────────────────────────── -->
+      <section class="ps-tldr">
+        <v-container>
+          <div class="tldr-card reveal">
+            <span class="tldr-kicker">
+              <v-icon size="14">mdi-timer-outline</v-icon>
+              Resumen en 30 segundos
+            </span>
+            <ul class="tldr-list">
+              <li>
+                <span class="tldr-icon"><v-icon size="20">mdi-target</v-icon></span>
+                <div>
+                  <strong>Qué hacemos</strong>
+                  <p>Posicionamos tu consulta en redes para que más pacientes te encuentren, confíen en ti y agenden.</p>
+                </div>
+              </li>
+              <li>
+                <span class="tldr-icon"><v-icon size="20">mdi-package-variant-closed-check</v-icon></span>
+                <div>
+                  <strong>Qué incluye</strong>
+                  <p>Estrategia, 4 reels, 4 posts, historias, sesión de grabación, pauta en Meta Ads y reporte mensual.</p>
+                </div>
+              </li>
+              <li>
+                <span class="tldr-icon"><v-icon size="20">mdi-cash-multiple</v-icon></span>
+                <div>
+                  <strong>Cuánto cuesta</strong>
+                  <p>Desde <b>$1.500.000 / mes</b> + IVA. Lo ajustas a tu medida en el cotizador.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="tldr-actions">
+              <button type="button" class="tldr-cta" @click="goToQuoter">
+                <v-icon size="18">mdi-calculator-variant-outline</v-icon>
+                Cotizar mi proyecto
+              </button>
+              <a href="#reto" class="tldr-more">
+                Prefiero ver todo
+                <v-icon size="16">mdi-chevron-down</v-icon>
+              </a>
+            </div>
+          </div>
+        </v-container>
+      </section>
+
       <!-- ─── EL RETO ───────────────────────────────────────────── -->
-      <section class="ps-section ps-section-alt">
+      <section id="reto" class="ps-section ps-section-alt">
         <div class="ps-blob-center" />
         <v-container>
           <v-row justify="center" class="mb-14">
@@ -393,7 +445,7 @@ const whys = [
             </v-col>
           </v-row>
 
-          <v-row justify="center">
+          <v-row justify="center" class="ps-snap">
             <v-col
               v-for="(c, i) in challenges"
               :key="i"
@@ -434,7 +486,7 @@ const whys = [
             </v-col>
           </v-row>
 
-          <v-row>
+          <v-row class="ps-snap">
             <v-col
               v-for="(r, i) in results"
               :key="i"
@@ -556,6 +608,7 @@ const whys = [
                     <v-icon size="24" color="#a100ff">{{ step.icon }}</v-icon>
                   </div>
                   <h3 class="ps-step-title">{{ step.title }}</h3>
+                  <span class="ps-step-mini">{{ step.number }}</span>
                 </div>
                 <p class="ps-card-desc mb-5">{{ step.desc }}</p>
                 <div class="d-flex flex-wrap" style="gap:8px">
@@ -591,7 +644,7 @@ const whys = [
               </p>
             </v-col>
             <v-col cols="12" md="6" offset-md="1">
-              <v-row>
+              <v-row class="ps-snap ps-snap--compact">
                 <v-col
                   v-for="(w, i) in whys"
                   :key="i"
@@ -640,19 +693,6 @@ const whys = [
                     <p class="ps-offer-item-desc">{{ item.desc }}</p>
                   </div>
                 </div>
-              </div>
-
-              <!-- Botón sistema -->
-              <div class="text-center reveal d2 mb-10">
-                <v-btn
-                  class="cta-btn"
-                  href="https://app.conectux.com/"
-                  target="_blank"
-                  size="large"
-                >
-                  <v-icon start size="18">mdi-open-in-new</v-icon>
-                  Conoce nuestro sistema Conectux
-                </v-btn>
               </div>
 
               <!-- Cotizador -->
@@ -874,9 +914,9 @@ const whys = [
                 </div>
               </div>
 
-              <!-- Barra fija del total (solo móvil) -->
-              <transition name="qz-bar">
-                <div v-if="showBar" class="qz-bar">
+              <!-- Barra fija: "Cotizar mi proyecto" en toda la página; precio + WhatsApp dentro del cotizador -->
+              <transition name="qz-bar" mode="out-in">
+                <div v-if="barMode === 'price'" key="price" class="qz-bar qz-bar--price">
                   <button type="button" class="qz-bar-total" @click="scrollToSummary">
                     <small>Tu plan · ver detalle <v-icon size="12">mdi-chevron-down</v-icon></small>
                     <strong :class="{ bump: totalBump }">{{ fmt(displayTotal) }}</strong>
@@ -886,6 +926,15 @@ const whys = [
                     <v-icon size="18">mdi-whatsapp</v-icon>
                     Lo quiero
                   </a>
+                </div>
+                <div v-else-if="barMode === 'go'" key="go" class="qz-bar qz-bar--go">
+                  <button type="button" class="qz-bar-total" @click="goToQuoter">
+                    <strong class="qz-bar-title">Arma tu plan</strong>
+                  </button>
+                  <button type="button" class="qz-bar-cta" @click="goToQuoter">
+                    <v-icon size="18">mdi-calculator-variant-outline</v-icon>
+                    {{ isCustomized ? 'Ver mi cotización' : 'Cotizar mi proyecto' }}
+                  </button>
                 </div>
               </transition>
 
@@ -1302,6 +1351,154 @@ const whys = [
   margin: 0;
 }
 
+/* ─── Resumen en 30 segundos ─────────────────────────────── */
+.ps-tldr {
+  position: relative;
+  background: #09090f;
+  padding: 0 0 8px;
+  margin-top: -40px;
+  z-index: 2;
+}
+.tldr-card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 26px 18px 20px;
+  border-radius: 26px;
+  background:
+    radial-gradient(ellipse at top left, rgba(161, 0, 255, 0.22) 0%, transparent 60%),
+    rgba(20, 12, 36, 0.92);
+  border: 1px solid rgba(161, 0, 255, 0.35);
+  box-shadow: 0 30px 70px -30px rgba(161, 0, 255, 0.45);
+}
+.tldr-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #c84bff;
+  background: rgba(161, 0, 255, 0.12);
+  border: 1px solid rgba(161, 0, 255, 0.28);
+}
+.tldr-list { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 14px; }
+.tldr-list li { display: flex; gap: 14px; align-items: flex-start; }
+.tldr-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  color: #fff;
+  background: linear-gradient(135deg, #a100ff, #7b2fff);
+  box-shadow: 0 8px 20px -8px rgba(161, 0, 255, 0.8);
+}
+.tldr-list strong { display: block; font-size: 15.5px; font-weight: 800; color: #fff; }
+.tldr-list p { margin: 2px 0 0; font-size: 14px; line-height: 1.55; color: rgba(200, 200, 220, 0.8); }
+.tldr-list b { color: #fff; }
+.tldr-actions { display: flex; flex-direction: column; align-items: stretch; gap: 10px; margin-top: 22px; }
+.tldr-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 54px;
+  border: 0;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #a100ff, #7b2fff);
+  box-shadow: 0 12px 28px -10px rgba(161, 0, 255, 0.85);
+  transition: transform 0.15s ease;
+}
+.tldr-cta:active { transform: scale(0.97); }
+.tldr-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(200, 200, 220, 0.75);
+  text-decoration: none;
+}
+.tldr-cta:focus-visible,
+.tldr-more:focus-visible { outline: 2px solid #c84bff; outline-offset: 2px; }
+@media (min-width: 600px) {
+  .tldr-card { padding: 34px 34px 28px; }
+  .tldr-list { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tldr-list li { flex-direction: column; }
+  .tldr-actions { flex-direction: row; justify-content: center; }
+  .tldr-cta { padding: 0 28px; }
+}
+
+/* ─── Carruseles en móvil ────────────────────────────────── */
+.ps-step-mini { display: none; }
+@media (max-width: 599px) {
+  .ps-snap {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-left: -16px !important;
+    margin-right: -16px !important;
+    padding: 0 16px 6px;
+    scroll-padding: 0 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ps-snap::-webkit-scrollbar { display: none; }
+  .ps-snap > .v-col {
+    flex: 0 0 82% !important;
+    max-width: 82% !important;
+    scroll-snap-align: start;
+  }
+  .ps-snap--compact > .v-col { flex-basis: 62% !important; max-width: 62% !important; }
+
+  /* Pasos como carrusel */
+  .ps-steps-wrapper {
+    flex-direction: row !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    gap: 12px;
+    margin: 0 -16px !important;
+    padding: 0 16px 6px;
+    scroll-padding: 0 16px;
+  }
+  .ps-steps-wrapper::-webkit-scrollbar { display: none; }
+  .ps-step-row {
+    display: block !important;
+    flex: 0 0 84%;
+    scroll-snap-align: start;
+  }
+  .ps-step-row .ps-step-card { height: 100%; margin-bottom: 0 !important; padding: 22px 18px !important; }
+  .ps-step-num-col { display: none !important; }
+  .ps-step-mini {
+    display: inline-grid;
+    place-items: center;
+    margin-left: auto;
+    min-width: 34px;
+    height: 26px;
+    padding: 0 8px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    background: rgba(161, 0, 255, 0.35);
+  }
+
+  /* Espacio para la barra fija al final */
+  .ps-footer { padding-bottom: 110px !important; }
+}
+
 /* ─── Cotizador (mobile first) ───────────────────────────── */
 .qz,
 .qz-bar {
@@ -1316,6 +1513,7 @@ const whys = [
 .qz {
   position: relative;
   overflow: hidden;
+  scroll-margin-top: 84px;
   padding: 28px 16px 20px;
   border-radius: 28px;
   background: linear-gradient(180deg, rgba(20, 12, 36, 0.92) 0%, rgba(12, 10, 22, 0.96) 100%);
@@ -1756,8 +1954,13 @@ const whys = [
   font-variant-numeric: tabular-nums;
 }
 .qz-bar-total span { font-size: 11px; color: var(--qz-muted); }
+.qz-bar-total .qz-bar-title { font-size: 18px; }
+.qz-bar-total .qz-bar-title + span { font-size: 12px; margin-top: 2px; }
 .qz-bar-cta {
   flex-shrink: 0;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1809,7 +2012,8 @@ const whys = [
   .qz-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 22px; align-items: start; }
   .qz-summary { position: sticky; top: 92px; }
   .qz-sum-total { font-size: clamp(2.1rem, 3vw, 2.7rem); letter-spacing: -1px; }
-  .qz-bar { display: none; }
+  .qz-bar--price { display: none; }
+  .qz-bar { left: 0; right: 0; max-width: 560px; margin: 0 auto; bottom: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
