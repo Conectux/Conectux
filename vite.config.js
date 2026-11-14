@@ -1,12 +1,30 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import { existsSync } from 'fs'
 import { fileURLToPath } from 'url'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
+// En desarrollo, /pagina (sin "/" final) cae en la página principal.
+// Redirige a /pagina/ cuando existe pagina/index.html, como hace Vercel en producción.
+const trailingSlashRedirect = {
+  name: 'trailing-slash-redirect',
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      const [path, query = ''] = (req.url || '').split('?')
+      if (/^\/[\w-]+$/.test(path) && existsSync(resolve(__dirname, `.${path}/index.html`))) {
+        res.statusCode = 301
+        res.setHeader('Location', `${path}/${query ? `?${query}` : ''}`)
+        return res.end()
+      }
+      next()
+    })
+  },
+}
+
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(), trailingSlashRedirect],
   build: {
     rollupOptions: {
       input: {
@@ -24,6 +42,7 @@ export default defineConfig({
         llenarBrief: resolve(__dirname, 'llenar-brief/index.html'),
         cotizaciones: resolve(__dirname, 'cotizaciones/index.html'),
         verCotizacion: resolve(__dirname, 'ver-cotizacion/index.html'),
+        cotizador: resolve(__dirname, 'cotizador/index.html'),
       },
     },
   },
